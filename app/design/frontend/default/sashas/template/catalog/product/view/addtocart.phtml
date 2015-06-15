@@ -1,0 +1,24 @@
+<?php $_product = $this->getProduct(); ?>
+<?php $buttonTitle = $this->__('Add to Cart'); ?>
+<?php $buttonTitle_Free = $this->__('Download'); ?>
+
+<?php if($_product->isSaleable() && $_product->getPrice()!='0.00'): ?>
+    <div class="add-to-cart">
+        <?php if(!$_product->isGrouped()): ?>
+        <label for="qty"><?php echo $this->__('Qty:') ?></label>
+        <input type="text" name="qty" id="qty" maxlength="12" value="<?php echo $this->getProductDefaultQty() * 1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+        <?php endif; ?>
+        <button type="button" title="<?php echo $buttonTitle ?>" class="button btn-cart" onclick="productAddToCartForm.submit(this)"><span><span><?php echo $buttonTitle ?></span></span></button>
+        <?php echo $this->getChildHtml('', true, true) ?>
+    </div>
+<?php else:?>
+<?php $links= Mage::getModel('downloadable/product_type')->getLinks( $_product ); ?>
+ <?php foreach ($links as $link_item) {
+ 		$link=$link_item;
+ }
+  
+ ?>
+    <div class="add-to-cart">  
+ 		<button type="button" title="<?php echo $buttonTitle_Free ?>" class="button btn-cart" onclick="window.open('<?php echo $link->getLinkUrl();?>');"><span><span><?php echo $buttonTitle_Free ?></span></span></button>    
+    </div>     
+<?php endif; ?>

@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+ <!-- 
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Hreflang
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+ -->
+<config>
+	<modules>
+		<Sashas_Hreflang>
+			<version>1.0.0</version>
+		</Sashas_Hreflang>
+	</modules>
+	<global>
+		<helpers>
+			<hreflang>
+				<class>Sashas_Hreflang_Helper</class>
+			</hreflang>
+		</helpers>
+		<blocks>
+			<hreflang>
+				<class>Sashas_Hreflang_Block</class>
+			</hreflang>
+			<page>
+				<rewrite>
+					<html_head>Sashas_Hreflang_Block_Head</html_head>
+				</rewrite>
+			</page>
+		</blocks> 
+		<resources>
+			<hreflang_setup>
+				<setup>
+					<module>Sashas_Hreflang</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</hreflang_setup>
+			<hreflang_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</hreflang_write>
+			<hreflang_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</hreflang_read>
+		</resources>
+	</global>
+</config>

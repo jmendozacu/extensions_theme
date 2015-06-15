@@ -1,0 +1,73 @@
+<?xml version="1.0"?> 
+<layout version="0.1.0">
+	<cms_page>
+		<reference name="head">			
+			<action method="addCss"><stylesheet>css/sh/shThemeDefault.css</stylesheet></action>
+			<action method="addCss"><stylesheet>css/sh/shCore.css</stylesheet></action>
+			<action method="addItem"><type>skin_js</type><script>js/sh/shCore.js</script></action>
+			<action method="addItem"><type>skin_js</type><script>js/sh/shBrushCss.js</script></action>
+			<action method="addItem"><type>skin_js</type><script>js/sh/shBrushJScript.js</script></action>
+			<action method="addItem"><type>skin_js</type><script>js/sh/shBrushPhp.js</script></action>
+			<action method="addItem"><type>skin_js</type><script>js/sh/shBrushXml.js</script></action>
+			<action method="addItem"><type>skin_js</type><script>js/sh/shBrushPlain.js</script></action>
+			<action method="addItem"><type>skin_js</type><script>js/scripts.js</script></action>
+		</reference>
+	</cms_page>
+	
+ 	<default>
+ 		<reference name="right">
+ 			 <remove name="catalog.compare.sidebar"/>
+ 		</reference> 	
+ 		<reference name="footer">
+			<block type="cms/block" name="footer_social_links" after="footer_links2">
+			                    <action method="setBlockId"><block_id>footer_support_links</block_id></action>
+			 </block> 		
+ 		</reference>
+ 	</default>
+ 	
+ 	<catalog_category_default>
+ 		<reference name="root">
+ 			 <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+ 		</reference> 	
+ 	</catalog_category_default>
+ 	
+ 	<catalog_category_layered>
+ 		<reference name="root">
+ 			 <action method="setTemplate"><template>page/2columns-left.phtml</template></action>
+ 		</reference> 	
+ 	</catalog_category_layered> 	
+ 	
+ 	<catalog_product_view>
+ 		<reference name="head">	
+ 			<action method="addItem"><type>skin_css</type><script>css/fancybox/jquery.fancybox.css</script></action> 
+ 			<action method="addItem"><type>skin_js</type><script>js/fancybox/jquery.fancybox.pack.js</script></action>
+ 		</reference>
+ 	</catalog_product_view>
+ 
+	<review_product_view>
+ 		<reference name="root">
+ 			 <action method="setTemplate"><template>page/1column.phtml</template></action>
+ 		</reference> 		
+	</review_product_view>
+	
+	<review_product_list>
+ 		<reference name="root">
+ 			 <action method="setTemplate"><template>page/1column.phtml</template></action>
+ 		</reference> 		
+	</review_product_list>
+ 	<contacts_index_index>
+  		<reference name="root">
+ 			 <action method="setTemplate"><template>page/1column.phtml</template></action>
+ 		</reference> 			
+ 	</contacts_index_index>
+ 	
+ 	<checkout_cart_index>
+		<reference name="head">
+			<action method="addItem"><type>skin_js</type><script>js/owl.carousel.min.js</script></action>
+			<action method="addItem"><type>skin_css</type><script>css/owl.theme.css</script></action>
+			<action method="addItem"><type>skin_css</type><script>css/owl.carousel.css</script></action>
+		</reference>
+ 	
+ 	</checkout_cart_index>
+ 	
+</layout>

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Widgetemailproduct
+ * @copyright   Copyright (c) 2014 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+    <modules>
+        <Sashas_Widgetemailproduct>
+            <version>1.0.2</version>
+        </Sashas_Widgetemailproduct>
+    </modules>
+    <global> 
+        <helpers>
+            <widgetemailproduct>
+                <class>Sashas_Widgetemailproduct_Helper</class>
+            </widgetemailproduct>
+        </helpers>
+        <blocks>
+             <widgetemailproduct>
+                <class>Sashas_Widgetemailproduct_Block</class>
+             </widgetemailproduct>
+        </blocks>
+		<resources>
+			<widgetemailproduct_setup>
+				<setup>
+					<module>Sashas_Widgetemailproduct</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</widgetemailproduct_setup>
+			<widgetemailproduct_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</widgetemailproduct_write>
+			<widgetemailproduct_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</widgetemailproduct_read>
+		</resources>        
+    </global>
+</config> 

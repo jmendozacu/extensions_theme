@@ -1,0 +1,30 @@
+/* ============================================ *
+ * About US
+ * ============================================ */
+ 
+ .about-us  .more-views li,  .product-view   .more-views li { float:left; margin:0 0 8px 9px;    list-style: none outside none;}
+.syntaxhighlighter .toolbar, .toolbar_item.command_help {display:none;} 
+.cms-call-for-price-installation-html .std p,
+.cms-special-product-installation-html .std p,
+.cms-widget-email-product-template-example-html .std p,
+.cms-product-page-tabs-instructions-html .std p,
+.cms-configurable-images-switcher-installation-html .std p,
+.cms-free-gift-manual-html .std p,
+{ margin: 0 0 0.3em;}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}  
+ 
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+  

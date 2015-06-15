@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Magapp
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+    <modules>
+        <Sashas_Magapp>
+            <version>1.1.0</version>
+        </Sashas_Magapp>
+    </modules>
+	<global>
+        <helpers>
+        	<magapp>
+        		<class>Sashas_Magapp_Helper</class>        		
+        	</magapp>
+        </helpers> 
+        <models>
+        	<magapp>
+        		<class>Sashas_Magapp_Model</class>
+        		<resourceModel>magapp_resource</resourceModel> 
+        	</magapp>         	 
+        	<magapp_resource>
+                <class>Sashas_Magapp_Model_Resource</class>
+                <entities>
+                    <notifications>
+                        <table>magapp_notifications</table>
+                    </notifications>                    
+                </entities>
+            </magapp_resource>        	       
+        </models>         
+		<resources>
+            <magapp_setup>
+                <setup>
+                    <module>Sashas_Magapp</module>                 
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </magapp_setup>
+            <magapp_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </magapp_write>
+            <magapp_read>
+                <connection> 
+                    <use>core_read</use>
+                </connection>
+            </magapp_read>
+		</resources>  
+		<events>
+			<sales_order_place_after>
+				<observers>
+					<notfication_order_place_after>
+						<type>singleton</type>
+						<class>magapp/observer</class>
+						<method>notificationSave</method>
+					</notfication_order_place_after>
+				</observers>
+			</sales_order_place_after>
+		</events>                       
+	</global>		   
+</config>
+
+

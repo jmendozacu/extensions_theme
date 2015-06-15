@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Minify
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+    <modules>
+        <Sashas_Minify>
+            <version>1.2.0</version>
+        </Sashas_Minify>
+    </modules>
+	<global>
+         <blocks>
+        	<minify>
+        		<class>Sashas_Minify_Block</class>        		
+        	</minify>       
+        </blocks> 
+        <helpers>
+        	<minify>
+        		<class>Sashas_Minify_Helper</class>        		
+        	</minify>
+        	<core>
+        		<rewrite>
+        			<data>Sashas_Minify_Helper_Core_Data</data>
+        		</rewrite>
+        	</core>
+        </helpers>    
+        <models>
+        	<minify>
+        		<class>Sashas_Minify_Model</class>        		
+        	</minify>       
+        	<catalog>
+        		<rewrite>
+        			<product_image>Sashas_Minify_Model_Catalog_Product_Image</product_image>
+        		</rewrite>
+        	</catalog> 
+        </models>           
+		<resources>
+            <minify_setup>
+                <setup>
+                    <module>Sashas_Minify</module>                 
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </minify_setup>
+            <minify_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </minify_write>
+            <minify_read>
+                <connection> 
+                    <use>core_read</use>
+                </connection>
+            </minify_read>
+		</resources>                         
+	</global>
+	<default>
+		<minify>
+			<minify_group>
+				<enable_js><![CDATA[0]]></enable_js>
+				<enable_css><![CDATA[0]]></enable_css>
+				<enable_html><![CDATA[0]]></enable_html>
+				<optimize_images><![CDATA[0]]></optimize_images>
+				<image_quality><![CDATA[50]]></image_quality>
+			</minify_group>
+		</minify>
+	</default>	 
+	<frontend>
+		<events>
+		    <core_block_abstract_to_html_after>
+			<observers>
+				<sashas_minify_core_block_abstract_to_html_after>
+					<class>minify/observer</class>
+					<method>minifyBlockHtml</method>
+				</sashas_minify_core_block_abstract_to_html_after>
+			</observers>
+		    </core_block_abstract_to_html_after>
+		</events>
+	</frontend>	  	
+</config>
+
+

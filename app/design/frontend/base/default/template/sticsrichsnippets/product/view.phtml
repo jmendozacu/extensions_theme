@@ -1,0 +1,47 @@
+<?php
+/* @var $this StrongTics_RichSnippets_Block_Product_View */
+$firstReview = $this->getFirstReview();
+?>
+
+<div itemscope="itemscope" itemtype="http://schema.org/Product">    
+    <meta itemprop="name" content="<?php echo $this->getEscapedProductName(); ?>"/>    
+    <meta itemprop="image" content="<?php echo $this->getImageUrl() ?>"/>
+    <?php if ($this->getReviewsCount()): ?>
+        <div itemprop="aggregateRating" itemscope="itemscope" itemtype="http://schema.org/AggregateRating">
+            <meta itemprop="ratingValue" content="<?php echo $this->getRatingSummary(); ?>"/>            
+            <meta itemprop="reviewCount" content="<?php echo $this->getReviewsCount(); ?>"/>            
+            <meta itemprop="bestRating" content="<?php echo $this->getBestRating(); ?>"/>            
+            <meta itemprop="worstRating" content="<?php echo $this->getWorstRating(); ?>"/>                                    
+        </div>   
+        <div itemprop="review" itemscope="itemscope" itemtype="http://schema.org/Review">      
+            <meta itemprop="itemreviewed" content="<?php echo $this->getEscapedProductName(); ?>"/>
+            <?php if ($firstReview): ?>
+                <meta itemprop="author" content="<?php echo $this->escapeHtml($firstReview->getNickname()); ?>"/>               
+                <meta itemprop="datePublished" content="<?php echo $this->getCleanDate($firstReview->getCreatedAt()); ?>"/>
+                <div itemprop="reviewRating" itemscope="itemscope" itemtype="http://schema.org/Rating">         
+                    <meta itemprop="ratingValue" content="<?php echo $this->getRating(); ?>"/>
+                    <meta itemprop="bestRating" content="<?php echo $this->getBestRating(); ?>"/>
+                    <meta itemprop="worstRating" content="<?php echo $this->getWorstRating(); ?>"/> 
+                </div>
+                <meta itemprop="description" content="<?php echo $this->escapeHtml($firstReview->getDetail()); ?>"/>  
+            <?php endif; ?>
+        </div> 
+    <?php endif; ?>	
+    <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer">
+        <meta itemprop="priceCurrency" content="<?php echo $this->getCurrentCurrency(); ?>"/>
+        <meta itemprop="price" content="<?php echo $this->getProductFinalPrice(); ?>"/>		 
+        <?php if ($this->getProductAvailability()): ?>
+            <meta itemprop="availability" href="http://schema.org/InStock" content="In stock"/>
+        <?php else: ?>
+            <meta itemprop="availability" href="http://schema.org/OutOfStock" content="Out of stock"/>
+        <?php endif; ?>
+        <?php if ($this->getEscapedCategoryName()): ?>
+            <meta itemprop="category" content="<?php echo $this->getEscapedCategoryName(); ?>"/>
+        <?php endif; ?>		
+    </div>
+    <meta itemprop="description" content="<?php echo $this->getEscapedDescription(); ?>"/>
+    <meta itemprop="sku" content="sku:<?php echo $this->getSku(); ?>" />
+    <?php if ($this->getEscapedManufacturerName()): ?>
+    <meta itemprop="brand" content="<?php echo $this->getEscapedManufacturerName(); ?>"/> 	
+    <?php endif; ?>		
+</div>

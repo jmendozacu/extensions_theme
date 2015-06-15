@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Wordpress
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+    <modules>
+        <Sashas_Wordpress>
+            <version>1.0.0</version>
+        </Sashas_Wordpress>
+    </modules>
+	<global>
+         <blocks>
+        	<wordpress>
+        		<class>Sashas_Wordpress_Block</class>        		
+        	</wordpress>         
+        </blocks> 
+        <helpers>
+        	<wordpress>
+        		<class>Sashas_Wordpress_Helper</class>        		
+        	</wordpress>
+        </helpers>      
+		<resources>
+            <wordpress_setup>
+                <setup>
+                    <module>Sashas_Wordpress</module>                 
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </wordpress_setup>
+            <wordpress_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </wordpress_write>
+            <wordpress_read>
+                <connection> 
+                    <use>core_read</use>
+                </connection>
+            </wordpress_read>
+		</resources>                         
+	</global>
+	<default>
+		<wordpress>
+			<wordpress_group>
+				<wp_folder><![CDATA[blog/]]></wp_folder>
+			</wordpress_group>
+		</wordpress>
+	</default>	  	   
+</config>
+
+

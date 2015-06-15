@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <api>
+        <resources>
+            <magapp_sales_order translate="title" module="magapp">
+                <model>magapp/order_api</model>
+                <title>Android Order API</title>
+                <acl>magapp/sales/order</acl>
+                <methods>
+                    <last translate="title" module="magapp">
+                        <title>Retrieve last orders by filters</title>
+                        <method>last</method>
+                        <acl>magapp/sales/order/last</acl>
+                    </last>                   
+                    <info translate="title" module="magapp">
+                        <title>Retrieve order information</title>
+                        <acl>magapp/sales/order/info</acl>
+                    </info>
+                    <notifications translate="title" module="magapp">
+                        <title>Android Notification</title>
+                         <method>notifications</method>
+                         <acl>magapp/sales/order/notifications</acl>
+                    </notifications>                       
+                </methods>
+                <faults module="magapp">
+                    <not_exists>
+                        <code>100</code>
+                        <message>Requested order not exists.</message>
+                    </not_exists>
+                    <filters_invalid>
+                        <code>101</code>
+                        <message>Invalid filters given. Details in error message.</message>
+                    </filters_invalid>
+                    <data_invalid>
+                        <code>102</code>
+                        <message>Invalid data given. Details in error message.</message>
+                    </data_invalid>
+                    <status_not_changed>
+                        <code>103</code>
+                        <message>Order status not changed. Details in error message.</message>
+                    </status_not_changed>
+                </faults>
+            </magapp_sales_order>
+            <magapp_dashboard>
+                <model>magapp/dashboard_api</model>
+                <title>Android Dashboard API</title>
+                <acl>magapp/dashboard</acl>     
+                <methods>
+                    <charts translate="title" module="magapp">
+                        <title>Retrieve Charts</title>
+                        <method>charts</method>
+                        <acl>magapp/dashboard/charts</acl>
+                    </charts> 
+                </methods>
+                <faults module="magapp">
+                </faults>                       
+            </magapp_dashboard>
+            <magapp_sales_order_invoice>
+                <title>Invoice API</title>
+                <model>magapp/invoice_api</model>
+                <acl>magapp/sales/order/invoice</acl>
+                <methods> 
+                    <info translate="title" module="magapp">
+                        <title>Retrieve invoice information</title>
+                        <acl>sales/order/invoice/info</acl>
+                    </info>  
+                </methods> 
+                <faults module="magapp">
+                    <not_exists>
+                        <code>100</code>
+                        <message>Requested invoice does not exist.</message>
+                    </not_exists>
+                    <invalid_filter>
+                        <code>101</code>
+                        <message>Invalid filter given. Details in error message.</message>
+                    </invalid_filter>
+                    <data_invalid>
+                        <code>102</code>
+                        <message>Invalid data given. Details in error message.</message>
+                    </data_invalid>
+                    <order_not_exists>
+                        <code>103</code>
+                        <message>Requested order not exists.</message>
+                    </order_not_exists>
+                    <status_not_changed>
+                        <code>104</code>
+                        <message>Invoice status not changed</message>
+                    </status_not_changed>
+                </faults>                
+           </magapp_sales_order_invoice>   
+            <magapp_sales_order_shipment>
+                <title>Adnroid Shipment API</title>
+                <model>magapp/shipment_api</model>
+                <acl>magapp/sales/order/shipment</acl>
+                <methods> 
+                    <info translate="title" module="magapp">
+                        <title>Retrieve shipment information</title>
+                        <acl>sales/order/shipment/info</acl>
+                    </info>  
+                    <addtrack translate="title" module="magapp">
+                        <title>Shipment Add Tracking</title>
+                        <acl>sales/order/shipment/addtrack</acl>
+                    </addtrack>                      
+                </methods> 
+                <faults module="magapp">
+                    <not_exists>
+                        <code>100</code>
+                        <message>Requested shipment does not exist.</message>
+                    </not_exists>
+                    <invalid_filter>
+                        <code>101</code>
+                        <message>Invalid filter given. Details in error message.</message>
+                    </invalid_filter>
+                    <data_invalid>
+                        <code>102</code>
+                        <message>Invalid data given. Details in error message.</message>
+                    </data_invalid>
+                    <order_not_exists>
+                        <code>103</code>
+                        <message>Requested order not exists.</message>
+                    </order_not_exists>
+                    <status_not_changed>
+                        <code>104</code>
+                        <message>Invoice status not changed</message>
+                    </status_not_changed>
+                </faults>                
+           </magapp_sales_order_shipment>      
+           <magapp_sales_order_creditmemo>
+                <title>Credit Memo API</title>
+                <model>magapp/creditmemo_api</model>
+                <acl>magapp/sales/order/creditmemo</acl>
+                <methods> 
+                    <info translate="title" module="magapp">
+                        <title>Retrieve credit memo information</title>
+                        <acl>sales/order/creditmemo/info</acl>
+                    </info>  
+                </methods> 
+                <faults module="magapp">
+                    <not_exists>
+                        <code>100</code>
+                        <message>Requested credit memo does not exist.</message>
+                    </not_exists>
+                    <invalid_filter>
+                        <code>101</code>
+                        <message>Invalid filter given. Details in error message.</message>
+                    </invalid_filter>
+                    <data_invalid>
+                        <code>102</code>
+                        <message>Invalid data given. Details in error message.</message>
+                    </data_invalid>
+                    <order_not_exists>
+                        <code>103</code>
+                        <message>Requested order not exists.</message>
+                    </order_not_exists>
+                    <status_not_changed>
+                        <code>104</code>
+                        <message>Credit  Memo status not changed</message>
+                    </status_not_changed>
+                </faults>                
+           </magapp_sales_order_creditmemo>                                            
+       </resources>
+        <resources_alias>
+            <magapp_order>magapp_sales_order</magapp_order>
+        </resources_alias>               
+        <acl>
+            <resources>
+				<all>
+				  <title>Allow Everything</title>
+				</all>            
+                <magapp_sales translate="title" module="magapp">
+                    <title>Android Sales</title>
+                    <sort_order>2</sort_order>
+                    <order translate="title" module="magapp">
+                        <title>Android Order</title>
+                        <info translate="title" module="magapp">
+                            <title>Retrieve orders info</title>
+                        </info>
+                        <notifications translate="title" module="magapp">
+                            <title>Android Notification</title>
+                        </notifications>                        
+                    </order>
+                    <invoice>
+                    	 <title>Android Order Invoice</title>
+                        <info translate="title" module="magapp">
+                            <title>Retrieve invoice info</title>
+                        </info>                    	 
+                    </invoice>
+                    <shipment>
+                    	 <title>Android Order Shipment</title>
+                        <info translate="title" module="magapp">
+                            <title>Retrieve shipment info</title>
+                        </info>            
+                        <addtrack translate="title" module="magapp">
+                            <title>Shipment Add Tracking</title>
+                        </addtrack>                                  	 
+                    </shipment>  
+                    <creditmemo>
+                    	 <title>Android Order Credit Memo</title>
+                        <info translate="title" module="magapp">
+                            <title>Retrieve credit memo info</title>
+                        </info>                    	 
+                    </creditmemo>                                           
+                </magapp_sales>
+                <magapp_dashboard  translate="title" module="magapp">
+                	 <title>Android Dashboard API</title>
+                	  <sort_order>3</sort_order>
+                        <charts translate="title" module="magapp">
+                            <title>Retrieve Charts</title>
+                        </charts>              	  
+                </magapp_dashboard>
+            </resources>
+        </acl>
+    </api>
+</config>       

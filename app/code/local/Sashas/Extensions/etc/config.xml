@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Extensions
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+    <modules>
+        <Sashas_Extensions>
+            <version>1.0.0</version>
+        </Sashas_Extensions>
+    </modules>
+	<global>
+         <blocks>
+        	<extensions>
+        		<class>Sashas_Extensions_Block</class>        		
+        	</extensions>       
+        	<checkout>
+        		<rewrite>
+        			<cart_crosssell>Sashas_Extensions_Block_Crosssell</cart_crosssell>
+        		</rewrite>
+        	</checkout>  
+        </blocks> 
+        <helpers>
+        	<extensions>
+        		<class>Sashas_Extensions_Helper</class>        		
+        	</extensions>
+        </helpers>      
+		<resources>
+            <extensions_setup>
+                <setup>
+                    <module>Sashas_Extensions</module>                 
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </extensions_setup>
+            <extensions_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </extensions_write>
+            <extensions_read>
+                <connection> 
+                    <use>core_read</use>
+                </connection>
+            </extensions_read>
+		</resources>                         
+	</global>  	  
+</config>
+
+

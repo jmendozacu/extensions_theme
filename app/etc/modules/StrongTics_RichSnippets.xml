@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <StrongTics_RichSnippets>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Catalog/>
+                <Mage_Page/>                
+                <Mage_Review/>                
+            </depends>
+        </StrongTics_RichSnippets>
+    </modules>
+</config>

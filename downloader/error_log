@@ -1,0 +1,1 @@
+[18-May-2015 07:29:25 UTC] PHP Fatal error:  Class 'Zend_Validate_Abstract' not found in /home/sashasor/public_html/extensions/lib/Zend/Captcha/Base.php on line 40

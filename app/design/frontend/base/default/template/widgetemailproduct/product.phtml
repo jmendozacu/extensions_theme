@@ -1,0 +1,62 @@
+<?php
+$_product = $this->getProduct();
+$td_width = $this->getTdWith();
+$image_h = $this->getImgH();
+$image_w = $this->getImgW();
+$show_price=$this->getShowPrice();
+$show_cart=$this->getShowCart();
+$show_name=$this->getShowName();
+
+$button_color=$this->getButtonColor();
+$button_text_color=$this->getButtonTextColor();
+$show_description=$this->getShowDescr();
+$button_border_color=$this->getButtonBorderColor();
+?>
+<table>
+	<tr>
+		<td width="<?php echo $td_width; ?>">
+		<a target="_blank" class="product-image" title="<?php echo $_product->getName();?>" alt="<?php echo $_product->getName();?>" href="<?php echo $_product->getProductUrl();?>">
+		 <?php
+			$_img = '<img id="image"  width="' . $image_w . '" height="' . $image_h . '" src="' . Mage::helper ( 'catalog/image' )->init ( $_product, 'image' ) . '"  />';
+			echo Mage::helper ( 'catalog/output' )->productAttribute ( $_product, $_img, 'image' );
+		 ?>
+ 		</a>
+ 		</td>
+	</tr>
+<?php if ($show_description):?>	
+	<tr>
+		<td width="<?php echo $td_width; ?>">
+			 <?php echo $_product->getShortDescription();?>
+		</td>
+	</tr>	
+<?php endif;?>	
+<?php if ($show_name):?>	
+	<tr>
+		<td width="<?php echo $td_width; ?>">
+			<h2 class="product-name" style="margin: 0;">
+				<a style="font-size: 12px;font-weight: normal;line-height: 1.35;text-decoration: underline;color: #1E7EC8;" target="_blank" title="<?php echo $_product->getName();?>" href="<?php echo $_product->getProductUrl();?>"><?php echo $_product->getName();?></a>
+			</h2>
+		</td>
+	</tr>
+<?php endif;?>	
+<?php if ($show_price):?>
+	<tr>
+		<td width="<?php echo $td_width; ?>">
+			<div style="margin: 5px 0;"><span class="price" style="color: #C76200;font-size: 12px;font-weight: bold;"><?php  echo $this->getPriceHtml($_product, true); ?></span></div>
+		</td>
+	</tr>
+<?php endif;?>		
+<?php if ($show_cart):?>	
+	<tr>
+		<td>
+			<a target="_blank" href="<?php echo $_product->getProductUrl(); ?>"> 
+				<button  style="background: none repeat scroll 0 0 rgba(0, 0, 0, 0);border: 0 none;cursor: pointer;margin: 0;overflow: visible;padding: 0;width: auto; vertical-align: middle;" class="button btn-cart" title="<?php echo $this->__('View');?>" type="button"> 
+					<span  style="background: none repeat scroll 0 0 <?php echo $button_color;?>; border: 1px solid <?php echo $button_border_color;?>; color: #FFFFFF;display: block;height: 19px;padding: 0 8px;text-align: center;white-space: nowrap;" >
+						<span style="background: none repeat scroll 0 0 <?php echo $button_color;?>; color: <?php echo $button_text_color; ?>;display: block; white-space: nowrap;border: 0 none;padding: 0;"><?php echo $this->__('View');?></span>
+					</span>
+				</button>
+			</a>
+		</td>
+	</tr>
+<?php endif;?>		
+</table>

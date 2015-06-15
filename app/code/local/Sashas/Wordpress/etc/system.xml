@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Wordpress
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+	  <tabs>
+		<sashas_modules translate="label" module="wordpress">
+            <label>Sashas Extensions</label>
+            <sort_order>10</sort_order>
+        </sashas_modules>
+	  </tabs>
+	  <sections>
+	  	<wordpress translate="label" module="wordpress">
+	  		<label>Wordpress Integration</label>
+	  		<tab>sashas_modules</tab>
+	  		<sort_order>20000</sort_order>
+	  		<show_in_default>1</show_in_default>
+	  		<show_in_website>1</show_in_website>
+	  		<show_in_store>1</show_in_store>
+	  		<groups>
+	  			<wordpress_group translate="label" module="wordpress">
+	  				<label>Wordpress Integration Settings</label>
+	  				<frontend_type>text</frontend_type>
+	  				<sort_order>1000</sort_order>
+	  				<show_in_default>1</show_in_default>
+	  				<show_in_website>1</show_in_website>
+	  				<show_in_store>1</show_in_store>
+	  				<comment><![CDATA[<p class="switcher">You need to perform wordpress file changes before</p>]]></comment>
+	  				<fields>	  					 
+	  					<wp_folder translate="label">
+	  						<label>Wordpress folder: </label>	  						
+	  						<frontend_type>text</frontend_type>	  						
+	  						<sort_order>20</sort_order>
+	  						<show_in_default>1</show_in_default>
+	  						<show_in_website>1</show_in_website>
+	  						<show_in_store>1</show_in_store>	  	
+	  						<comment><![CDATA[Please add tralining slash at the end]]></comment>							
+	  					</wp_folder>	 									  										  							  									
+	  				</fields>
+	  			</wordpress_group> 	  							  					
+	  		</groups>
+	  	</wordpress>
+	  </sections>
+</config>

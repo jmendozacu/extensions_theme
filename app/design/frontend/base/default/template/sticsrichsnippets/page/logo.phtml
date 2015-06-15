@@ -1,0 +1,35 @@
+<?php
+/* @var $this Maxiscoot_RichSnippets_Block_Page_Logo */
+?>
+<div itemscope="itemscope" itemtype="http://schema.org/Organization">
+    <?php if ($this->getStoreName()): ?>
+        <meta itemprop="name" content="<?php echo $this->getStoreName(); ?>" />
+    <?php endif; ?>
+    <?php if ($this->getStoreUrl()): ?>
+        <meta itemprop="url" href="<?php echo $this->getStoreUrl(); ?>" content="home" />
+    <?php endif; ?>
+    <?php if ($this->getOrganizationLogoSrc()): ?>
+        <meta itemprop="logo" src="<?php echo $this->getOrganizationLogoSrc(); ?>" />
+    <?php endif; ?>
+
+    <?php if ($this->getStoreLocalityAddress()): ?>
+        <div itemprop="address" itemscope="itemscope" itemtype="http://schema.org/PostalAddress"> 
+            <?php if ($this->getStoreStreetAddress()): ?>
+                <meta itemprop="streetAddress" content="<?php echo $this->getStoreStreetAddress(); ?>" />
+            <?php endif; ?>
+            <?php if ($this->getStorePostalCodeAddress()): ?>
+                <meta itemprop="postalCode" content="<?php echo $this->getStorePostalCodeAddress(); ?>" />
+            <?php endif; ?>
+            <?php if ($this->getStoreLocalityAddress()): ?> 
+                <meta itemprop="addressLocality" content="<?php echo $this->getStoreLocalityAddress(); ?>" />       
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($this->getStorePhoneNumber()): ?>
+        <meta itemprop="telephone" content="<?php echo $this->getStorePhoneNumber(); ?>" />  
+    <?php endif; ?>
+    <?php if ($this->getStoreEmail()): ?>
+        <meta itemprop="email" content="<?php echo $this->getStoreEmail(); ?>" />     
+    <?php endif; ?>
+</div>

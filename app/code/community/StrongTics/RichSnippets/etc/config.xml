@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    StrongTics
+ * @package     StrongTics_RichSnippets
+ * @author      Issa BERTHE <issaberthet@gmail.com>
+ * @copyright   Copyright (c) StrongTics
+ */
+-->
+<config>
+    <modules>
+        <StrongTics_RichSnippets>
+            <version>0.1.6</version>
+        </StrongTics_RichSnippets>
+    </modules>
+
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <sticsrichsnippets translate="title" module="sticsrichsnippets">
+                                            <title>StrongTics RichSnippets</title>
+                                        </sticsrichsnippets>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+    <frontend>
+        <layout>
+            <updates>
+                <sticsrichsnippets>
+                    <file>sticsrichsnippets.xml</file>
+                </sticsrichsnippets>
+            </updates>
+        </layout>
+    </frontend>
+
+    <global>
+        <blocks>
+            <sticsrichsnippets>
+                <class>StrongTics_RichSnippets_Block</class>
+            </sticsrichsnippets>
+
+         <!--   <page>
+                <rewrite>
+                    <html_breadcrumbs>StrongTics_RichSnippets_Block_Page_Html_Breadcrumbs</html_breadcrumbs>
+                </rewrite>		
+            </page>	-->		
+					
+        </blocks>
+
+        <helpers>
+            <sticsrichsnippets>
+                <class>StrongTics_RichSnippets_Helper</class>
+            </sticsrichsnippets>
+        </helpers>
+
+        <models>
+            <sticsrichsnippets>
+                <class>Maxiscoot_RichSnippets_Model</class>
+            </sticsrichsnippets>
+        </models>
+    </global>
+
+    <default>
+        <sticsrichsnippets>
+            <activation>
+                <enabled>0</enabled>
+                <google_plusone_author_page></google_plusone_author_page>                
+            </activation>
+            <author>
+                <enabled>0</enabled>
+            </author>
+            <breadcrumbs>
+                <enabled>0</enabled>
+            </breadcrumbs>
+            <organization>
+                <enabled>0</enabled>           
+                <store_street_address></store_street_address>
+                <store_postal_code_address></store_postal_code_address>
+                <store_city_address></store_city_address>
+            </organization>
+            <publisher>
+                <enabled>0</enabled>                
+            </publisher>            
+            <product>
+                <enabled>0</enabled>
+            </product>
+        </sticsrichsnippets>
+    </default>
+</config>

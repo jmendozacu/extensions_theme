@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Smsnotification
+ * @copyright   Copyright (c) 2013 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+    <modules>
+        <Sashas_Smsnotification>
+            <version>0.1.1</version>
+        </Sashas_Smsnotification>
+    </modules>
+ <global>
+         <blocks>
+        	<smsnotification>
+        		<class>Sashas_Smsnotification_Block</class>        		
+        	</smsnotification>
+        </blocks> 
+        <helpers>
+        	<smsnotification>
+        		<class>Sashas_Smsnotification_Helper</class>        		
+        	</smsnotification>
+        </helpers> 
+		<models>
+			<smsnotification>
+				<class>Sashas_Smsnotification_Model</class>				
+			</smsnotification>
+		</models>
+        <resources>
+            <smsnotification_setup>
+                <setup>
+                    <module>Sashas_Smsnotification</module>                 
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </smsnotification_setup>
+            <smsnotification_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </smsnotification_write>
+            <smsnotification_read>
+                <connection> 
+                    <use>core_read</use>
+                </connection>
+            </smsnotification_read>
+       </resources>   
+	   <events>
+  		<checkout_onepage_controller_success_action>
+  			<observers>
+  				<smsnotification_order_placed>  	
+  					<type>singleton</type>	  						
+  					<class>smsnotification/observer</class>
+  					<method>Sendnotification</method>
+  				</smsnotification_order_placed>
+  			</observers>
+  		</checkout_onepage_controller_success_action>
+  		<checkout_multishipping_controller_success_action>
+  			<observers>
+  				<smsnotification_multiship_order_placed>  
+  					<type>singleton</type>	 	  									
+  					<class>smsnotification/observer</class>
+  					<method>Sendnotification</method>
+  				</smsnotification_multiship_order_placed>
+  			</observers>  			
+  		</checkout_multishipping_controller_success_action>
+  	   </events>                 
+  </global>
+    <default>
+        <smsnotification>
+            <smsnotification_group>
+                <carrier_setup><![CDATA[0]]></carrier_setup>
+            </smsnotification_group>
+        </smsnotification>
+    </default>	  
+</config>
+
+

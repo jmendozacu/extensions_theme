@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Minify
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+<config>
+	  <tabs>
+		<sashas_modules translate="label" module="minify">
+            <label>Sashas Extensions</label>
+            <sort_order>10</sort_order>
+        </sashas_modules>
+	  </tabs>
+	  <sections>
+	  	<minify translate="label" module="minify">
+	  		<label>Minify</label>
+	  		<tab>sashas_modules</tab>
+	  		<sort_order>12100</sort_order>
+	  		<show_in_default>1</show_in_default>
+	  		<show_in_website>1</show_in_website>
+	  		<show_in_store>1</show_in_store>
+	  		<groups>
+	  			<minify_group translate="label" module="minify">
+	  				<label>Minify CSS/JS/HTML/Images Settings</label>
+	  				<frontend_type>text</frontend_type>
+	  				<sort_order>1000</sort_order>
+	  				<show_in_default>1</show_in_default>
+	  				<show_in_website>1</show_in_website>
+	  				<show_in_store>1</show_in_store>
+	  				<fields>
+	  					<enable_js translate="label">
+	  						<label>Enabled Js Minify: </label>
+	  						<comment>Js scripts should be combined at System->Configuraton->Developer->Javascript Settings</comment>
+	  						<frontend_type>select</frontend_type>
+	  						<source_model>adminhtml/system_config_source_yesno</source_model>
+	  						<sort_order>10</sort_order>
+	  						<show_in_default>1</show_in_default>
+	  						<show_in_website>1</show_in_website>
+	  						<show_in_store>1</show_in_store>	 						  						
+	  					</enable_js> 	
+	  					<js_minifyplus translate="label">
+	  						<label>Use Js Minify Plus: </label>
+	  						<comment>Minifies a javascript file using a javascript parser</comment>
+	  						<frontend_type>select</frontend_type>
+	  						<depends><enable_js>1</enable_js></depends>
+	  						<source_model>adminhtml/system_config_source_yesno</source_model>
+	  						<sort_order>12</sort_order>
+	  						<show_in_default>1</show_in_default>
+	  						<show_in_website>1</show_in_website>
+	  						<show_in_store>1</show_in_store>	 						  						
+	  					</js_minifyplus> 	  					  	
+	  					<enable_css translate="label">
+	  						<label>Enabled CSS Minify: </label>
+	  						<comment>Js scripts should be combined at System->Configuraton->Developer->CSS Settings</comment>
+	  						<frontend_type>select</frontend_type>
+	  						<source_model>adminhtml/system_config_source_yesno</source_model>
+	  						<sort_order>20</sort_order>
+	  						<show_in_default>1</show_in_default>
+	  						<show_in_website>1</show_in_website>
+	  						<show_in_store>1</show_in_store>	 						  						
+	  					</enable_css> 	
+	  					<enable_html translate="label">
+	  						<label>Enabled HTML Minify: </label>
+	  						<comment>This options will delete empty spaces and comments from html and compress it.</comment>
+	  						<frontend_type>select</frontend_type>
+	  						<source_model>adminhtml/system_config_source_yesno</source_model>
+	  						<sort_order>30</sort_order>
+	  						<show_in_default>1</show_in_default>
+	  						<show_in_website>1</show_in_website>
+	  						<show_in_store>1</show_in_store>	 						  						
+	  					</enable_html>
+	  					<optimize_images translate="label">
+	  						<label>Optimize Images: </label>
+	  						<comment>This options will optimize product images. Once it enabled you need to refresh image cache in System->Cache Management</comment>
+	  						<frontend_type>select</frontend_type>
+	  						<source_model>adminhtml/system_config_source_yesno</source_model>
+	  						<sort_order>40</sort_order>
+	  						<show_in_default>1</show_in_default>
+	  						<show_in_website>1</show_in_website>
+	  						<show_in_store>1</show_in_store>	 						  						
+	  					</optimize_images> 	
+	  					<image_quality translate="label">
+	  						<label>Image Quality: </label>
+	  						<comment>You can set quality of image. The default value is 50.</comment>
+	  						<frontend_type>text</frontend_type>
+	  						<depends><optimize_images>1</optimize_images></depends>	  					
+	  						<sort_order>50</sort_order>
+	  						<show_in_default>1</show_in_default>
+	  						<show_in_website>1</show_in_website>
+	  						<show_in_store>1</show_in_store>	 						  						
+	  					</image_quality> 		  						  					 		  						  										  								
+	  				</fields>
+	  			</minify_group>
+	  		</groups>
+	  	</minify>
+	  </sections>
+</config>

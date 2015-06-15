@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sashas_Wordpress>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sashas_Wordpress>
+    </modules>
+</config>

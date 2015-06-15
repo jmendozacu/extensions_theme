@@ -1,0 +1,24 @@
+<?php
+/* @var $this Strongtics_RichSnippets_Block_Page_Html_Breadcrumbs */
+?>
+<?php if ($crumbs && is_array($crumbs)): ?>
+    <div class="breadcrumbs">
+        <ul>
+            <?php foreach ($crumbs as $_crumbName => $_crumbInfo): ?>
+                <li class="<?php echo $_crumbName ?>" itemscope="itemscope" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <?php if ($_crumbInfo['link']): ?>
+                        <a href="<?php echo $_crumbInfo['link'] ?>" title="<?php echo $this->htmlEscape($_crumbInfo['title']) ?>" itemprop="url"><span itemprop="title"><?php echo $this->htmlEscape($_crumbInfo['label']) ?></a>
+                    <?php elseif ($_crumbInfo['last']): ?>
+                    	<a class="hidden"  itemprop="url" href="<?php Mage::helper('core/url')->getCurrentUrl(); ?>" ></a>
+                        <strong itemprop="title"><?php echo $this->htmlEscape($_crumbInfo['label']) ?></strong>
+                    <?php else: ?>
+                        <?php echo $this->htmlEscape($_crumbInfo['label']) ?>
+                    <?php endif; ?>
+                    <?php if (!$_crumbInfo['last']): ?>
+                        <span>> </span>
+                    <?php endif; ?>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+    </div>
+<?php endif; ?>

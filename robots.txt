@@ -1,0 +1,59 @@
+# $Id: robots.txt,v magento-specific 2013/11/12 18:24:19   $
+#
+# robots.txt
+#
+
+# Website Sitemap
+Sitemap: http://extensions.sashas.org/sitemap.xml
+
+# Crawlers Setup
+User-agent: *
+ 
+
+# Allowable Index
+Allow: /*?p=
+Allow: /catalog/seo_sitemap/category/
+Allow:/catalogsearch/result/
+
+# Directories
+Disallow: /404/
+Disallow: /app/
+Disallow: /cgi-bin/
+Disallow: /downloader/
+Disallow: /includes/
+Disallow: /js/
+Disallow: /lib/
+Disallow: /magento/
+Disallow: /media/
+Disallow: /pkginfo/
+Disallow: /report/
+Disallow: /skin/
+Disallow: /stats/
+Disallow: /var/
+
+# Paths (clean URLs)
+Disallow: /index.php/
+Disallow: /checkout/
+Disallow: /control/
+Disallow: /contacts/
+Disallow: /customer/
+Disallow: /customize/
+Disallow: /newsletter/
+Disallow: /sendfriend/
+
+# Files
+Disallow: /cron.php
+Disallow: /cron.sh
+Disallow: /error_log
+Disallow: /install.php
+Disallow: /LICENSE.html
+Disallow: /LICENSE.txt
+Disallow: /LICENSE_AFL.txt
+Disallow: /STATUS.txt
+
+# Paths (no clean URLs)
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /*.php$
+Disallow: /*?p=*&
+Disallow: /*?SID=

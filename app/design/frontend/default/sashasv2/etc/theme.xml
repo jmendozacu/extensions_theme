@@ -1,0 +1,12 @@
+<?xml version="1.0"?> 
+<theme>
+    <parent>rwd/default</parent>
+	<layout>
+	    <updates>
+	        <sashas>
+	            <file>sashas.xml</file>
+	        </sashas>
+	    </updates>
+	</layout>    
+</theme>
+ 

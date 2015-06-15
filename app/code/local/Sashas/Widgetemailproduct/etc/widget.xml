@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Widgetemailproduct
+ * @copyright   Copyright (c) 2014 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<widgets>
+    <widgetemailproduct_product type="widgetemailproduct/product">
+        <name>Widget Email Product</name>
+        <description type="desc">Add product to newsletter emails</description>
+        <is_email_compatible>1</is_email_compatible>
+        <parameters>
+            <id_path translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Product</label>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_product_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Product...</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <sort_order>10</sort_order>
+            </id_path>       
+            <container_width translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>td Container width (add px)</label>
+                <type>text</type>
+   				<value><![CDATA[138px]]></value>
+                <sort_order>20</sort_order>
+            </container_width>       
+            <image_height translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Product Image Height (add px)</label>
+                <type>text</type>
+        		<value><![CDATA[135px]]></value>
+                <sort_order>30</sort_order>
+            </image_height> 
+			<image_width translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Product Image Width (add px)</label>
+                <type>text</type>
+                <value><![CDATA[135px]]></value>
+                <sort_order>40</sort_order>
+            </image_width>  
+			<show_name translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Show Product Name</label>
+                <type>select</type>
+                <value>1</value>
+                <source_model>adminhtml/system_config_source_yesno</source_model>	
+                <sort_order>50</sort_order>
+            </show_name> 
+            <button_color translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Color of the add to cart button</label>
+                <type>text</type>
+                <value><![CDATA[#F18200]]></value>
+                <sort_order>55</sort_order>
+            </button_color>          
+            <button_text_color translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Color of the text on add to cart button</label>
+                <type>text</type>
+                <value><![CDATA[#FFFFFF]]></value>
+                <sort_order>57</sort_order>
+            </button_text_color>      
+            <button_border_color translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Color of the border at add to cart button</label>
+                <type>text</type>
+                <value><![CDATA[#DE5400]]></value>
+                <sort_order>58</sort_order>
+            </button_border_color>                   
+			<show_price translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Show Product Price</label>
+                <type>select</type>
+                <value>1</value>
+                <source_model>adminhtml/system_config_source_yesno</source_model>	
+                <sort_order>60</sort_order>
+            </show_price>  
+              <!-- <show_price_span_style translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Price text style</label>
+                <type>text</type>
+                <value>135px</value>
+                <sort_order>70</sort_order>
+            </show_price_span_style>-->            
+			<show_cart translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Show View Button</label>
+                <type>select</type>
+                <value>1</value>
+                <source_model>adminhtml/system_config_source_yesno</source_model>	
+                <sort_order>70</sort_order>
+            </show_cart> 
+			<show_shortdescription translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Show short description</label>
+                <type>select</type>
+                <value>1</value>
+                <source_model>adminhtml/system_config_source_yesno</source_model>	
+                <sort_order>90</sort_order>
+            </show_shortdescription>             
+     	          <!-- <show_cart_span_style translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Button background style</label>
+                <type>text</type>
+                <value>background: none repeat scroll 0 0 #F18200; border: 1px solid #DE5400;color: #FFFFFF;</value>
+                <sort_order>70</sort_order>
+            </show_cart_span_style>    
+			<show_cart_span_span_style translate="label">
+                <visible>1</visible>
+                <required>1</required>
+                <label>Button text style</label>
+                <type>text</type>
+                <value>font: bold 12px/19px Arial,Helvetica,sans-serif;height: 19px; text-align: center;background: none repeat scroll 0 0 #F18200; color: #FFFFFF;</value>	
+                <sort_order>70</sort_order>
+            </show_cart_span_style> -->   
+        </parameters>
+    </widgetemailproduct_product>
+</widgets> 

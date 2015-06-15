@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<layout version="0.1.5">
+    <default>
+ 		<reference name="root">
+			<action method="unsetChild" ifconfig="sticsrichsnippets/breadcrumbs/enabled">
+				<name>breadcrumbs</name>
+			</action>
+            <block type="sticsrichsnippets/page_html_breadcrumbs"
+                   name="breadcrumbs"
+                   as="breadcrumbs"
+                   template="sticsrichsnippets/page/html/breadcrumbs.phtml"
+                   module="sticsrichsnippets"
+                   ifconfig="sticsrichsnippets/breadcrumbs/enabled"/>		  
+        </reference>		
+
+        <reference name="after_body_start">
+            <block type="sticsrichsnippets/page_logo"
+                   name="sticsrichsnippets_page_logo"
+                   after="-"
+                   as="sticsrichsnippets.page.logo"
+                   template="sticsrichsnippets/page/logo.phtml"/>
+        </reference>
+
+        <block type="sticsrichsnippets/page_publisher" name="sticsrichsnippets_page_publisher"/>
+		
+    </default>
+
+    <catalog_product_view>
+        <head>
+            <block type="sticsrichsnippets/product_author" name="sticsrichsnippets_product_author"/>
+        </head>
+        <reference name="after_body_start">
+            <block type="sticsrichsnippets/product_view"
+                   name="sticsrichsnippets_product_view"
+                   as="sticsrichsnippets.product.view"
+                   template="sticsrichsnippets/product/view.phtml">
+            </block>
+        </reference>
+    </catalog_product_view>
+	
+
+</layout>

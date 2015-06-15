@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+<atom:link href="http://extensions.sashas.org/news.xml" rel="self" type="application/rss+xml" />
+<title>Sashas Extensions</title>
+<link>http://extensions.sashas.org/</link>
+<description>Sashas Extensions</description>
+<copyright>Copyright (c) 2014 Sashas It Support</copyright>
+<webMaster>support@sashas.org</webMaster>
+<language>en</language>
+<lastBuildDate>Mon Mar 27 9:00:01 2014</lastBuildDate>
+<ttl>300</ttl>
+<item>
+<title>Product Page Tabs Extension avaiable for download!</title>
+<link>http://extensions.sashas.org/product-page-tabs.html</link>
+<severity>3</severity>
+<description><![CDATA[Product Page Tabs adds to product page tabs for description, specifications related products and tags.]]></description>
+<pubDate>Mon Mar 27 9:00:01 2014</pubDate>
+</item>
+<item>
+<title>Widget tag products extension is avaiable now!</title>
+<link>http://extensions.sashas.org/widget-tag-products.html</link>
+<severity>3</severity>
+<description><![CDATA[Widget tag products extension allows you to make custom cms pages with product list/grid as it on category page. 
+This way you can make custom pages with subselection of products by tags. It also can be used for brands pages. ]]></description>
+<pubDate>Mon Mar 24 12:00:01 2014</pubDate>
+</item>
+<item>
+<title>Mass / Bulkd Add To Cart extension avaiable!</title>
+<link>http://extensions.sashas.org/bulk-mass-add-to-cart.html</link>
+<severity>3</severity>
+<description><![CDATA[The  extension adds ability to make mass ( bulk)  order of configurable products with different options.]]></description>
+<pubDate>Sun Aug 10 12:00:01 2014</pubDate>
+</item>
+
+</channel>
+</rss>
