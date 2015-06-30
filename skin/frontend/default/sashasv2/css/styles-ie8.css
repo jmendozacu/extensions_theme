@@ -5613,6 +5613,12 @@ p.product-name a:hover {
   float: left;
   width: 100%;
 }
+.cart .products-grid .product-info {
+  text-align: center;
+}
+.cart .products-grid .item {
+  width: 88.333%;
+}
 
 /* ============================================ *
  * Checkout - One Page
@@ -8519,13 +8525,6 @@ div.calendar table td.button {
   height: 100%;
 }
 
-/* Top Launguage selector */
-.page-header-container .store-language-container {
-  display: inline-block;
-  float: none;
-  width: auto;
-}
-
-.page-header-container .store-language-container select {
-  padding: 3px;
+.catalog-product-view .qanda-title, .catalog-product-view .qanda-ask-title {
+  font-size: 15px;
 }

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sashas_QandA>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Sashas_QandA>
+    </modules>
+</config>

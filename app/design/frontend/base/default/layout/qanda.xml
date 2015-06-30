@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_QandA
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<layout version="0.1.0">
+	<default>
+		<reference name="head">     			 
+   			  <action method="addItem" ><type>skin_css</type><script>css/qanda/style.css</script></action>
+		 	  <action method="addItem" ifconfig="qanda/qanda_group/include_fancybox"><type>skin_css</type><script>css/qanda/jquery.fancybox.css</script></action> 					 
+   			  <action method="addItem" ifconfig="qanda/qanda_group/include_jquery"><type>skin_js</type><script>js/qanda/jquery-1.11.1.min.js</script></action> 	
+   			  <action method="addItem" ifconfig="qanda/qanda_group/include_jquery"><type>skin_js</type><script>js/qanda/jquery-noconflict.js</script></action> 		 			 
+ 			  <action method="addItem" ifconfig="qanda/qanda_group/include_fancybox"><type>skin_js</type><script>js/qanda/jquery.fancybox.pack.js</script></action>     			   		   		 
+		</reference>		
+	</default>
+ 
+	<catalog_product_view>
+		<reference name="product.info">
+			<block type="qanda/catalog_product_view_QandA" name="qanda_view" as="qanda"  template="qanda/catalog/product/view/qanda.phtml" after="-">				 			 
+				<action  ifconfig="qanda/qanda_group/extension_enabled" method="addToParentGroup"><group>detailed_info</group></action>
+				 <action method="setTitle" translate="value"><value>Q &amp; A</value></action>
+			</block>					 
+		</reference>
+	</catalog_product_view>
+	
+	<customer_account>
+		<reference name="customer_account_navigation">
+			<action method="addLink" translate="label" module="qanda"><name>my_questions</name><path>qanda/question/my_questions</path><label>My Questions</label></action>
+		</reference>	
+	</customer_account>
+		
+    <qanda_question_my_questions translate="label">
+        <label>Customer My Questions</label>
+        <!-- Mage_Customer -->
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="qanda/customer_myQuestions" name="customer_questions" template="qanda/customer/questions.phtml"/>
+        </reference>
+    </qanda_question_my_questions>
+</layout>
