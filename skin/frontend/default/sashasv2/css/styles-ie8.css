@@ -8532,9 +8532,9 @@ div.calendar table td.button {
   font-size: 15px;
 }
 
-.catalog-product-view .product-options ul.options-list label:hover,
-.catalog-product-view .product-options ul.options-list label {
-  background-color: transparent;
+.catalog-product-view .product-options #options-support-list label:hover,
+.catalog-product-view .product-options #options-support-list label {
+  background-color: #fff;
 }
 
 .catalog-product-view .product-options dd {
