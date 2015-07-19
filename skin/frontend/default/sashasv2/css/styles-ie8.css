@@ -8485,9 +8485,6 @@ div.calendar table td.button {
   text-transform: none;
 }
 
-/* ============================================ *
- * About US
- * ============================================ */
 .about-us .more-views li, .product-view .more-views li {
   float: left;
   margin: 0 0 8px 9px;
@@ -8525,24 +8522,20 @@ div.calendar table td.button {
   height: 100%;
 }
 
-.catalog-product-view .qanda-title, .catalog-product-view .qanda-ask-title {
+.catalog-product-view .qanda-title, .catalog-product-view .catalog-product-view .qanda-ask-title {
   font-size: 15px;
 }
-
 .catalog-product-view .product-options #options-support-list label:hover,
 .catalog-product-view .product-options #options-support-list label {
   background-color: #fff;
 }
-
 .catalog-product-view .product-options dd {
   border-bottom: 0px;
 }
-
 .catalog-product-view .product-options #options-support-list label {
   width: auto;
   padding-left: 25px;
 }
-
 .catalog-product-view .product-options #support {
   margin-left: 0px;
 }
