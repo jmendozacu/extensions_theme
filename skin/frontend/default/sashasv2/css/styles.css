@@ -10692,9 +10692,6 @@ div.calendar table td.button {
   text-transform: none;
 }
 
-/* ============================================ *
- * About US
- * ============================================ */
 .about-us .more-views li, .product-view .more-views li {
   float: left;
   margin: 0 0 8px 9px;
@@ -10732,9 +10729,6 @@ div.calendar table td.button {
   height: 100%;
 }
 
-/* ============================================ *
- * Product Page
- * ============================================ */
 .catalog-product-view .qanda-title, .catalog-product-view .qanda-ask-title {
   font-size: 15px;
 }
