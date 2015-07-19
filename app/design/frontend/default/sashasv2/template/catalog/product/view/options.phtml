@@ -167,7 +167,7 @@
     <?php if ($supportProductId):?>    	 
     	<dd>
     		<div class="input-box">    		
-    			<ul class="options-list" id="options-support-list">
+    			<ul class="options-list support-option" id="options-support-list">
     				<li>    		 	 	
 	    				<input id="support" type="checkbox" class="checkbox product-custom-option" name="" value="<?php echo $supportProductId; ?>" /> 
     					<span><label for="support"><?php echo $this->__("Add Installation or Integration (+%s)",Mage::helper('core')->currency($supportProductPrice, true, false));?></label></span>    		

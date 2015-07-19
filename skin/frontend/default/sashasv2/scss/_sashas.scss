@@ -28,12 +28,12 @@
 .catalog-product-view {
 	.qanda-title, .qanda-ask-title {font-size:15px;}
 	.product-options {
-		 #options-support-list label:hover,
-		 #options-support-list label {background-color: #fff;}
+		 .support-option label:hover,
+		 .support-option label {background-color: #fff;}
 		 
-		 dd { border-bottom:0px;}
-		 #options-support-list label { width:auto; padding-left:25px;}
-		 #support {margin-left:0px;} 
+		 .support-option  dd { border-bottom:0px;}
+		 .support-option label { width:auto; padding-left:25px;}
+		 .support-option input.checkbox.product-custom-option {margin-left:0px;} 
 	 } 
 } 
  

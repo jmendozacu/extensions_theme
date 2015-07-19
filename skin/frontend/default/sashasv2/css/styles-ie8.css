@@ -8525,17 +8525,17 @@ div.calendar table td.button {
 .catalog-product-view .qanda-title, .catalog-product-view .qanda-ask-title {
   font-size: 15px;
 }
-.catalog-product-view .product-options #options-support-list label:hover,
-.catalog-product-view .product-options #options-support-list label {
+.catalog-product-view .product-options .support-option label:hover,
+.catalog-product-view .product-options .support-option label {
   background-color: #fff;
 }
-.catalog-product-view .product-options dd {
+.catalog-product-view .product-options .support-option dd {
   border-bottom: 0px;
 }
-.catalog-product-view .product-options #options-support-list label {
+.catalog-product-view .product-options .support-option label {
   width: auto;
   padding-left: 25px;
 }
-.catalog-product-view .product-options #support {
+.catalog-product-view .product-options .support-option input.checkbox.product-custom-option {
   margin-left: 0px;
 }
