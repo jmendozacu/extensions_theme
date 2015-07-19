@@ -23,6 +23,18 @@
                         <input name="email" id="email" title="<?php echo Mage::helper('contacts')->__('Email') ?>" value="<?php echo $this->escapeHtml($this->helper('contacts')->getUserEmail()) ?>" class="input-text required-entry validate-email" type="email" autocapitalize="off" autocorrect="off" spellcheck="false" />
                     </div>
                 </div>
+                <div class="field">
+                    <label for="order" ><?php echo Mage::helper('contacts')->__('Order #') ?></label>
+                    <div class="input-box">
+                        <input name="order" id="order" title="<?php echo Mage::helper('contacts')->__('Order #') ?>" value="" class="input-text" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" />
+                    </div>
+                </div>                  
+                <div class="field">
+                    <label for="website" "><?php echo Mage::helper('contacts')->__('Website Url') ?></label>
+                    <div class="input-box">
+                        <input name="website" id="website" title="<?php echo Mage::helper('contacts')->__('Website Url') ?>" value="" class="input-text" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" />
+                    </div>
+                </div>                                
             </li>
             <li>
                 <label for="telephone"><?php echo Mage::helper('contacts')->__('Telephone') ?></label>
