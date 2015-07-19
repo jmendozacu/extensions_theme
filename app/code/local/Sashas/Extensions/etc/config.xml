@@ -29,6 +29,11 @@
         			<cart_crosssell>Sashas_Extensions_Block_Crosssell</cart_crosssell>
         		</rewrite>
         	</checkout>  
+        	<cms>
+        		<rewrite>
+        			<block>Sashas_Extensions_Block_Block</block>
+        		</rewrite>
+        	</cms>
         </blocks> 
         <helpers>
         	<extensions>
