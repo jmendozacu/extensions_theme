@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Extensions
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+	  <tabs>
+		<sashas_modules translate="label" module="extensions">
+            <label>Sashas Extensions</label>
+            <sort_order>10</sort_order>
+        </sashas_modules>
+	  </tabs>
+	  <sections>
+	  	<recaptcha translate="label" module="extensions">
+	  		<label>reCaptcha v2</label>
+	  		<tab>sashas_modules</tab>
+	  		<sort_order>13000</sort_order>
+	  		<show_in_default>1</show_in_default>
+	  		<show_in_website>1</show_in_website>
+	  		<show_in_store>1</show_in_store>
+	  		<groups>
+	  			<recaptcha_group translate="label" module="extensions">
+	  				<label>Google reCaptcha Settings</label>
+	  				<frontend_type>text</frontend_type>
+	  				<sort_order>1000</sort_order>
+	  				<show_in_default>1</show_in_default>
+	  				<show_in_website>1</show_in_website>
+	  				<show_in_store>1</show_in_store>
+	  				<fields>
+                        <site_key translate="label">
+                            <label>Site Key</label>
+                            <comment>You got this from the signup page: http://www.google.com/recaptcha/admin</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </site_key>
+                        <secret_key translate="label">
+                            <label>Secret Key</label>
+                            <comment>You got this from the signup page: http://www.google.com/recaptcha/admin</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </secret_key> 	  						  					 		  						  										  							
+	  				</fields>
+	  			</recaptcha_group>
+	  		</groups>
+	  	</recaptcha>
+	  </sections>
+</config>

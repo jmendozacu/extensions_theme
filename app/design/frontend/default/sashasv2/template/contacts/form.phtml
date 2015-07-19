@@ -2,14 +2,9 @@
 <div class="page-title">
     <h1><?php echo Mage::helper('contacts')->__('Contact Us') ?></h1>
 </div>
-<script type="text/javascript">
-//<![CDATA[
-    var RecaptchaOptions = {
-        theme : '<?php echo $this->getCaptchaTheme(); ?>',
-        lang : '<?php echo $this->getCaptchaLang(); ?>',
-    };
-//]]>
-</script>
+<div class="custom-message">
+	<?php echo  $this->getLayout()->createBlock('cms/block')->setBlockId('contacts_message')->toHtml(); ?>
+</div>
 <form action="<?php echo $this->getFormAction(); ?>" id="contactForm" method="post" class="scaffold-form">
     <div class="fieldset">
         <h2 class="legend"><?php echo Mage::helper('contacts')->__('Contact Information') ?></h2>
@@ -43,7 +38,9 @@
             </li>
             <li class="wide">
                 <div class="input-box">
-                    <?php echo $this->getCaptchaCode(); ?>
+                	 <?php $siteKey= Mage::getStoreConfig('recaptcha/recaptcha_group/site_key');?>
+					 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+					 <div class="g-recaptcha" data-sitekey="<?php echo $siteKey; ?>"></div>   					                       
                 </div>
             </li>            
         </ul>
@@ -55,6 +52,6 @@
 </form>
 <script type="text/javascript">
 //<![CDATA[
-    var contactForm = new VarienForm('contactForm', true);
+    var contactForm = new VarienForm('contactForm', true); 
 //]]>
 </script>
