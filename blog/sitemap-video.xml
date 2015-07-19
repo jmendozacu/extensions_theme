@@ -3,6 +3,29 @@
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
  
    <url> 
+     <loc>http://www.extensions.sashas.org/blog/magento-questions-answers-qa.html</loc>
+     <video:video>
+       <video:thumbnail_loc>http://i.ytimg.com/vi/HjhNYpEgFWA/hqdefault.jpg</video:thumbnail_loc> 
+       <video:title>Magento Questions and Answers (Q&amp;amp;A)</video:title>
+       <video:description>Magento Questions and Answers (Q&amp;amp;A)</video:description>
+       <video:player_loc allow_embed="yes" autoplay="ap=1">
+        http://www.youtube.com/v/HjhNYpEgFWA</video:player_loc>
+       <video:duration>0</video:duration>
+       <video:rating>0</video:rating> 
+       <video:view_count>0</video:view_count>
+       <video:publication_date>2015-07-15T00:19:14+00:00</video:publication_date>
+              <video:tag>magento</video:tag>
+              <video:tag>magento extension</video:tag>
+              <video:tag>magento questions and answers</video:tag>
+              <video:tag>Q&amp;A</video:tag>
+                     <video:category>Magento Extensions</video:category>
+              <video:category>Magento General</video:category>
+              <video:uploader>Alex Lukyanau</video:uploader>
+       <video:live>no</video:live>
+     </video:video> 
+   </url>
+ 
+   <url> 
      <loc>http://www.extensions.sashas.org/blog/magento-cartstack-integration.html</loc>
      <video:video>
        <video:thumbnail_loc>http://i.ytimg.com/vi/lbatttXjr1k/hqdefault.jpg</video:thumbnail_loc> 

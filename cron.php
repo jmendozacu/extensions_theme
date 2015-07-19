@@ -27,6 +27,7 @@
 // Change current directory to the directory of current script
 chdir(dirname(__FILE__));
 
+require 'app/bootstrap.php';
 require 'app/Mage.php';
 
 if (!Mage::isInstalled()) {
@@ -46,7 +47,6 @@ umask(0);
 $disabledFuncs = explode(',', ini_get('disable_functions'));
 $isShellDisabled = is_array($disabledFuncs) ? in_array('shell_exec', $disabledFuncs) : true;
 $isShellDisabled = (stripos(PHP_OS, 'win') === false) ? $isShellDisabled : true;
-$isShellDisabled = true;
 
 try {
     if (stripos(PHP_OS, 'win') === false) {
