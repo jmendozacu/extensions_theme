@@ -23,6 +23,9 @@
  							<recaptcha translate="title" module="extensions">
  								<title>reCaptcha v2</title>
  							</recaptcha>
+ 							<support  translate="title" module="extensions">
+ 								<title>Support</title>
+ 							</support>
  						</children>
  					</config>
  				</children>

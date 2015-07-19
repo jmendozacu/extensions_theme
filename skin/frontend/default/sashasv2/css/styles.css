@@ -10732,6 +10732,27 @@ div.calendar table td.button {
   height: 100%;
 }
 
+/* ============================================ *
+ * Product Page
+ * ============================================ */
 .catalog-product-view .qanda-title, .catalog-product-view .qanda-ask-title {
   font-size: 15px;
+}
+
+.catalog-product-view .product-options ul.options-list label:hover,
+.catalog-product-view .product-options ul.options-list label {
+  background-color: transparent;
+}
+
+.catalog-product-view .product-options dd {
+  border-bottom: 0px;
+}
+
+.catalog-product-view .product-options #options-support-list label {
+  width: auto;
+  padding-left: 25px;
+}
+
+.catalog-product-view .product-options #support {
+  margin-left: 0px;
 }

@@ -54,5 +54,43 @@
 	  			</recaptcha_group>
 	  		</groups>
 	  	</recaptcha>
+	  	<support translate="label" module="extensions">
+	  		<label>Support</label>
+	  		<tab>sashas_modules</tab>
+	  		<sort_order>15000</sort_order>
+	  		<show_in_default>1</show_in_default>
+	  		<show_in_website>1</show_in_website>
+	  		<show_in_store>1</show_in_store>
+	  		<groups>
+	  			<support_group translate="label" module="extensions">
+	  				<label>Support Settings</label>
+	  				<frontend_type>text</frontend_type>
+	  				<sort_order>1000</sort_order>
+	  				<show_in_default>1</show_in_default>
+	  				<show_in_website>1</show_in_website>
+	  				<show_in_store>1</show_in_store>
+	  				<fields>
+                        <product_id translate="label">
+                            <label>Support Product ID</label>
+                            <comment>Support Product ID</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </product_id>  	  	
+                        <support_price translate="label">
+                            <label>Support Price</label>
+                            <comment>Support Price</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </support_price>                          					  					 		  						  										  						
+	  				</fields>
+	  			</support_group>
+	  		</groups>
+	  	</support>	  	
 	  </sections>
 </config>

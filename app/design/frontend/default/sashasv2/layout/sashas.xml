@@ -41,7 +41,7 @@
  		<reference name="head">	
  			<action method="addItem"><type>skin_css</type><script>css/fancybox/jquery.fancybox.css</script></action> 
  			<action method="addItem"><type>skin_js</type><script>js/fancybox/jquery.fancybox.pack.js</script></action>
- 		</reference>
+ 		</reference> 
  	</catalog_product_view>
  
 	<review_product_view>
