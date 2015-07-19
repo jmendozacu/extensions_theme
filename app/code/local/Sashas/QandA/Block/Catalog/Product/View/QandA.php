@@ -17,15 +17,12 @@ class Sashas_QandA_Block_Catalog_Product_View_QandA extends Mage_Core_Block_Temp
      * @see Mage_Core_Block_Template::_construct()
      */
     protected function _construct()
-    {
-        $this->addData(
-        	array(
-                'cache_key' => $this->getCacheKeyInfo(),  
-                'cache_lifetime'    => 3600,
-                'cache_tags'        => array(Mage_Core_Model_Store::CACHE_TAG),
-        	)
-        );
-       
+    {        
+        $this->addData(array('cache_lifetime' => 3600));
+        $this->addCacheTag(array(
+                Mage_Core_Model_Store::CACHE_TAG                
+        ));
+        
         parent::_construct();
     }
     
