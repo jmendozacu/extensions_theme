@@ -1,0 +1,14 @@
+<!--@subject You have answer for product question@-->
+<!--@vars
+{"var data.name":"Customer Name",
+"var data.email":"Customer Email",
+"var data.product_name":"Product Name",
+"var data.product_url":"Product Url",
+"var data.question":"Question"}
+@-->
+Hello {{var data.name}}, <br/>
+ 
+You have answer for your question about product:<br/>
+{{var data.question}} <br/>
+You can view it at the product page <a target="_blank" href="{{var data.product_url}}">{{var data.product_name}}</a><br/>
+ 

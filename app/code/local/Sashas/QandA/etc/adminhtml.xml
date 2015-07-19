@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_QandA
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config> 
+	<menu>
+		<catalog>
+			<children>
+				<qanda translate="title" module="qanda">
+					 <title>Q &amp; A</title>
+					 <sort_order>500</sort_order>
+					 <action>adminhtml/qanda/</action>
+					 <depends><module>Mage_Catalog</module></depends>
+				</qanda>
+			</children>
+		</catalog>
+	</menu>
+     <acl>
+        <resources>
+			<all>
+			  <title>Allow Everything</title>
+			</all>        
+			<admin>
+			  <children>
+	 			<system>
+	 				<children>
+	 					<config>
+	 						<children>
+	 							<qanda translate="title" module="qanda">
+	 								<title>Q &amp; A</title>
+	 							</qanda>
+	 						</children>
+	 					</config>
+	 				</children>
+	 			</system>
+	 			<catalog>
+	 				<children>
+	 					<qanda translate="title" module="qanda">
+	 						<title>Q &amp; A</title>
+	 					</qanda>
+	 				</children>
+	 			</catalog>
+			  </children>
+			</admin>
+        </resources>
+     </acl>	      
+</config>

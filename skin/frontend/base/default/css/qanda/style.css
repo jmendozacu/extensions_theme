@@ -1,0 +1,38 @@
+@CHARSET "ISO-8859-1";
+.box-qanda .qanda-title{padding-right:5px;}
+.box-qanda .qanda-ask-title { font-size: 13px; padding-left:5px; text-decoration:none;} 
+.q-and-a-container .question-item {padding: 10px 0px;}
+.q-and-a-container .question-item.first {padding-top:0px;}
+.q-and-a-container  .question-title {font-weight: bold; margin-bottom: 5px;}
+.box-qanda #no-new-question  { font-size: 13px; padding-left:10px; text-decoration:none;}
+
+#qanda-new-question-form .validation-advice {float:left;}
+#qanda-new-question-form .buttons-set {margin-top:15px;}
+
+.box-qanda .ajax-loader {	
+	display:none;
+	width: 44px;
+	height: 44px;
+	background-image: url('../../images/qanda/fancybox_sprite.png');
+	background-position: 0 -108px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	margin-top: -22px;
+	margin-left: -22px;
+	opacity: 0.8;
+	cursor: pointer;
+	z-index: 8060;
+}
+
+.box-qanda .ajax-loader div {
+	width: 44px;
+	height: 44px;
+	background: url('../../images/qanda/fancybox_loading.gif') center center no-repeat;
+}
+
+.qanda-new-question .success-submitted { display:none;}
+ 
+/* 1.9 rdw style */
+ 
+ 

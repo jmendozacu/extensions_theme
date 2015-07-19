@@ -1,0 +1,14 @@
+<!--@subject New Question@-->
+<!--@vars
+{"var data.name":"Customer Name",
+"var data.email":"Customer Email",
+"var data.product_name":"Product Name",
+"var data.product_url":"Product Url",
+"var data.question":"Question"}
+@-->
+Name: {{var data.name}} <br/>
+{{if data.email}}
+E-mail: {{var data.email}} <br/>
+{{/if}}
+Product: <a target="_blank" href="{{var data.product_url}}">{{var data.product_name}}</a><br/>
+Question: {{var data.question}} <br/>

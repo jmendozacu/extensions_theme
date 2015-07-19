@@ -1,0 +1,158 @@
+<?php 
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_QandA
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/GPL-3.0 GNU License, version 3 (GPL-3.0)
+ */
+?>
+<?php 
+$collection=$this->getQuestions();
+if (Mage::getSingleton('customer/session')->isLoggedIn()) {    
+    $customer = Mage::getSingleton('customer/session')->getCustomer();
+    $name=$customer->getName(); 
+    $email=$customer->getEmail();
+    $customer_id=$customer->getId();
+} else {
+   $name='';
+   $email='';
+   $customer_id=0;
+}
+?>
+<h2 style="display:block;"><span class="qanda-title" ><?php echo $this->__('Questions &amp; Answers');?> &#x7c; </span>
+	<?php if ($this->getAllowNewQuestion()): ?> <a id="top-new-question" class="qanda-ask-title" href="#qanda-new-question-form"><?php echo $this->__('Ask a Question'); ?></a><?php endif;?></h2>
+<div class="q-and-a-container">
+	<?php if ($collection->getSize()>0):?> 
+		<?php $i=0; ?>
+		<?php foreach ($collection as $item):?>		 
+			<div class="question-item <?php echo ($i%2 ? 'odd' : 'even'); ?> <?php if ($i==0) echo "first";?> <?php if ($i==$collection->getSize()-1) echo "last"; ?>">
+				<div class="question-title"><?php echo $item->getQuestion();?></div>
+				<div class="question-answer"><?php echo $item->getAnswer();?></div>
+			</div>		
+			<?php $i++;?>	  
+		<?php endforeach;?>
+	<?php else:?>
+		<div class="no-quesitons">
+			<?php if ($this->getAllowNewQuestion()): ?>
+				<a id="no-new-question" href="#qanda-new-question-form"><?php echo $this->__('Be the first to ask a question.');?></a>
+			<?php else:?>
+				<?php echo $this->__('There is no questions yet.');?>
+			<?php endif;?>
+		</div>
+	<?php endif;?>
+	<?php if ($this->getAllowNewQuestion()): ?>
+    <form id="qanda-new-question-form" action="<?php echo $this->getAction() ?>" method="post" id="review-form" style="display:none">     
+	<div class="qanda-new-question" >
+		<h2><?php echo $this->__('Ask a Question');?></h2>
+		<div class="form-add">
+			<?php echo $this->getBlockHtml('formkey'); ?>
+			<input type="hidden" name="customer_id" value="<?php echo $customer_id;?>" />
+			<input type="hidden" name="product_id" value="<?php echo Mage::registry('current_product')->getId();?>" />
+			<input type="hidden" name="product_name" value="<?php echo Mage::registry('current_product')->getName();?>" />
+			<fieldset>
+				<ul class="form-list">
+					<li>
+						<label for="name_field" class="required"><em>*</em><?php echo $this->__('Name') ?></label>
+						<div class="input-box">
+							<input type="text" name="name" id="name_field" class="input-text required-entry" value="<?php echo $name;?>" />
+						</div>
+					</li>
+					<li>
+						<label for="email_field" class="required"><?php if ($this->isEmailRequired()):?><em>*</em><?php endif;?><?php echo $this->__('Email') ?></label>
+						<div class="input-box">
+							<input type="text" name="email" id="email_field" class="input-text validate-email <?php if ($this->isEmailRequired()):?> required-entry<?php endif;?>" value="<?php echo $email;?>" />
+						</div>
+					</li>	
+					<li>
+						<label for="question_field" class="required"><em>*</em><?php echo $this->__('Question') ?></label>
+						<div class="input-box">
+							<textarea name="question" id="question_field" cols="5" rows="3" class="required-entry"></textarea>
+						</div>
+					</li>							
+				</ul>
+			</fieldset>
+            <div class="buttons-set">
+                <button id="submit_question" type="submit" onlick="javacript:void(0);" title="<?php echo $this->__('Submit Question') ?>" class="button"><span><span><?php echo $this->__('Submit Question') ?></span></span></button>
+            </div>			
+		</div>
+		<div class="success-submitted"><?php echo $this->__('Your question has been submitted.<br/>Thank you');?></div>
+	</div>
+	</form>	
+	<div class="ajax-loader"><div></div></div>
+	<script type="text/javascript">		 
+		jQuery("#no-new-question").fancybox({
+			'scrolling'		: 'no',
+			'titleShow'		: false,
+        	'autoDimensions': true, 
+			'transitionIn'	: 'none',
+			'transitionOut'	: 'none',
+			afterClose: function() {
+					jQuery('.form-add').show();
+					jQuery('.success-submitted').hide();
+	            	<?php if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+            			jQuery('form#qanda-new-question-form').find("input#question_field, textarea").val("");
+	        		<?php else:?>
+	        			jQuery('form#qanda-new-question-form').find("input[type='text'], textarea").val("");
+	        		<?php endif;?> 					
+				}				 
+		});
+
+		jQuery("#top-new-question").fancybox({
+			'scrolling'		: 'no',
+			'titleShow'		: false,
+        	'autoDimensions': true,
+			'transitionIn'	: 'none',
+			'transitionOut'	: 'none',	
+			 afterClose: function() {
+				jQuery('.form-add').show();
+				jQuery('.success-submitted').hide();
+            	<?php if (Mage::getSingleton('customer/session')->isLoggedIn()): ?>
+            		jQuery('form#qanda-new-question-form').find("input#question_field, textarea").val("");
+        		<?php else:?>
+        			jQuery('form#qanda-new-question-form').find("input[type='text'], textarea").val("");
+        		<?php endif;?>
+				 
+			}
+		});
+		var dataForm = new VarienForm('qanda-new-question-form');
+		 
+		jQuery('button#submit_question').click( function() {
+			if (dataForm.validator.validate()===false)			
+				return false;
+			
+			jQuery('button#submit_question').attr('disabled',true);
+			jQuery('form#qanda-new-question-form').parent().parent().parent().hide();			 
+			jQuery('.ajax-loader').show();	
+			
+			jQuery.ajax({
+		        url: '<?php echo $this->getAction() ?>',
+		        type: 'post',
+		        dataType: 'json',
+		        data: jQuery('form#qanda-new-question-form').serialize(),
+		        success: function(data) {		 
+		        	jQuery('.ajax-loader').hide();	   
+			        if (data=='success') {    	 		        	 
+		        	jQuery('.form-add').hide();
+		        	jQuery('.success-submitted').show();
+		        	jQuery('form#qanda-new-question-form').parent().parent().parent().show();
+			        } else {			        	
+			        	jQuery('form#qanda-new-question-form').parent().parent().parent().show();
+				        alert(data);
+			        }		
+		         	
+		        },
+		        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                	alert( '<?php echo $this->__('There was issue with request. Please try again');?>' );
+                	jQuery('.ajax-loader').hide();	 
+                	jQuery('form#qanda-new-question-form').parent().parent().parent().show();	
+               	}
+		    });
+			 
+			jQuery('button#submit_question').attr('disabled',false); 
+		    return false;
+		});		
+		 
+	</script>
+	<?php endif;?> 
+</div>

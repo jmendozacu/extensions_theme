@@ -1,0 +1,134 @@
+<?xml version="1.0"?>
+ <!-- 
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_QandA
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+ -->
+<config>
+	<modules>
+		<Sashas_QandA>
+			<version>1.0.0</version>
+		</Sashas_QandA>
+	</modules>
+	<global>
+		<helpers>
+			<qanda>
+				<class>Sashas_QandA_Helper</class>
+			</qanda>
+		</helpers>
+		<blocks>
+			<qanda>
+				<class>Sashas_QandA_Block</class>
+			</qanda> 
+		</blocks> 
+		<models>
+			<qanda>
+				<class>Sashas_QandA_Model</class>
+				<resourceModel>qanda_resource</resourceModel>		
+			</qanda>
+			<qanda_resource>
+                <class>Sashas_QandA_Model_Resource</class>
+                <entities>
+                    <questions>
+                        <table>qanda_questions</table>
+                    </questions>                                
+                </entities>
+            </qanda_resource>			 
+		</models>    		
+		<resources>
+			<qanda_setup>
+				<setup>
+					<module>Sashas_QandA</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</qanda_setup>
+			<qanda_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</qanda_write>
+			<qanda_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</qanda_read>
+		</resources>	
+	    <template>
+	        <email>
+	            <qanda_qanda_group_new_question_email_template translate="label" module="qanda">
+	                <label>New Question</label>
+	                <file>qanda/new_question.html</file>
+	                <type>html</type>
+	            </qanda_qanda_group_new_question_email_template>  
+	            <qanda_qanda_group_answered_question_email_template>
+	                <label>Answer for a question</label>
+	                <file>qanda/answered_question.html</file>
+	                <type>html</type>	            
+	            </qanda_qanda_group_answered_question_email_template>
+	        </email>
+	    </template>  		    	
+	</global>    	
+    <frontend>  
+        <routers>
+            <qanda>
+                <use>standard</use>
+                <args>
+                    <module>Sashas_QandA</module>
+                    <frontName>qanda</frontName>
+                </args>
+            </qanda>
+        </routers>       
+        <layout>
+            <updates>
+                <qanda>
+                    <file>qanda.xml</file>
+                </qanda>
+            </updates>
+        </layout>         
+    </frontend>	 	
+  	<default>
+        <qanda>
+        	<qanda_group>
+        		<enable_extension><![CDATA[0]]></enable_extension>
+        		<include_jquery><![CDATA[0]]></include_jquery>
+        		<include_fancybox><![CDATA[0]]></include_fancybox>
+        		<allow_ask><![CDATA[1]]></allow_ask>            
+        		<send_email_asked><![CDATA[0]]></send_email_asked>
+                <new_question_email_template>qanda_qanda_group_new_question_email_template</new_question_email_template>
+                <answered_question_email_template>qanda_qanda_group_answered_question_email_template</answered_question_email_template>          
+				<send_email_answered><![CDATA[0]]></send_email_answered>
+				<change_status_auto><![CDATA[1]]></change_status_auto>                                		         		
+        	</qanda_group>             
+        </qanda>  		
+    </default>		
+    <admin>
+        <routers>
+            <adminhtml>                 
+                <args>
+                    <modules> 
+                    	<Sashas_QandA before="Mage_Adminhtml">Sashas_QandA_Adminhtml</Sashas_QandA>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin> 
+  <adminhtml>
+    <events>
+       <core_block_abstract_prepare_layout_after>
+            <observers>
+                <qanda_questions_product>
+                    <type>singleton</type>
+                    <class>qanda/observer</class>
+                    <method>addProductTabBlock</method>
+                </qanda_questions_product>
+            </observers>
+       </core_block_abstract_prepare_layout_after>
+    </events>  	
+  </adminhtml>      
+</config>
