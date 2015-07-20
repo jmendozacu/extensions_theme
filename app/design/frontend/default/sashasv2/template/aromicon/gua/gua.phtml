@@ -85,14 +85,14 @@
 		    $category = str_replace (".html","",$mcategory);				
 		?>
 		
-			ga('send', 'event',  'Category', 'PageView', '<?php echo $category; ?>');
+			//ga('send', 'event',  'Category', 'PageView', '<?php echo $category; ?>');
 		<?php endif;?>
 
 		<?php 
 			if(Mage::registry('current_product')):
 			    $pName = Mage::registry('current_product')->getName();				   		
 		?>				
-				ga('send', 'event',  'Product', 'PageView', '<?php echo $pName; ?>');
+			//	ga('send', 'event',  'Product', 'PageView', '<?php echo $pName; ?>');
 		<?php endif;?>		
 		
 		<?php 
