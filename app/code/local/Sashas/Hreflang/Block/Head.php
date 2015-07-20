@@ -19,7 +19,8 @@ class Sashas_Hreflang_Block_Head extends Mage_Page_Block_Html_Head
  			$storeCode = substr(Mage::getStoreConfig('general/locale/code', $store->getId()),0,2); 		 
  			$url= $store->getCurrentUrl();
  			$url = strtok($url, '?');
- 			$this->addLinkRel('alternate"' . ' hreflang="' . $storeCode, $url);
+ 		 	if (!defined('WP_USE_THEMES'))
+ 				$this->addLinkRel('alternate"' . ' hreflang="' . $storeCode, $url);
  		} 		
  		 		 
 		return  parent::getCssJsHtml(); 	 

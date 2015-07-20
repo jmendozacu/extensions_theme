@@ -25,3 +25,4 @@ media/files/*
 blog/wp-content/cache/*
 /.sass-cache/*
 skin/frontend/default/sashasv2/.sass-cache/
+blog/sitemap-video.xml
