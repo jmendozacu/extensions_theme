@@ -170,3 +170,10 @@ Stack trace:
 #2 /home/styleizi/domains/sashas.org/public_html/extensions/lib/Varien/Db/Adapter/Pdo/Mysql.php(320): Zend_Db_Adapter_Pdo_Mysql->_connect()
 #3 /home/styleizi/domains/sashas.org/public_html/extensions/lib/Zend/Db/Adapter/Abstract.php(460): Varien_Db_Adapter_Pdo_Mysql->_connect()
 #4 /home/styleizi/domains/sashas.org/public_html/extensions/lib/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query('SET NAMES utf8',  in /home/styleizi/domains/sashas.org/public_html/extensions/lib/Zend/Db/Adapter/Pdo/Abstract.php on line 144
+[21-Jul-2015 09:07:02 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[42000] [1203] User styleizi_sashas already has more than 'max_user_connections' active connections' in /home/styleizi/domains/sashas.org/public_html/extensions/lib/Zend/Db/Adapter/Pdo/Abstract.php:129
+Stack trace:
+#0 /home/styleizi/domains/sashas.org/public_html/extensions/lib/Zend/Db/Adapter/Pdo/Abstract.php(129): PDO->__construct('mysql:host=loca...', 'styleizi_sashas', 'jP8M1lEr', Array)
+#1 /home/styleizi/domains/sashas.org/public_html/extensions/lib/Zend/Db/Adapter/Pdo/Mysql.php(111): Zend_Db_Adapter_Pdo_Abstract->_connect()
+#2 /home/styleizi/domains/sashas.org/public_html/extensions/lib/Varien/Db/Adapter/Pdo/Mysql.php(396): Zend_Db_Adapter_Pdo_Mysql->_connect()
+#3 /home/styleizi/domains/sashas.org/public_html/extensions/lib/Zend/Db/Adapter/Abstract.php(460): Varien_Db_Adapter_Pdo_Mysql->_connect()
+#4 /home/styleizi/domains/sashas.org/public_html/extensions/lib/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query('SET NAMES utf8',  in /home/styleizi/domains/sashas.org/public_html/extensions/lib/Zend/Db/Adapter/Pdo/Abstract.php on line 144
