@@ -10,7 +10,7 @@ return array(
 	'minify.configuration_sealed' => false,
 	'objectcache.configuration_sealed' => false,
 	'pgcache.configuration_sealed' => false,
-	'previewmode.enabled' => true,
+	'previewmode.enabled' => false,
 	'varnish.configuration_sealed' => false,
 	'fragmentcache.configuration_sealed' => false,
 	'newrelic.configuration_sealed' => false,

@@ -1774,3 +1774,26 @@ img#wpstats {
 		margin-left: 3.57142857rem;
 	}
 }
+
+ .site {max-width: 90.5714rem;  box-shadow: none; margin-top:0px; }
+.site-content { margin: 1.014285714rem 0 0; }
+ .widget-area { margin-bottom: 1.428571429rem; } 
+.entry-content .more-link {
+ 	white-space: nowrap;
+	float: right;
+	padding-right: 30px;
+	font-family: "Raleway","Helvetica Neue",Verdana,Arial,sans-serif;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.widget-area .widget a {
+	font-family: "Raleway","Helvetica Neue",Verdana,Arial,sans-serif;
+	color: #636363;
+ }
+ 
+.widget-area .widget h3 {
+	font-family: "Raleway","Helvetica Neue",Verdana,Arial,sans-serif;
+ 	font-size: 12px;
+ 	text-transform: uppercase;
+} 

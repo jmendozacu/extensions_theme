@@ -323,7 +323,8 @@ function twentytwelve_comment( $comment, $args, $depth ) {
 					printf( '<cite><b class="fn">%1$s</b> %2$s</cite>',
 						get_comment_author_link(),
 						// If current post author is also comment author, make it known visually.
-						( $comment->user_id === $post->post_author ) ? '<span>' . __( 'Post author', 'twentytwelve' ) . '</span>' : ''
+						/*( $comment->user_id === $post->post_author ) ? '<span>' . __( 'Post author', 'twentytwelve' ) . '</span>' : ''*/
+( $comment->user_id === $post->post_author ) ? '<span class="role org">' . __( 'Magento Developer', 'twentytwelve' ) . '</span>' : '<span class="role org">' . __( 'Magento Expert', 'twentytwelve' ) . '</span>'					        
 					);
 					printf( '<a href="%1$s"><time datetime="%2$s">%3$s</time></a>',
 						esc_url( get_comment_link( $comment->comment_ID ) ),
