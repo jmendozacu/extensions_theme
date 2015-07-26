@@ -158,8 +158,11 @@ function translate_with_gettext_context( $text, $context, $domain = 'default' ) 
  * @param string $domain Optional. Text domain. Unique identifier for retrieving translated strings.
  * @return string Translated text.
  */
-function __( $text, $domain = 'default' ) {
-	return translate( $text, $domain );
+/* Sashas */
+if (!function_exists('__')) {
+	function __( $text, $domain = 'default' ) {
+		return translate( $text, $domain );
+	}
 }
 
 /**

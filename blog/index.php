@@ -14,4 +14,11 @@
 define('WP_USE_THEMES', true);
 
 /** Loads the WordPress Environment and Template */
+/*Sashas */ 
+require( dirname( __FILE__ ) . '/../app/Mage.php' );
+umask(0);
+Mage::app();
+Mage::getSingleton('core/session', array('name' => 'frontend'));
+$session = Mage::getSingleton('customer/session', array('name'=>'frontend'));
+/*Sashas */
 require( dirname( __FILE__ ) . '/wp-blog-header.php' );
