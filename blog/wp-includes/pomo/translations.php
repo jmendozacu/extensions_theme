@@ -9,7 +9,7 @@
 
 require_once dirname(__FILE__) . '/entry.php';
 
-if ( !class_exists( 'Translations',false ) ):
+if ( !class_exists( 'Translations' ) ):
 class Translations {
 	var $entries = array();
 	var $headers = array();
@@ -266,7 +266,7 @@ class Gettext_Translations extends Translations {
 }
 endif;
 
-if ( !class_exists( 'NOOP_Translations',false ) ):
+if ( !class_exists( 'NOOP_Translations' ) ):
 /**
  * Provides the same interface as Translations, but doesn't do anything
  */

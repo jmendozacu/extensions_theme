@@ -8,7 +8,7 @@
  * @subpackage streams
  */
 
-if ( !class_exists( 'POMO_Reader',false ) ):
+if ( !class_exists( 'POMO_Reader' ) ):
 class POMO_Reader {
 
 	var $endian = 'little';
@@ -40,7 +40,7 @@ class POMO_Reader {
 			return false;
 		$endian_letter = ('big' == $this->endian)? 'N' : 'V';
 		$int = unpack($endian_letter, $bytes);
-		return array_shift($int);
+		return reset( $int );
 	}
 
 	/**
@@ -116,7 +116,7 @@ class POMO_Reader {
 }
 endif;
 
-if ( !class_exists( 'POMO_FileReader',false ) ):
+if ( !class_exists( 'POMO_FileReader' ) ):
 class POMO_FileReader extends POMO_Reader {
 
 	/**
@@ -167,7 +167,7 @@ class POMO_FileReader extends POMO_Reader {
 }
 endif;
 
-if ( !class_exists( 'POMO_StringReader',false ) ):
+if ( !class_exists( 'POMO_StringReader' ) ):
 /**
  * Provides file-like methods for manipulating a string instead
  * of a physical file.
@@ -214,7 +214,7 @@ class POMO_StringReader extends POMO_Reader {
 }
 endif;
 
-if ( !class_exists( 'POMO_CachedFileReader',false ) ):
+if ( !class_exists( 'POMO_CachedFileReader' ) ):
 /**
  * Reads the contents of the file in the beginning.
  */
@@ -229,7 +229,7 @@ class POMO_CachedFileReader extends POMO_StringReader {
 }
 endif;
 
-if ( !class_exists( 'POMO_CachedIntFileReader',false ) ):
+if ( !class_exists( 'POMO_CachedIntFileReader' ) ):
 /**
  * Reads the contents of the file in the beginning.
  */

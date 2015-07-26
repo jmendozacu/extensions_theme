@@ -888,9 +888,10 @@ function edit_tag_link( $link = '', $before = '', $after = '', $tag = null ) {
  *
  * @since 3.1.0
  *
- * @param int $term_id Term ID
- * @param string $taxonomy Taxonomy
- * @param string $object_type The object type
+ * @param int    $term_id     Term ID.
+ * @param string $taxonomy    Taxonomy.
+ * @param string $object_type The object type. Used to highlight the proper post type menu on the linked page.
+ *                            Defaults to the first object_type associated with the taxonomy.
  * @return string The edit term link URL for the given term.
  */
 function get_edit_term_link( $term_id, $taxonomy, $object_type = '' ) {
@@ -906,8 +907,11 @@ function get_edit_term_link( $term_id, $taxonomy, $object_type = '' ) {
 		'tag_ID' => $term->term_id,
 	);
 
-	if ( $object_type )
+	if ( $object_type ) {
 		$args['post_type'] = $object_type;
+	} else if ( ! empty( $tax->object_type ) ) {
+		$args['post_type'] = reset( $tax->object_type );
+	}
 
 	$location = add_query_arg( $args, admin_url( 'edit-tags.php' ) );
 
@@ -1337,7 +1341,7 @@ function edit_comment_link( $text = null, $before = '', $after = '' ) {
  *
  * @since 2.7.0
  *
- * @param int $link Optional. Bookmark ID.
+ * @param int|stdClass $link Optional. Bookmark ID.
  * @return string The edit bookmark link URL.
  */
 function get_edit_bookmark_link( $link = 0 ) {
@@ -1517,6 +1521,36 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 		}
 	}
 
+	// 'post_status' clause depends on the current user.
+	if ( is_user_logged_in() ) {
+		$user_id = get_current_user_id();
+
+		$post_type_object = get_post_type_object( $post->post_type );
+		if ( empty( $post_type_object ) ) {
+			$post_type_cap    = $post->post_type;
+			$read_private_cap = 'read_private_' . $post_type_cap . 's';
+		} else {
+			$read_private_cap = $post_type_object->cap->read_private_posts;
+		}
+
+		/*
+		 * Results should include private posts belonging to the current user, or private posts where the
+		 * current user has the 'read_private_posts' cap.
+		 */
+		$private_states = get_post_stati( array( 'private' => true ) );
+		$where .= " AND ( p.post_status = 'publish'";
+		foreach ( (array) $private_states as $state ) {
+			if ( current_user_can( $read_private_cap ) ) {
+				$where .= $wpdb->prepare( " OR p.post_status = %s", $state );
+			} else {
+				$where .= $wpdb->prepare( " OR (p.post_author = %d AND p.post_status = %s)", $user_id, $state );
+			}
+		}
+		$where .= " )";
+	} else {
+		$where .= " AND p.post_status = 'publish'";
+	}
+
 	$adjacent = $previous ? 'previous' : 'next';
 	$op = $previous ? '<' : '>';
 	$order = $previous ? 'DESC' : 'ASC';
@@ -1547,7 +1581,7 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 	 * @param bool   $in_same_term   Whether post should be in a same taxonomy term.
 	 * @param array  $excluded_terms Array of excluded term IDs.
 	 */
-	$where = apply_filters( "get_{$adjacent}_post_where", $wpdb->prepare( "WHERE p.post_date $op %s AND p.post_type = %s AND p.post_status = 'publish' $where", $current_post_date, $post->post_type ), $in_same_term, $excluded_terms );
+	$where = apply_filters( "get_{$adjacent}_post_where", $wpdb->prepare( "WHERE p.post_date $op %s AND p.post_type = %s $where", $current_post_date, $post->post_type ), $in_same_term, $excluded_terms );
 
 	/**
 	 * Filter the ORDER BY clause in the SQL for an adjacent post query.
@@ -2390,13 +2424,13 @@ function get_comments_pagenum_link( $pagenum = 1, $max_page = 0 ) {
 	if ( 'newest' == get_option('default_comments_page') ) {
 		if ( $pagenum != $max_page ) {
 			if ( $wp_rewrite->using_permalinks() )
-				$result = user_trailingslashit( trailingslashit($result) . 'comment-page-' . $pagenum, 'commentpaged');
+				$result = user_trailingslashit( trailingslashit($result) . $wp_rewrite->comments_pagination_base . '-' . $pagenum, 'commentpaged');
 			else
 				$result = add_query_arg( 'cpage', $pagenum, $result );
 		}
 	} elseif ( $pagenum > 1 ) {
 		if ( $wp_rewrite->using_permalinks() )
-			$result = user_trailingslashit( trailingslashit($result) . 'comment-page-' . $pagenum, 'commentpaged');
+			$result = user_trailingslashit( trailingslashit($result) . $wp_rewrite->comments_pagination_base . '-' . $pagenum, 'commentpaged');
 		else
 			$result = add_query_arg( 'cpage', $pagenum, $result );
 	}
@@ -2431,6 +2465,10 @@ function get_next_comments_link( $label = '', $max_page = 0 ) {
 		return;
 
 	$page = get_query_var('cpage');
+
+	if ( ! $page ) {
+		$page = 1;
+	}
 
 	$nextpage = intval($page) + 1;
 
@@ -2539,7 +2577,7 @@ function paginate_comments_links($args = array()) {
 		'add_fragment' => '#comments'
 	);
 	if ( $wp_rewrite->using_permalinks() )
-		$defaults['base'] = user_trailingslashit(trailingslashit(get_permalink()) . 'comment-page-%#%', 'commentpaged');
+		$defaults['base'] = user_trailingslashit(trailingslashit(get_permalink()) . $wp_rewrite->comments_pagination_base . '-%#%', 'commentpaged');
 
 	$args = wp_parse_args( $args, $defaults );
 	$page_links = paginate_links( $args );
@@ -2560,23 +2598,43 @@ function paginate_comments_links($args = array()) {
  * @return string The Press This bookmarklet link URL.
  */
 function get_shortcut_link() {
-	// In case of breaking changes, version this. #WP20071
-	$link = "javascript:
-			var d=document,
-			w=window,
-			e=w.getSelection,
-			k=d.getSelection,
-			x=d.selection,
-			s=(e?e():(k)?k():(x?x.createRange().text:0)),
-			f='" . admin_url('press-this.php') . "',
-			l=d.location,
-			e=encodeURIComponent,
-			u=f+'?u='+e(l.href)+'&t='+e(d.title)+'&s='+e(s)+'&v=4';
-			a=function(){if(!w.open(u,'t','toolbar=0,resizable=1,scrollbars=1,status=1,width=720,height=570'))l.href=u;};
-			if (/Firefox/.test(navigator.userAgent)) setTimeout(a, 0); else a();
-			void(0)";
+	global $is_IE, $wp_version;
 
-	$link = str_replace(array("\r", "\n", "\t"),  '', $link);
+	include_once( ABSPATH . 'wp-admin/includes/class-wp-press-this.php' );
+	$bookmarklet_version = $GLOBALS['wp_press_this']->version;
+	$link = '';
+
+	if ( $is_IE ) {
+		/**
+		 * Return the old/shorter bookmarklet code for MSIE 8 and lower,
+		 * since they only support a max length of ~2000 characters for
+		 * bookmark[let] URLs, which is way to small for our smarter one.
+		 * Do update the version number so users do not get the "upgrade your
+		 * bookmarklet" notice when using PT in those browsers.
+		 */
+		$ua = $_SERVER['HTTP_USER_AGENT'];
+
+		if ( ! empty( $ua ) && preg_match( '/\bMSIE (\d)/', $ua, $matches ) && (int) $matches[1] <= 8 ) {
+			$url = wp_json_encode( admin_url( 'press-this.php' ) );
+
+			$link = 'javascript:var d=document,w=window,e=w.getSelection,k=d.getSelection,x=d.selection,' .
+				's=(e?e():(k)?k():(x?x.createRange().text:0)),f=' . $url . ',l=d.location,e=encodeURIComponent,' .
+				'u=f+"?u="+e(l.href)+"&t="+e(d.title)+"&s="+e(s)+"&v=' . $bookmarklet_version . '";' .
+				'a=function(){if(!w.open(u,"t","toolbar=0,resizable=1,scrollbars=1,status=1,width=600,height=700"))l.href=u;};' .
+				'if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else a();void(0)';
+		}
+	}
+
+	if ( empty( $link ) ) {
+		$src = @file_get_contents( ABSPATH . 'wp-admin/js/bookmarklet.min.js' );
+
+		if ( $src ) {
+			$url = wp_json_encode( admin_url( 'press-this.php' ) . '?v=' . $bookmarklet_version );
+			$link = 'javascript:' . str_replace( 'window.pt_url', $url, $src );
+		}
+	}
+
+	$link = str_replace( array( "\r", "\n", "\t" ),  '', $link );
 
 	/**
 	 * Filter the Press This bookmarklet link.
@@ -3333,7 +3391,7 @@ function the_shortlink( $text = '', $title = '', $before = '', $after = '' ) {
  *
  * @param mixed $id_or_email The Gravatar to retrieve a URL for. Accepts a user_id, gravatar md5 hash,
  *                           user email, WP_User object, WP_Post object, or comment object.
- * @param array $args        {
+ * @param array $args {
  *     Optional. Arguments to return instead of the default arguments.
  *
  *     @type int    $size           Height and width of the avatar in pixels. Default 96.
@@ -3346,12 +3404,11 @@ function the_shortlink( $text = '', $title = '', $before = '', $after = '' ) {
  *     @type bool   $force_default  Whether to always show the default image, never the Gravatar. Default false.
  *     @type string $rating         What rating to display avatars up to. Accepts 'G', 'PG', 'R', 'X', and are
  *                                  judged in that order. Default is the value of the 'avatar_rating' option.
- *     @type string $scheme         URL scheme to use. See {@see set_url_scheme()} for accepted values.
+ *     @type string $scheme         URL scheme to use. See set_url_scheme() for accepted values.
  *                                  Default null.
  *     @type array  $processed_args When the function returns, the value will be the processed/sanitized $args
  *                                  plus a "found_avatar" guess. Pass as a reference. Default null.
  * }
- *
  * @return false|string The URL of the avatar we found, or false if we couldn't find an avatar.
  */
 function get_avatar_url( $id_or_email, $args = null ) {
@@ -3366,10 +3423,12 @@ function get_avatar_url( $id_or_email, $args = null ) {
  *
  * @param mixed $id_or_email The Gravatar to check the data against. Accepts a user_id, gravatar md5 hash,
  *                           user email, WP_User object, WP_Post object, or comment object.
- * @param array $args        {
+ * @param array $args {
  *     Optional. Arguments to return instead of the default arguments.
  *
- *     @type int    $size           Height and width of the avatar in pixels. Default 96.
+ *     @type int    $size           Height and width of the avatar image file in pixels. Default 96.
+ *     @type int    $height         Display height of the avatar in pixels. Defaults to $size.
+ *     @type int    $width          Display width of the avatar in pixels. Defaults to $size.
  *     @type string $default        URL for the default image or a default type. Accepts '404' (return
  *                                  a 404 instead of a default image), 'retro' (8bit), 'monsterid' (monster),
  *                                  'wavatar' (cartoon face), 'indenticon' (the "quilt"), 'mystery', 'mm',
@@ -3379,14 +3438,14 @@ function get_avatar_url( $id_or_email, $args = null ) {
  *     @type bool   $force_default  Whether to always show the default image, never the Gravatar. Default false.
  *     @type string $rating         What rating to display avatars up to. Accepts 'G', 'PG', 'R', 'X', and are
  *                                  judged in that order. Default is the value of the 'avatar_rating' option.
- *     @type string $scheme         URL scheme to use. See {@see set_url_scheme()} for accepted values.
+ *     @type string $scheme         URL scheme to use. See set_url_scheme() for accepted values.
  *                                  Default null.
  *     @type array  $processed_args When the function returns, the value will be the processed/sanitized $args
  *                                  plus a "found_avatar" guess. Pass as a reference. Default null.
+ *     @type string $extra_attr     HTML attributes to insert in the IMG element. Is not sanitized. Default empty.
  * }
- *
  * @return array $processed_args {
- *     Along with the arguments passed in $args, this will contain a couple of extra arguments.
+ *     Along with the arguments passed in `$args`, this will contain a couple of extra arguments.
  *
  *     @type bool   $found_avatar True if we were able to find an avatar for this user,
  *                                false or not set if we couldn't.
@@ -3396,11 +3455,14 @@ function get_avatar_url( $id_or_email, $args = null ) {
 function get_avatar_data( $id_or_email, $args = null ) {
 	$args = wp_parse_args( $args, array(
 		'size'           => 96,
+		'height'         => null,
+		'width'          => null,
 		'default'        => get_option( 'avatar_default', 'mystery' ),
 		'force_default'  => false,
 		'rating'         => get_option( 'avatar_rating' ),
 		'scheme'         => null,
 		'processed_args' => null, // if used, should be a reference
+		'extra_attr'     => '',
 	) );
 
 	if ( is_numeric( $args['size'] ) ) {
@@ -3410,6 +3472,24 @@ function get_avatar_data( $id_or_email, $args = null ) {
 		}
 	} else {
 		$args['size'] = 96;
+	}
+
+	if ( is_numeric( $args['height'] ) ) {
+		$args['height'] = absint( $args['height'] );
+		if ( ! $args['height'] ) {
+			$args['height'] = $args['size'];
+		}
+	} else {
+		$args['height'] = $args['size'];
+	}
+
+	if ( is_numeric( $args['width'] ) ) {
+		$args['width'] = absint( $args['width'] );
+		if ( ! $args['width'] ) {
+			$args['width'] = $args['size'];
+		}
+	} else {
+		$args['width'] = $args['size'];
 	}
 
 	if ( empty( $args['default'] ) ) {
@@ -3437,8 +3517,8 @@ function get_avatar_data( $id_or_email, $args = null ) {
 	 * Filter whether to retrieve the avatar URL early.
 	 *
 	 * Passing a non-null value in the 'url' member of the return array will
-	 * effectively short circuit {@see get_avatar_data()}, passing the value
-	 * through the 'get_avatar_data' filter and returning early.
+	 * effectively short circuit get_avatar_data(), passing the value through
+	 * the {@see 'get_avatar_data'} filter and returning early.
 	 *
 	 * @since 4.2.0
 	 *
@@ -3448,7 +3528,7 @@ function get_avatar_data( $id_or_email, $args = null ) {
 	$args = apply_filters( 'pre_get_avatar_data', $args, $id_or_email );
 
 	if ( isset( $args['url'] ) && ! is_null( $args['url'] ) ) {
-		/** This filter is documented in src/wp-includes/link-template.php */
+		/** This filter is documented in wp-includes/link-template.php */
 		return apply_filters( 'get_avatar_data', $args, $id_or_email );
 	}
 
@@ -3485,7 +3565,7 @@ function get_avatar_data( $id_or_email, $args = null ) {
 		$allowed_comment_types = apply_filters( 'get_avatar_comment_types', array( 'comment' ) );
 		if ( ! empty( $id_or_email->comment_type ) && ! in_array( $id_or_email->comment_type, (array) $allowed_comment_types ) ) {
 			$args['url'] = false;
-			/** This filter is documented in src/wp-includes/link-template.php */
+			/** This filter is documented in wp-includes/link-template.php */
 			return apply_filters( 'get_avatar_data', $args, $id_or_email );
 		}
 
@@ -3533,9 +3613,9 @@ function get_avatar_data( $id_or_email, $args = null ) {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @param string            $url           The URL of the avatar.
-	 * @param int|object|string $id_or_email   A user ID, email address, or comment object.
-	 * @param array             $args          Arguments passed to get_avatar_data(), after processing.
+	 * @param string            $url         The URL of the avatar.
+	 * @param int|object|string $id_or_email A user ID, email address, or comment object.
+	 * @param array             $args        Arguments passed to get_avatar_data(), after processing.
 	 */
 	$args['url'] = apply_filters( 'get_avatar_url', $url, $id_or_email, $args );
 
@@ -3544,8 +3624,8 @@ function get_avatar_data( $id_or_email, $args = null ) {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @param array             $args          Arguments passed to get_avatar_data(), after processing.
-	 * @param int|object|string $id_or_email   A user ID, email address, or comment object.
+	 * @param array             $args        Arguments passed to get_avatar_data(), after processing.
+	 * @param int|object|string $id_or_email A user ID, email address, or comment object.
 	 */
 	return apply_filters( 'get_avatar_data', $args, $id_or_email );
 }

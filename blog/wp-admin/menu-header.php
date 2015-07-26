@@ -60,7 +60,7 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
 			$first = false;
 		}
 
-		$submenu_items = false;
+		$submenu_items = array();
 		if ( ! empty( $submenu[$item[2]] ) ) {
 			$class[] = 'wp-has-submenu';
 			$submenu_items = $submenu[$item[2]];
@@ -219,9 +219,12 @@ function _wp_menu_output( $menu, $submenu, $submenu_as_parent = true ) {
 
 ?>
 
+<div id="adminmenumain" role="navigation" aria-label="<?php esc_attr_e( 'Main menu' ); ?>">
+<a href="#wpbody-content" class="screen-reader-shortcut"><?php _e( 'Skip to main content' ); ?></a>
+<a href="#wp-toolbar" class="screen-reader-shortcut"><?php _e( 'Skip to toolbar' ); ?></a>
 <div id="adminmenuback"></div>
 <div id="adminmenuwrap">
-<ul id="adminmenu" role="navigation">
+<ul id="adminmenu">
 
 <?php
 
@@ -235,4 +238,5 @@ do_action( 'adminmenu' );
 
 ?>
 </ul>
+</div>
 </div>

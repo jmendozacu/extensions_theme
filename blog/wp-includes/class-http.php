@@ -182,7 +182,9 @@ class WP_Http {
 		if ( function_exists( 'wp_kses_bad_protocol' ) ) {
 			if ( $r['reject_unsafe_urls'] )
 				$url = wp_http_validate_url( $url );
-			$url = wp_kses_bad_protocol( $url, array( 'http', 'https', 'ssl' ) );
+			if ( $url ) {
+				$url = wp_kses_bad_protocol( $url, array( 'http', 'https', 'ssl' ) );
+			}
 		}
 
 		$arrURL = @parse_url( $url );
@@ -226,7 +228,7 @@ class WP_Http {
 			$r['headers'] = array();
 
 		if ( ! is_array( $r['headers'] ) ) {
-			$processedHeaders = WP_Http::processHeaders( $r['headers'], $url );
+			$processedHeaders = self::processHeaders( $r['headers'], $url );
 			$r['headers'] = $processedHeaders['headers'];
 		}
 
@@ -245,7 +247,7 @@ class WP_Http {
 		}
 
 		// Construct Cookie: header if any cookies are set.
-		WP_Http::buildCookieHeader( $r );
+		self::buildCookieHeader( $r );
 
 		// Avoid issues where mbstring.func_overload is enabled.
 		mbstring_binary_safe_encoding();
@@ -1520,10 +1522,16 @@ class WP_Http_Curl {
 
 		// If an error occurred, or, no response.
 		if ( $curl_error || ( 0 == strlen( $theBody ) && empty( $theHeaders['headers'] ) ) ) {
-			if ( CURLE_WRITE_ERROR /* 23 */ == $curl_error && $r['stream'] ) {
+			if ( CURLE_WRITE_ERROR /* 23 */ == $curl_error ) {
 				if ( ! $this->max_body_length || $this->max_body_length != $bytes_written_total ) {
-					fclose( $this->stream_handle );
-					return new WP_Error( 'http_request_failed', __( 'Failed to write request to temporary file.' ) );
+					if ( $r['stream'] ) {
+						curl_close( $handle );
+						fclose( $this->stream_handle );
+						return new WP_Error( 'http_request_failed', __( 'Failed to write request to temporary file.' ) );
+					} else {
+						curl_close( $handle );
+						return new WP_Error( 'http_request_failed', curl_error( $handle ) );
+					}
 				}
 			} else {
 				if ( $curl_error = curl_error( $handle ) ) {
@@ -2108,7 +2116,7 @@ class WP_Http_Encoding {
 		if ( false !== ( $decompressed = @gzinflate( $compressed ) ) )
 			return $decompressed;
 
-		if ( false !== ( $decompressed = WP_Http_Encoding::compatible_gzinflate( $compressed ) ) )
+		if ( false !== ( $decompressed = self::compatible_gzinflate( $compressed ) ) )
 			return $decompressed;
 
 		if ( false !== ( $decompressed = @gzuncompress( $compressed ) ) )
@@ -2186,7 +2194,7 @@ class WP_Http_Encoding {
 	 */
 	public static function accept_encoding( $url, $args ) {
 		$type = array();
-		$compression_enabled = WP_Http_Encoding::is_available();
+		$compression_enabled = self::is_available();
 
 		if ( ! $args['decompress'] ) // Decompression specifically disabled.
 			$compression_enabled = false;

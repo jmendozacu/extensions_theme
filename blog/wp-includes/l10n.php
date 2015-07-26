@@ -158,10 +158,8 @@ function translate_with_gettext_context( $text, $context, $domain = 'default' ) 
  * @param string $domain Optional. Text domain. Unique identifier for retrieving translated strings.
  * @return string Translated text.
  */
-if (!function_exists('__')) {
-	function __( $text, $domain = 'default' ) {
-		return translate( $text, $domain );
-	}
+function __( $text, $domain = 'default' ) {
+	return translate( $text, $domain );
 }
 
 /**
@@ -175,7 +173,6 @@ if (!function_exists('__')) {
  * @param string $domain Optional. Text domain. Unique identifier for retrieving translated strings.
  * @return string Translated text on success, original text on failure.
  */
-
 function esc_attr__( $text, $domain = 'default' ) {
 	return esc_attr( translate( $text, $domain ) );
 }
@@ -899,7 +896,7 @@ function wp_dropdown_languages( $args = array() ) {
 			$languages[] = array(
 				'language'    => $translation['language'],
 				'native_name' => $translation['native_name'],
-				'lang'        => $translation['iso'][1],
+				'lang'        => current( $translation['iso'] ),
 			);
 
 			// Remove installed language from available translations.
@@ -945,7 +942,7 @@ function wp_dropdown_languages( $args = array() ) {
 			$structure[] = sprintf(
 				'<option value="%s" lang="%s"%s>%s</option>',
 				esc_attr( $translation['language'] ),
-				esc_attr( $translation['iso'][1] ),
+				esc_attr( current( $translation['iso'] ) ),
 				selected( $translation['language'], $args['selected'], false ),
 				esc_html( $translation['native_name'] )
 			);

@@ -812,9 +812,9 @@ function wp_print_media_templates() {
 	</script>
 
 	<script type="text/html" id="tmpl-embed-link-settings">
-		<label class="setting title">
-			<span><?php _e( 'Title' ); ?></span>
-			<input type="text" class="alignment" data-setting="title" />
+		<label class="setting link-text">
+			<span><?php _e( 'Link Text' ); ?></span>
+			<input type="text" class="alignment" data-setting="linkText" />
 		</label>
 		<div class="embed-container" style="display: none;">
 			<div class="embed-preview"></div>
@@ -1205,7 +1205,7 @@ function wp_print_media_templates() {
 	</script>
 
 	<script type="text/html" id="tmpl-editor-gallery">
-		<# if ( data.attachments ) { #>
+		<# if ( data.attachments.length ) { #>
 			<div class="gallery gallery-columns-{{ data.columns }}">
 				<# _.each( data.attachments, function( attachment, index ) { #>
 					<dl class="gallery-item">

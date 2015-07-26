@@ -1117,13 +1117,13 @@ class wp_xmlrpc_server extends IXR_Server {
 			return $this->error;
 
 		// convert the date field back to IXR form
-		if ( isset( $content_struct['post_date'] ) && ! is_a( $content_struct['post_date'], 'IXR_Date' ) ) {
+		if ( isset( $content_struct['post_date'] ) && ! ( $content_struct['post_date'] instanceof IXR_Date ) ) {
 			$content_struct['post_date'] = $this->_convert_date( $content_struct['post_date'] );
 		}
 
 		// ignore the existing GMT date if it is empty or a non-GMT date was supplied in $content_struct,
 		// since _insert_post will ignore the non-GMT date if the GMT date is set
-		if ( isset( $content_struct['post_date_gmt'] ) && ! is_a( $content_struct['post_date_gmt'], 'IXR_Date' ) ) {
+		if ( isset( $content_struct['post_date_gmt'] ) && ! ( $content_struct['post_date_gmt'] instanceof IXR_Date ) ) {
 			if ( $content_struct['post_date_gmt'] == '0000-00-00 00:00:00' || isset( $content_struct['post_date'] ) ) {
 				unset( $content_struct['post_date_gmt'] );
 			} else {
@@ -1520,7 +1520,7 @@ class wp_xmlrpc_server extends IXR_Server {
 	 *
 	 * @uses get_post()
 	 * @param array $args Method parameters. Contains:
-	 *  - int     $blog_id (unset)
+	 *  - int     $blog_id (unused)
 	 *  - string  $username
 	 *  - string  $password
 	 *  - int     $post_id
@@ -2916,7 +2916,7 @@ class wp_xmlrpc_server extends IXR_Server {
 			return $this->error;
 
 		if ( !current_user_can( 'edit_posts' ) )
-			return new IXR_Error( 401, __( 'Sorry, you must be able to edit posts to this site in order to view categories.' ) );
+			return new IXR_Error( 401, __( 'Sorry, you must be able to edit posts on this site in order to view categories.' ) );
 
 		/** This action is documented in wp-includes/class-wp-xmlrpc-server.php */
 		do_action( 'xmlrpc_call', 'wp.suggestCategories' );
@@ -4756,20 +4756,26 @@ class wp_xmlrpc_server extends IXR_Server {
 		$post_author = $postdata['post_author'];
 
 		// Only set the post_author if one is set.
-		if ( isset($content_struct['wp_author_id']) && ($user->ID != $content_struct['wp_author_id']) ) {
-			switch ( $post_type ) {
-				case 'post':
-					if ( !current_user_can('edit_others_posts') )
-						return new IXR_Error( 401, __( 'You are not allowed to change the post author as this user.' ) );
-					break;
-				case 'page':
-					if ( !current_user_can('edit_others_pages') )
-						return new IXR_Error( 401, __( 'You are not allowed to change the page author as this user.' ) );
-					break;
-				default:
-					return new IXR_Error( 401, __( 'Invalid post type' ) );
+		if ( isset( $content_struct['wp_author_id'] ) ) {
+			// Check permissions if attempting to switch author to or from another user.
+			if ( $user->ID != $content_struct['wp_author_id'] || $user->ID != $post_author ) {
+				switch ( $post_type ) {
+					case 'post':
+						if ( ! current_user_can( 'edit_others_posts' ) ) {
+							return new IXR_Error( 401, __( 'You are not allowed to change the post author as this user.' ) );
+						}
+						break;
+					case 'page':
+						if ( ! current_user_can( 'edit_others_pages' ) ) {
+							return new IXR_Error( 401, __( 'You are not allowed to change the page author as this user.' ) );
+						}
+						break;
+					default:
+						return new IXR_Error( 401, __( 'Invalid post type' ) );
+						break;
+				}
+				$post_author = $content_struct['wp_author_id'];
 			}
-			$post_author = $content_struct['wp_author_id'];
 		}
 
 		if ( isset($content_struct['mt_allow_comments']) ) {

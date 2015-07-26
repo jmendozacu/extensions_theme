@@ -336,12 +336,6 @@ class WP_Comments_List_Table extends WP_List_Table {
 	</tr>
 	</thead>
 
-	<tfoot>
-	<tr>
-		<?php $this->print_column_headers( false ); ?>
-	</tr>
-	</tfoot>
-
 	<tbody id="the-comment-list" data-wp-lists="list:comment">
 		<?php $this->display_rows_or_placeholder(); ?>
 	</tbody>
@@ -349,6 +343,13 @@ class WP_Comments_List_Table extends WP_List_Table {
 	<tbody id="the-extra-comment-list" data-wp-lists="list:comment" style="display: none;">
 		<?php $this->items = $this->extra_items; $this->display_rows(); ?>
 	</tbody>
+
+	<tfoot>
+	<tr>
+		<?php $this->print_column_headers( false ); ?>
+	</tr>
+	</tfoot>
+
 </table>
 <?php
 
@@ -360,6 +361,9 @@ class WP_Comments_List_Table extends WP_List_Table {
 
 		$comment = $a_comment;
 		$the_comment_class = wp_get_comment_status( $comment->comment_ID );
+		if ( ! $the_comment_class ) {
+			$the_comment_class = '';
+		}
 		$the_comment_class = join( ' ', get_comment_class( $the_comment_class, $comment->comment_ID, $comment->comment_post_ID ) );
 
 		$post = get_post( $comment->comment_post_ID );
@@ -480,7 +484,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 
 				$format = '<a data-comment-id="%d" data-post-id="%d" data-action="%s" class="%s" title="%s" href="#">%s</a>';
 
-				$actions['quickedit'] = sprintf( $format, $comment->comment_ID, $post->ID, 'edit', 'vim-q comment-inline', esc_attr__( 'Quick Edit' ), __( 'Quick Edit' ) );
+				$actions['quickedit'] = sprintf( $format, $comment->comment_ID, $post->ID, 'edit', 'vim-q comment-inline',esc_attr__( 'Edit this item inline' ), __( 'Quick&nbsp;Edit' ) );
 
 				$actions['reply'] = sprintf( $format, $comment->comment_ID, $post->ID, 'replyto', 'vim-r comment-inline', esc_attr__( 'Reply to this comment' ), __( 'Reply' ) );
 			}
@@ -542,7 +546,7 @@ class WP_Comments_List_Table extends WP_List_Table {
 	}
 
 	public function column_date() {
-		return get_comment_date( __( 'Y/m/d \a\t g:ia' ) );
+		return get_comment_date( __( 'Y/m/d \a\t g:i a' ) );
 	}
 
 	public function column_response() {
@@ -557,9 +561,9 @@ class WP_Comments_List_Table extends WP_List_Table {
 
 		if ( current_user_can( 'edit_post', $post->ID ) ) {
 			$post_link = "<a href='" . get_edit_post_link( $post->ID ) . "'>";
-			$post_link .= get_the_title( $post->ID ) . '</a>';
+			$post_link .= esc_html( get_the_title( $post->ID ) ) . '</a>';
 		} else {
-			$post_link = get_the_title( $post->ID );
+			$post_link = esc_html( get_the_title( $post->ID ) );
 		}
 
 		echo '<div class="response-links"><span class="post-com-count-wrapper">';

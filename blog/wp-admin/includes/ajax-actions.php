@@ -379,7 +379,7 @@ function _wp_ajax_delete_comment_response( $comment_id, $delta = -1 ) {
 		// Here for completeness - not used.
 		'id' => $comment_id,
 		'supplemental' => array(
-			'total_items_i18n' => sprintf( _n( '1 item', '%s items', $total ), number_format_i18n( $total ) ),
+			'total_items_i18n' => sprintf( _n( '%s item', '%s items', $total ), number_format_i18n( $total ) ),
 			'total_pages' => ceil( $total / $per_page ),
 			'total_pages_i18n' => number_format_i18n( ceil( $total / $per_page ) ),
 			'total' => $total,
@@ -1091,7 +1091,7 @@ function wp_ajax_add_menu_item() {
 			}
 
 			$_menu_items = array_map( 'wp_setup_nav_menu_item', array( $_object ) );
-			$_menu_item = array_shift( $_menu_items );
+			$_menu_item = reset( $_menu_items );
 
 			// Restore the missing menu item properties
 			$menu_item_data['menu-item-description'] = $_menu_item->description;
@@ -1550,6 +1550,17 @@ function wp_ajax_inline_save() {
 	if ( empty($data['ping_status']) )
 		$data['ping_status'] = 'closed';
 
+	// Exclude terms from taxonomies that are not supposed to appear in Quick Edit.
+	if ( ! empty( $data['tax_input'] ) ) {
+		foreach ( $data['tax_input'] as $taxonomy => $terms ) {
+			$tax_object = get_taxonomy( $taxonomy );
+			/** This filter is documented in wp-admin/includes/class-wp-posts-list-table.php */
+			if ( ! apply_filters( 'quick_edit_show_taxonomy', $tax_object->show_in_quick_edit, $taxonomy, $post['post_type'] ) ) {
+				unset( $data['tax_input'][ $taxonomy ] );
+			}
+		}
+	}
+
 	// Hack: wp_unique_post_slug() doesn't work for drafts, so we will fake that our post is published.
 	if ( ! empty( $data['post_name'] ) && in_array( $post['post_status'], array( 'draft', 'pending' ) ) ) {
 		$post['post_status'] = 'publish';
@@ -1782,7 +1793,7 @@ function wp_ajax_save_widget() {
 		if ( !$multi_number )
 			wp_die( $error );
 
-		$_POST['widget-' . $id_base] = array( $multi_number => array_shift($settings) );
+		$_POST[ 'widget-' . $id_base ] = array( $multi_number => reset( $settings ) );
 		$widget_id = $id_base . '-' . $multi_number;
 		$sidebar[] = $widget_id;
 	}
@@ -1834,21 +1845,36 @@ function wp_ajax_update_widget() {
  */
 function wp_ajax_upload_attachment() {
 	check_ajax_referer( 'media-form' );
+	/*
+	 * This function does not use wp_send_json_success() / wp_send_json_error()
+	 * as the html4 Plupload handler requires a text/html content-type for older IE.
+	 * See https://core.trac.wordpress.org/ticket/31037
+	 */
 
 	if ( ! current_user_can( 'upload_files' ) ) {
-		wp_send_json_error( array(
-			'message'  => __( "You don't have permission to upload files." ),
-			'filename' => $_FILES['async-upload']['name'],
+		echo wp_json_encode( array(
+			'success' => false,
+			'data'    => array(
+				'message'  => __( "You don't have permission to upload files." ),
+				'filename' => $_FILES['async-upload']['name'],
+			)
 		) );
+
+		wp_die();
 	}
 
 	if ( isset( $_REQUEST['post_id'] ) ) {
 		$post_id = $_REQUEST['post_id'];
 		if ( ! current_user_can( 'edit_post', $post_id ) ) {
-			wp_send_json_error( array(
-				'message'  => __( "You don't have permission to attach files to this post." ),
-				'filename' => $_FILES['async-upload']['name'],
+			echo wp_json_encode( array(
+				'success' => false,
+				'data'    => array(
+					'message'  => __( "You don't have permission to attach files to this post." ),
+					'filename' => $_FILES['async-upload']['name'],
+				)
 			) );
+
+			wp_die();
 		}
 	} else {
 		$post_id = null;
@@ -1860,20 +1886,30 @@ function wp_ajax_upload_attachment() {
 	if ( isset( $post_data['context'] ) && in_array( $post_data['context'], array( 'custom-header', 'custom-background' ) ) ) {
 		$wp_filetype = wp_check_filetype_and_ext( $_FILES['async-upload']['tmp_name'], $_FILES['async-upload']['name'] );
 		if ( ! wp_match_mime_types( 'image', $wp_filetype['type'] ) ) {
-			wp_send_json_error( array(
-				'message'  => __( 'The uploaded file is not a valid image. Please try again.' ),
-				'filename' => $_FILES['async-upload']['name'],
+			echo wp_json_encode( array(
+				'success' => false,
+				'data'    => array(
+					'message'  => __( 'The uploaded file is not a valid image. Please try again.' ),
+					'filename' => $_FILES['async-upload']['name'],
+				)
 			) );
+
+			wp_die();
 		}
 	}
 
 	$attachment_id = media_handle_upload( 'async-upload', $post_id, $post_data );
 
 	if ( is_wp_error( $attachment_id ) ) {
-		wp_send_json_error( array(
-			'message'  => $attachment_id->get_error_message(),
-			'filename' => $_FILES['async-upload']['name'],
+		echo wp_json_encode( array(
+			'success' => false,
+			'data'    => array(
+				'message'  => $attachment_id->get_error_message(),
+				'filename' => $_FILES['async-upload']['name'],
+			)
 		) );
+
+		wp_die();
 	}
 
 	if ( isset( $post_data['context'] ) && isset( $post_data['theme'] ) ) {
@@ -1887,7 +1923,12 @@ function wp_ajax_upload_attachment() {
 	if ( ! $attachment = wp_prepare_attachment_for_js( $attachment_id ) )
 		wp_die();
 
-	wp_send_json_success( $attachment );
+	echo wp_json_encode( array(
+		'success' => true,
+		'data'    => $attachment,
+	) );
+
+	wp_die();
 }
 
 /**
@@ -2226,6 +2267,9 @@ function wp_ajax_save_attachment() {
 	if ( 'attachment' != $post['post_type'] )
 		wp_send_json_error();
 
+	if ( isset( $changes['parent'] ) )
+		$post['post_parent'] = $changes['parent'];
+
 	if ( isset( $changes['title'] ) )
 		$post['post_title'] = $changes['title'];
 
@@ -2246,7 +2290,7 @@ function wp_ajax_save_attachment() {
 		}
 	}
 
-	if ( 0 === strpos( $post['post_mime_type'], 'audio/' ) ) {
+	if ( wp_attachment_is( 'audio', $post['ID'] ) ) {
 		$changed = false;
 		$id3data = wp_get_attachment_metadata( $post['ID'] );
 		if ( ! is_array( $id3data ) ) {
@@ -2401,10 +2445,16 @@ function wp_ajax_send_attachment_to_editor() {
 		$align = isset( $attachment['align'] ) ? $attachment['align'] : 'none';
 		$size = isset( $attachment['image-size'] ) ? $attachment['image-size'] : 'medium';
 		$alt = isset( $attachment['image_alt'] ) ? $attachment['image_alt'] : '';
+
+		// No whitespace-only captions.
 		$caption = isset( $attachment['post_excerpt'] ) ? $attachment['post_excerpt'] : '';
+		if ( '' === trim( $caption ) ) {
+			$caption = '';
+		}
+
 		$title = ''; // We no longer insert title tags into <img> tags, as they are redundant.
 		$html = get_image_send_to_editor( $id, $caption, $title, $align, $url, (bool) $rel, $size, $alt );
-	} elseif ( 'video' === substr( $post->post_mime_type, 0, 5 ) || 'audio' === substr( $post->post_mime_type, 0, 5 )  ) {
+	} elseif ( wp_attachment_is( 'video', $post ) || wp_attachment_is( 'audio', $post )  ) {
 		$html = stripslashes_deep( $_POST['html'] );
 	}
 
@@ -2440,8 +2490,8 @@ function wp_ajax_send_link_to_editor() {
 	if ( ! $src = esc_url_raw( $src ) )
 		wp_send_json_error();
 
-	if ( ! $title = trim( wp_unslash( $_POST['title'] ) ) )
-		$title = wp_basename( $src );
+	if ( ! $link_text = trim( wp_unslash( $_POST['link_text'] ) ) )
+		$link_text = wp_basename( $src );
 
 	$post = get_post( isset( $_POST['post_id'] ) ? $_POST['post_id'] : 0 );
 
@@ -2454,8 +2504,8 @@ function wp_ajax_send_link_to_editor() {
 	if ( $check_embed !== $fallback ) {
 		// TinyMCE view for [embed] will parse this
 		$html = '[embed]' . $src . '[/embed]';
-	} elseif ( $title ) {
-		$html = '<a href="' . esc_url( $src ) . '">' . $title . '</a>';
+	} elseif ( $link_text ) {
+		$html = '<a href="' . esc_url( $src ) . '">' . $link_text . '</a>';
 	} else {
 		$html = '';
 	}
@@ -2467,7 +2517,7 @@ function wp_ajax_send_link_to_editor() {
 			$type = $ext_type;
 
 	/** This filter is documented in wp-admin/includes/media.php */
-	$html = apply_filters( $type . '_send_to_editor_url', $html, $src, $title );
+	$html = apply_filters( $type . '_send_to_editor_url', $html, $src, $link_text );
 
 	wp_send_json_success( $html );
 }
@@ -2589,8 +2639,13 @@ function wp_ajax_save_user_color_scheme() {
 		wp_send_json_error();
 	}
 
+	$previous_color_scheme = get_user_meta( get_current_user_id(), 'admin_color', true );
 	update_user_meta( get_current_user_id(), 'admin_color', $color_scheme );
-	wp_send_json_success();
+
+	wp_send_json_success( array(
+		'previousScheme' => 'admin-color-' . $previous_color_scheme,
+		'currentScheme'  => 'admin-color-' . $color_scheme
+	) );
 }
 
 /**
@@ -2660,6 +2715,7 @@ function wp_ajax_parse_embed() {
 
 	$shortcode = wp_unslash( $_POST['shortcode'] );
 	$url = str_replace( '[embed]', '', str_replace( '[/embed]', '', $shortcode ) );
+
 	$parsed = false;
 	setup_postdata( $post );
 
@@ -2725,18 +2781,28 @@ function wp_ajax_parse_embed() {
 function wp_ajax_parse_media_shortcode() {
 	global $post, $wp_scripts;
 
-	if ( ! $post = get_post( (int) $_POST['post_ID'] ) ) {
+	if ( empty( $_POST['shortcode'] ) ) {
 		wp_send_json_error();
 	}
 
-	if ( empty( $_POST['shortcode'] ) || ! current_user_can( 'edit_post', $post->ID ) ) {
-		wp_send_json_error();
+	$shortcode = wp_unslash( $_POST['shortcode'] );
+
+	if ( ! empty( $_POST['post_ID'] ) ) {
+		$post = get_post( (int) $_POST['post_ID'] );
 	}
 
-	setup_postdata( $post );
-	$shortcode = do_shortcode( wp_unslash( $_POST['shortcode'] ) );
+	// the embed shortcode requires a post
+	if ( ! $post || ! current_user_can( 'edit_post', $post->ID ) ) {
+		if ( 'embed' === $shortcode ) {
+			wp_send_json_error();
+		}
+	} else {
+		setup_postdata( $post );
+	}
 
-	if ( empty( $shortcode ) ) {
+	$parsed = do_shortcode( $shortcode  );
+
+	if ( empty( $parsed ) ) {
 		wp_send_json_error( array(
 			'type' => 'no-items',
 			'message' => __( 'No items found.' ),
@@ -2756,7 +2822,7 @@ function wp_ajax_parse_media_shortcode() {
 
 	ob_start();
 
-	echo $shortcode;
+	echo $parsed;
 
 	if ( 'playlist' === $_REQUEST['type'] ) {
 		wp_underscore_playlist_templates();
@@ -2806,4 +2872,116 @@ function wp_ajax_destroy_sessions() {
 	}
 
 	wp_send_json_success( array( 'message' => $message ) );
+}
+
+
+/**
+ * AJAX handler for updating a plugin.
+ *
+ * @since 4.2.0
+ *
+ * @see Plugin_Upgrader
+ */
+function wp_ajax_update_plugin() {
+	global $wp_filesystem;
+
+	$plugin = urldecode( $_POST['plugin'] );
+
+	$status = array(
+		'update'     => 'plugin',
+		'plugin'     => $plugin,
+		'slug'       => sanitize_key( $_POST['slug'] ),
+		'oldVersion' => '',
+		'newVersion' => '',
+	);
+
+	$plugin_data = get_plugin_data( WP_PLUGIN_DIR . '/' . $plugin );
+	if ( $plugin_data['Version'] ) {
+		$status['oldVersion'] = sprintf( __( 'Version %s' ), $plugin_data['Version'] );
+	}
+
+	if ( ! current_user_can( 'update_plugins' ) ) {
+		$status['error'] = __( 'You do not have sufficient permissions to update plugins on this site.' );
+ 		wp_send_json_error( $status );
+	}
+
+	check_ajax_referer( 'updates' );
+
+	include_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
+
+	wp_update_plugins();
+
+	$skin = new Automatic_Upgrader_Skin();
+	$upgrader = new Plugin_Upgrader( $skin );
+	$result = $upgrader->bulk_upgrade( array( $plugin ) );
+
+	if ( is_array( $result ) && empty( $result[$plugin] ) && is_wp_error( $skin->result ) ) {
+		$result = $skin->result;
+	}
+
+	if ( is_array( $result ) && !empty( $result[ $plugin ] ) ) {
+		$plugin_update_data = current( $result );
+
+		/*
+		 * If the `update_plugins` site transient is empty (e.g. when you update
+		 * two plugins in quick succession before the transient repopulates),
+		 * this may be the return.
+		 *
+		 * Preferably something can be done to ensure `update_plugins` isn't empty.
+		 * For now, surface some sort of error here.
+		 */
+		if ( $plugin_update_data === true ) {
+ 			wp_send_json_error( $status );
+		}
+
+		$plugin_data = get_plugins( '/' . $result[ $plugin ]['destination_name'] );
+		$plugin_data = reset( $plugin_data );
+
+		if ( $plugin_data['Version'] ) {
+			$status['newVersion'] = sprintf( __( 'Version %s' ), $plugin_data['Version'] );
+		}
+
+		wp_send_json_success( $status );
+	} else if ( is_wp_error( $result ) ) {
+		$status['error'] = $result->get_error_message();
+ 		wp_send_json_error( $status );
+
+ 	} else if ( is_bool( $result ) && ! $result ) {
+		$status['errorCode'] = 'unable_to_connect_to_filesystem';
+		$status['error'] = __( 'Unable to connect to the filesystem. Please confirm your credentials.' );
+
+		// Pass through the error from WP_Filesystem if one was raised
+		if ( is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->get_error_code() ) {
+			$status['error'] = $wp_filesystem->errors->get_error_message();
+		}
+
+		wp_send_json_error( $status );
+
+	}
+}
+
+/**
+ * AJAX handler for saving a post from Press This.
+ *
+ * @since 4.2.0
+ */
+function wp_ajax_press_this_save_post() {
+	if ( empty( $GLOBALS['wp_press_this'] ) ) {
+		include( ABSPATH . 'wp-admin/includes/class-wp-press-this.php' );
+	}
+
+	$GLOBALS['wp_press_this']->save_post();
+}
+
+/**
+ * AJAX handler for creating new category from Press This.
+ *
+ * @since 4.2.0
+ */
+function wp_ajax_press_this_add_category() {
+	if ( empty( $GLOBALS['wp_press_this'] ) ) {
+		include( ABSPATH . 'wp-admin/includes/class-wp-press-this.php' );
+	}
+
+	$GLOBALS['wp_press_this']->add_category();
 }

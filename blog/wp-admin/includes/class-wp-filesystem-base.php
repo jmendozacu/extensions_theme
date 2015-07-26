@@ -38,6 +38,10 @@ class WP_Filesystem_Base {
 	 */
 	public $method = '';
 
+	public $errors = null;
+
+	public $options = array();
+
 	/**
 	 * Return the path on the remote filesystem of ABSPATH.
 	 *
@@ -164,7 +168,7 @@ class WP_Filesystem_Base {
 	 * @since 2.7.0
 	 *
 	 * @param string $folder the folder to locate.
-	 * @return string The location of the remote path.
+	 * @return string|false The location of the remote path, false on failure.
 	 */
 	public function find_folder( $folder ) {
 
@@ -232,7 +236,7 @@ class WP_Filesystem_Base {
 	 * @param string $folder The folder to locate.
 	 * @param string $base   The folder to start searching from.
 	 * @param bool   $loop   If the function has recursed, Internal use only.
-	 * @return string The location of the remote path.
+	 * @return string|false The location of the remote path, false to cease looping.
 	 */
 	public function search_for_folder( $folder, $base = '.', $loop = false ) {
 		if ( empty( $base ) || '.' == $base )
@@ -367,9 +371,11 @@ class WP_Filesystem_Base {
 		$legal =  array('', 'w', 'r', 'x', '-');
 		$attarray = preg_split('//', $mode);
 
-		for ($i=0; $i < count($attarray); $i++)
-		   if ($key = array_search($attarray[$i], $legal))
+		for ( $i = 0, $c = count( $attarray ); $i < $c; $i++ ) {
+		   if ($key = array_search($attarray[$i], $legal)) {
 			   $realmode .= $legal[$key];
+		   }
+		}
 
 		$mode = str_pad($realmode, 10, '-', STR_PAD_LEFT);
 		$trans = array('-'=>'0', 'r'=>'4', 'w'=>'2', 'x'=>'1');

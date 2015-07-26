@@ -1,12 +1,20 @@
 <?php
 /**
- * Customize Setting Class.
- *
- * Handles saving and sanitizing of settings.
+ * WordPress Customize Setting classes
  *
  * @package WordPress
  * @subpackage Customize
  * @since 3.4.0
+ */
+
+/**
+ * Customize Setting class.
+ *
+ * Handles saving and sanitizing of settings.
+ *
+ * @since 3.4.0
+ *
+ * @see WP_Customize_Manager
  */
 class WP_Customize_Setting {
 	/**
@@ -52,15 +60,21 @@ class WP_Customize_Setting {
 	public $sanitize_callback    = '';
 	public $sanitize_js_callback = '';
 
-	protected $id_data = array();
-
 	/**
-	 * Cached and sanitized $_POST value for the setting.
+	 * Whether or not the setting is initially dirty when created.
 	 *
-	 * @access private
-	 * @var mixed
+	 * This is used to ensure that a setting will be sent from the pane to the
+	 * preview when loading the Customizer. Normally a setting only is synced to
+	 * the preview if it has been changed. This allows the setting to be sent
+	 * from the start.
+	 *
+	 * @since 4.2.0
+	 * @access public
+	 * @var bool
 	 */
-	private $_post_value;
+	public $dirty = false;
+
+	protected $id_data = array();
 
 	/**
 	 * Constructor.
@@ -101,11 +115,51 @@ class WP_Customize_Setting {
 	}
 
 	/**
+	 * The ID for the current blog when the preview() method was called.
+	 *
+	 * @since 4.2.0
+	 * @access protected
+	 * @var int
+	 */
+	protected $_previewed_blog_id;
+
+	/**
+	 * Return true if the current blog is not the same as the previewed blog.
+	 *
+	 * @since 4.2.0
+	 * @access public
+	 *
+	 * @return bool|null Returns null if preview() has not been called yet.
+	 */
+	public function is_current_blog_previewed() {
+		if ( ! isset( $this->_previewed_blog_id ) ) {
+			return null;
+		}
+		return ( get_current_blog_id() === $this->_previewed_blog_id );
+	}
+
+	/**
+	 * Original non-previewed value stored by the preview method.
+	 *
+	 * @see WP_Customize_Setting::preview()
+	 * @since 4.1.1
+	 * @var mixed
+	 */
+	protected $_original_value;
+
+	/**
 	 * Handle previewing the setting.
 	 *
 	 * @since 3.4.0
 	 */
 	public function preview() {
+		if ( ! isset( $this->_original_value ) ) {
+			$this->_original_value = $this->value();
+		}
+		if ( ! isset( $this->_previewed_blog_id ) ) {
+			$this->_previewed_blog_id = get_current_blog_id();
+		}
+
 		switch( $this->type ) {
 			case 'theme_mod' :
 				add_filter( 'theme_mod_' . $this->id_data[ 'base' ], array( $this, '_preview_filter' ) );
@@ -149,6 +203,10 @@ class WP_Customize_Setting {
 	/**
 	 * Callback function to filter the theme mods and options.
 	 *
+	 * If switch_to_blog() was called after the preview() method, and the current
+	 * blog is now not the same blog, then this method does a no-op and returns
+	 * the original value.
+	 *
 	 * @since 3.4.0
 	 * @uses WP_Customize_Setting::multidimensional_replace()
 	 *
@@ -156,7 +214,19 @@ class WP_Customize_Setting {
 	 * @return mixed New or old value.
 	 */
 	public function _preview_filter( $original ) {
-		return $this->multidimensional_replace( $original, $this->id_data[ 'keys' ], $this->post_value() );
+		if ( ! $this->is_current_blog_previewed() ) {
+			return $original;
+		}
+
+		$undefined = new stdClass(); // symbol hack
+		$post_value = $this->post_value( $undefined );
+		if ( $undefined === $post_value ) {
+			$value = $this->_original_value;
+		} else {
+			$value = $post_value;
+		}
+
+		return $this->multidimensional_replace( $original, $this->id_data['keys'], $value );
 	}
 
 	/**
@@ -197,17 +267,7 @@ class WP_Customize_Setting {
 	 * @return mixed The default value on failure, otherwise the sanitized value.
 	 */
 	final public function post_value( $default = null ) {
-		// Check for a cached value
-		if ( isset( $this->_post_value ) )
-			return $this->_post_value;
-
-		// Call the manager for the post value
-		$result = $this->manager->post_value( $this );
-
-		if ( isset( $result ) )
-			return $this->_post_value = $result;
-		else
-			return $default;
+		return $this->manager->post_value( $this, $default );
 	}
 
 	/**
@@ -422,8 +482,15 @@ class WP_Customize_Setting {
 			$node = &$node[ $key ];
 		}
 
-		if ( $create && ! isset( $node[ $last ] ) )
-			$node[ $last ] = array();
+		if ( $create ) {
+			if ( ! is_array( $node ) ) {
+				// account for an array overriding a string or object value
+				$node = array();
+			}
+			if ( ! isset( $node[ $last ] ) ) {
+				$node[ $last ] = array();
+			}
+		}
 
 		if ( ! isset( $node[ $last ] ) )
 			return;
@@ -497,9 +564,9 @@ class WP_Customize_Setting {
  *
  * Results should be properly handled using another setting or callback.
  *
- * @package WordPress
- * @subpackage Customize
  * @since 3.4.0
+ *
+ * @see WP_Customize_Setting
  */
 class WP_Customize_Filter_Setting extends WP_Customize_Setting {
 
@@ -514,9 +581,9 @@ class WP_Customize_Filter_Setting extends WP_Customize_Setting {
  *
  * Results should be properly handled using another setting or callback.
  *
- * @package WordPress
- * @subpackage Customize
  * @since 3.4.0
+ *
+ * @see WP_Customize_Setting
  */
 final class WP_Customize_Header_Image_Setting extends WP_Customize_Setting {
 	public $id = 'header_image_data';
@@ -542,11 +609,11 @@ final class WP_Customize_Header_Image_Setting extends WP_Customize_Setting {
 }
 
 /**
- * Class WP_Customize_Background_Image_Setting
+ * Customizer Background Image Setting class.
  *
- * @package WordPress
- * @subpackage Customize
  * @since 3.4.0
+ *
+ * @see WP_Customize_Setting
  */
 final class WP_Customize_Background_Image_Setting extends WP_Customize_Setting {
 	public $id = 'background_image_thumb';
