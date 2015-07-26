@@ -1,10 +1,10 @@
 /*
 Theme Name: Twenty Twelve
-Theme URI: http://wordpress.org/themes/twentytwelve
+Theme URI: https://wordpress.org/themes/twentytwelve/
 Author: the WordPress team
-Author URI: http://wordpress.org/
+Author URI: https://wordpress.org/
 Description: The 2012 theme for WordPress is a fully responsive theme that looks great on any device. Features include a front page template with its own widgets, an optional display font, styling for post formats on both index and single views, and an optional no-sidebar page template. Make it yours with a custom menu, header image, and background.
-Version: 1.6
+Version: 1.7
 License: GNU General Public License v2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: light, gray, white, one-column, two-columns, right-sidebar, fluid-layout, responsive-layout, custom-background, custom-header, custom-menu, editor-style, featured-images, flexible-header, full-width-template, microformats, post-formats, rtl-language-support, sticky-post, theme-options, translation-ready
@@ -506,8 +506,14 @@ a:hover {
 .site .screen-reader-text {
 	position: absolute !important;
 	clip: rect(1px, 1px, 1px, 1px);
+	overflow: hidden;
+	height: 1px;
+	width: 1px;
 }
-.main-navigation .assistive-text:focus {
+.main-navigation .assistive-text:focus,
+.site .screen-reader-text:hover,
+.site .screen-reader-text:active,
+.site .screen-reader-text:focus {
 	background: #fff;
 	border: 2px solid #333;
 	border-radius: 3px;
@@ -530,7 +536,7 @@ a:hover {
 }
 .site-content {
 	margin: 24px 0 0;
-	margin: 1.014285714rem 0 0;
+	margin: 1.714285714rem 0 0;
 }
 .widget-area {
 	margin: 24px 0 0;
@@ -616,15 +622,12 @@ section[role="banner"] {
 	-moz-hyphens: auto;
 	hyphens: auto;
 	margin-bottom: 48px;
-	margin-bottom: 1.428571429rem;
+	margin-bottom: 3.428571429rem;
 	word-wrap: break-word;
 }
 .widget-area .widget h3 {
 	margin-bottom: 24px;
 	margin-bottom: 1.714285714rem;
-	font-family: "Raleway","Helvetica Neue",Verdana,Arial,sans-serif;
- 	font-size: 12px;
-    text-transform: uppercase;
 }
 .widget-area .widget p,
 .widget-area .widget li,
@@ -647,13 +650,14 @@ section[role="banner"] {
 	margin-left: 2.571428571rem;
 }
 .widget-area .widget a {
-	font-family: "Raleway","Helvetica Neue",Verdana,Arial,sans-serif;
-	color: #636363;
+	color: #757575;
 }
 .widget-area .widget a:hover {
-	color: #3399cc;
+	color: #21759b;
 }
- 
+.widget-area .widget a:visited {
+	color: #9f9f9f;
+}
 .widget-area #s {
 	width: 53.66666666666%; /* define a width to avoid dropping a wider submit button */
 }
@@ -809,11 +813,6 @@ article.sticky .featured-post {
 }
 .entry-content .more-link {
 	white-space: nowrap;
-	float: right;
-	padding-right: 30px;
- font-family: "Raleway","Helvetica Neue",Verdana,Arial,sans-serif;
-    font-size: 12px;
-    text-transform: uppercase;
 }
 .entry-content ol,
 .comment-content ol,
@@ -1006,7 +1005,8 @@ footer.entry-meta {
 	margin-bottom: 48px;
 	margin-bottom: 3.428571429rem;
 	padding-bottom: 22px;
-	padding-bottom: 1.571428571rem;	 
+	padding-bottom: 1.571428571rem;
+	border-bottom: 1px solid #ededed;
 }
 .archive-meta {
 	color: #757575;
@@ -1367,7 +1367,6 @@ a.comment-edit-link:hover {
 	padding-top: 24px;
 	padding-top: 1.714285714rem;
 	border-top: 1px solid #ededed;
-	 
 }
 .template-front-page .widget-area .widget li {
 	margin: 8px 0 0;
@@ -1482,12 +1481,12 @@ img#wpstats {
 	.site {
 		margin: 0 auto;
 		max-width: 960px;
-		max-width: 90.571428571rem;
+		max-width: 68.571428571rem;
 		overflow: hidden;
 	}
 	.site-content {
 		float: left;
-		width: 73.104166667%;
+		width: 65.104166667%;
 	}
 	body.template-front-page .site-content,
 	body.attachment .site-content,
@@ -1496,7 +1495,6 @@ img#wpstats {
 	}
 	.widget-area {
 		float: right;
-		padding-left: 1%;
 		width: 26.041666667%;
 	}
 	.site-header h1,
@@ -1654,9 +1652,10 @@ img#wpstats {
 		padding: 0 40px;
 		padding: 0 2.857142857rem;
 		margin-top: 48px;
-		margin-top:0rem;
+		margin-top: 3.428571429rem;
 		margin-bottom: 48px;
-		margin-bottom: 3.428571429rem;		 
+		margin-bottom: 3.428571429rem;
+		box-shadow: 0 2px 6px rgba(100, 100, 100, 0.3);
 	}
 	body.custom-background-empty {
 		background-color: #fff;
@@ -1772,12 +1771,6 @@ img#wpstats {
 	.comments-area article header cite,
 	.comments-area article header time {
 		margin-left: 50px;
-		margin-left: 1.57142857rem;
+		margin-left: 3.57142857rem;
 	}
 }
-#page.site ul.messages {padding-top:20px;}
-.single-post .site-content,  .page .site-content{ width:100%;}
-p#breadcrumbs { padding-top:20px;   font-family: "Raleway","Helvetica Neue",Verdana,Arial,sans-serif; font-size: 12px; text-transform: uppercase;}
-p#breadcrumbs a {color: #636363;}
-p#breadcrumbs a:hover {color:#3399cc}
-.comment .edit-link { float: left;  padding-right: 10px;} 

@@ -29,32 +29,25 @@
 <script src="<?php echo get_template_directory_uri(); ?>/js/html5.js" type="text/javascript"></script>
 <![endif]-->
 <?php wp_head(); ?>
-<?php 
-$layout = Mage::app('default')->setCurrentStore( Mage::app()->getStore()->getId() )->getLayout();
-$layout->getUpdate()->addHandle('default')->load();
-$layout->generateXml()->generateBlocks();
-$head=$layout->getBlock('head');
-echo $head->toHtml();
- 
-?>
 </head>
- 
+
 <body <?php body_class(); ?>>
+<div id="page" class="hfeed site">
+	<header id="masthead" class="site-header" role="banner">
+		<hgroup>
+			<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" title="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
+			<h2 class="site-description"><?php bloginfo( 'description' ); ?></h2>
+		</hgroup>
 
- <?php 
- $topmenu=$layout->getBlock('header');
- $topmenu->unsetChild('store_language');
- $new_block=$layout->createBlock('wordpress/page_switch');
- $topmenu->setChild('store_language',$new_block);
- $topmenu->unsetChild('topSearch');
- echo $topmenu->toHtml();
- 
- ?>			
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle"><?php _e( 'Menu', 'twentytwelve' ); ?></button>
+			<a class="assistive-text" href="#content" title="<?php esc_attr_e( 'Skip to content', 'twentytwelve' ); ?>"><?php _e( 'Skip to content', 'twentytwelve' ); ?></a>
+			<?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu' ) ); ?>
+		</nav><!-- #site-navigation -->
 
- 
-<div id="page" class="hfeed site"> 
+		<?php if ( get_header_image() ) : ?>
+		<a href="<?php echo esc_url( home_url( '/' ) ); ?>"><img src="<?php header_image(); ?>" class="header-image" width="<?php echo esc_attr( get_custom_header()->width ); ?>" height="<?php echo esc_attr( get_custom_header()->height ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name', 'display' ) ); ?>" /></a>
+		<?php endif; ?>
+	</header><!-- #masthead -->
+
 	<div id="main" class="wrapper">
-	 <?php 
- $messages=$layout->getBlock('global_messages');
- echo $messages->toHtml();
- ?>
