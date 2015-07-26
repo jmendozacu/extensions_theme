@@ -50,7 +50,13 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 			$this->tooltip_modules = array(); //initialize tooltip modules.
 			$this->one_click       = array(); //initialize one-click settings
 
-			if ( get_site_transient( 'itsec_upload_dir' ) === false ) {
+			if ( false !== ( $upload_dir = get_site_transient( 'itsec_upload_dir' ) ) ) {
+				if ( ! is_dir( $upload_dir['basedir'] ) ) {
+					unset( $upload_dir );
+				}
+			}
+			
+			if ( ! is_array( $upload_dir ) ) {
 
 				if ( is_multisite() ) {
 
@@ -66,15 +72,11 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 
 				set_site_transient( 'itsec_upload_dir', $upload_dir, 86400 );
 
-			} else {
-
-				$upload_dir = get_site_transient( 'itsec_upload_dir' );
-
 			}
 
 			//Set plugin defaults
 			$itsec_globals = array(
-				'plugin_build'       => 4035, //plugin build number - used to trigger updates
+				'plugin_build'       => 4036, //plugin build number - used to trigger updates
 				'plugin_access_lvl'  => 'manage_options', //Access level required to access plugin options
 				'plugin_name'        => sanitize_text_field( $plugin_name ), //the name of the plugin
 				'plugin_base'        => str_replace( WP_PLUGIN_DIR . '/', '', $plugin_file ),
@@ -138,6 +140,10 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 						'value'     => true,
 						'class_id'  => 'Backup',
 					),
+					'salts'  	=> array(
+						'has_front' => false,
+						'class_id'  => 'Salts',
+					),
 					'file-change'       => array(
 						'has_front' => true,
 						'option'    => 'itsec_file_change',
@@ -151,13 +157,6 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 						'setting'   => 'enabled',
 						'value'     => true,
 						'class_id'  => 'Hide_Backend',
-					),
-					'malware'           => array(
-						'has_front' => true,
-						'option'    => 'itsec_malware',
-						'setting'   => 'enabled',
-						'value'     => true,
-						'class_id'  => 'Malware',
 					),
 					'ssl'               => array(
 						'has_front' => true,
@@ -195,13 +194,6 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 					),
 				),
 				'pro_modules'        => array(
-					'malware-scheduling' => array(
-						'has_front' => true,
-						'option'    => 'itsec_malware_scheduling',
-						'setting'   => 'enabled',
-						'value'     => true,
-						'class_id'  => 'Malware_Scheduling',
-					),
 					'online-files'       => array(
 						'has_front' => true,
 						'option'    => 'itsec_online_files',
@@ -267,8 +259,8 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 				),
 			);
 
-			$free_modules_folder = trailingslashit( $itsec_globals['plugin_dir'] ) . 'modules/free';
-			$pro_modules_folder  = trailingslashit( $itsec_globals['plugin_dir'] ) . 'modules/pro';
+			$free_modules_folder = trailingslashit( $itsec_globals['plugin_dir'] ) . 'core/modules';
+			$pro_modules_folder  = trailingslashit( $itsec_globals['plugin_dir'] ) . 'pro';
 
 			$itsec_globals['has_pro'] = is_dir( $pro_modules_folder );
 
@@ -407,8 +399,7 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 
 			}
 
-			//load the text domain
-			load_plugin_textdomain( 'it-l10n-better-wp-security', false, trailingslashit( $itsec_globals['plugin_dir'] ) . 'lang' );
+			$this->load_textdomain();
 
 			//builds admin menus after modules are loaded
 			if ( is_admin() ) {
@@ -509,9 +500,30 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 
 			add_action( 'itsec_wpconfig_metabox', array( $itsec_files, 'config_metabox_contents' ) );
 			add_action( 'itsec_rewrite_metabox', array( $itsec_files, 'rewrite_metabox_contents' ) );
-
 		}
-
+		
+		/**
+		 * Load the text translations.
+		 *
+		 * The translations are loaded from WP_LANG_DIR/plugins/
+		 */
+		private function load_textdomain() {
+			$plugin_dir = dirname( dirname( __FILE__ ) );
+			
+			if ( is_dir( "$plugin_dir/pro" ) ) {
+				$plugin_name = 'ithemes-security-pro';
+				$domain = 'it-l10n-ithemes-security-pro';
+			} else {
+				$plugin_name = 'better-wp-security';
+				$domain = 'it-l10n-better-wp-security';
+			}
+			
+			$locale = apply_filters( 'plugin_locale', get_locale(), 'it-l10n-better-wp-security' );
+			
+			load_textdomain( 'it-l10n-better-wp-security', WP_LANG_DIR . "/plugins/$plugin_name/$domain-$locale.mo" );
+			load_plugin_textdomain( 'it-l10n-better-wp-security', false, basename( $plugin_dir ) . '/lang/' );
+		}
+		
 		/**
 		 * Add action link to plugin page.
 		 *
@@ -1162,8 +1174,8 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 
 			$modules             = $itsec_globals['free_modules'];
 			$has_pro             = $itsec_globals['has_pro'];
-			$free_modules_folder = trailingslashit( $itsec_globals['plugin_dir'] ) . 'modules/free';
-			$pro_modules_folder  = trailingslashit( $itsec_globals['plugin_dir'] ) . 'modules/pro';
+			$free_modules_folder = trailingslashit( $itsec_globals['plugin_dir'] ) . 'core/modules';
+			$pro_modules_folder  = trailingslashit( $itsec_globals['plugin_dir'] ) . 'pro';
 
 			if ( $has_pro ) {
 
@@ -1784,7 +1796,7 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 
 					foreach ( $error_messages as $error ) {
 
-						$itsec_saved_network_notices = '<div id="setting-error-settings_updated" class="' . sanitize_text_field( $type ) . ' settings-error"><p><strong>' . sanitize_text_field( $error ) . '</strong></p></div>';
+						$itsec_saved_network_notices .= '<div id="setting-error-settings_updated" class="' . sanitize_text_field( $type ) . ' settings-error"><p><strong>' . sanitize_text_field( $error ) . '</strong></p></div>';
 					}
 
 				}
@@ -1890,7 +1902,7 @@ if ( ! class_exists( 'ITSEC_Core' ) ) {
 						global $itsec_globals;
 
 						echo '<div class="updated" id="itsec_upgrade_notice">
-						<span class="itsec_notice_text">' . __( 'Thank you for activating', 'it-l10n-better-wp-security' ) . ' ' . $itsec_globals['plugin_name'] . '. ' . __( 'It looks like you had another version of this plugin activated. To avoid conflicts the extra version has been deactivated and we recommend you delete it.', 'it-l10n-better-wp-security' ) . '</span><a class="itsec-notice-hide" onclick="document.location.href=\'?itsec_no_upgrade_nag=off&_wpnonce=' . wp_create_nonce( 'itsec-nag' ) . '\';">&times;</a>
+						<a class="itsec-notice-hide" onclick="document.location.href=\'?itsec_no_upgrade_nag=off&_wpnonce=' . wp_create_nonce( 'itsec-nag' ) . '\';">&times;</a><span class="itsec_notice_text">' . __( 'Thank you for activating', 'it-l10n-better-wp-security' ) . ' ' . $itsec_globals['plugin_name'] . '. ' . __( 'It looks like you had another version of this plugin activated. To avoid conflicts the extra version has been deactivated and we recommend you delete it.', 'it-l10n-better-wp-security' ) . '</span>
 						</div>';
 
 					}

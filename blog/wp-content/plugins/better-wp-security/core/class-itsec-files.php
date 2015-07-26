@@ -7,60 +7,104 @@
  *
  * @package iThemes_Security
  *
- * @since   4.0
+ * @since   4.0.0
  */
 final class ITSEC_Files {
 
-	private
-		$file_modules,
-		$rewrite_rules,
-		$wpconfig_rules,
-		$rewrites_changed,
-		$config_changed,
-		$write_files;
+	/**
+	 * The module's that have registered with the file writer
+	 *
+	 * @since  4.0.0
+	 * @access private
+	 * @var array
+	 */
+	private $file_modules;
+
+	/**
+	 * The current rewrite rules
+	 *
+	 * @since  4.0.0
+	 * @access private
+	 * @var array
+	 */
+	private $rewrite_rules;
+
+	/**
+	 * The current wp-config.php rules
+	 *
+	 * @since  4.0.0
+	 * @access private
+	 * @var array
+	 */
+	private $wpconfig_rules;
+
+	/**
+	 * Whether or not rewrite rules have been modified externally
+	 *
+	 * @since  4.0.0
+	 * @access private
+	 * @var bool
+	 */
+	private $rewrites_changed;
+
+	/**
+	 * Whether or not wp-config.php rules have been modified externally
+	 *
+	 * @since  4.0.0
+	 * @access private
+	 * @var bool
+	 */
+	private $config_changed;
 
 	/**
 	 * Create and manage wp_config.php or .htaccess/nginx rewrites.
 	 *
 	 * Executes primary file actions at plugins_loaded.
 	 *
-	 * @since  4.0
+	 * @since  4.0.0
 	 *
-	 * @access private
-	 *
-	 * @return void
+	 * @return ITSEC_Files
 	 */
-	function __construct() {
+	public function __construct() {
 
 		$this->rewrites_changed = false;
 		$this->config_changed   = false;
 		$this->rewrite_rules    = array();
 		$this->wpconfig_rules   = array();
 
-		//look for the tweaks module to see if we should reset to 0444
-		$tweaks = get_site_option( 'itsec_tweaks' );
-
-		if ( $tweaks !== false && isset( $tweaks['write_permissions'] ) ) {
-
-			$this->write_files = $tweaks['write_permissions'];
-
-		} else {
-
-			$this->write_files = false;
-
-		}
-
 		//Add the metabox
 		add_action( 'itsec_add_admin_meta_boxes', array( $this, 'add_admin_meta_boxes' ) );
 		add_action( 'plugins_loaded', array( $this, 'file_writer_init' ) );
 		add_action( 'admin_init', array( $this, 'admin_init' ) );
 
-	}
 
+		add_filter( 'itsec_filter_can_write_to_files', array( $this, 'can_write_to_files' ) );
+	}
+	
+	/**
+	 * Check the setting that allows writing files.
+	 *
+	 * @since 1.15.0
+	 *
+	 * @return bool True if files can be written to, false otherwise.
+	 */
+	public function can_write_to_files() {
+		global $itsec_globals;
+		
+		if ( isset( $itsec_globals ) && isset( $itsec_globals['settings'] ) && isset( $itsec_globals['settings']['write_files'] ) && ( true === $itsec_globals['settings']['write_files'] ) ) {
+			return true;
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * Add meta boxes to primary options pages.
 	 *
-	 * @since 4.0
+	 * Adds the meta boxes containing rewrite rules that appears on the iThemes Security
+	 * Dashboard.
+	 *
+	 * @since 4.0.0
 	 *
 	 * @return void
 	 */
@@ -89,142 +133,79 @@ final class ITSEC_Files {
 	/**
 	 * Processes file writing after saving options.
 	 *
-	 * @since 4.0
+	 * Looks to see if rewrites_changed is true and starts file writing process as appropriate
 	 *
-	 * @return false
+	 * @since 4.0.0
+	 *
+	 * @return void
 	 */
 	public function admin_init() {
-
 		global $itsec_globals;
-
-		if ( $this->rewrites_changed === true && isset( $itsec_globals['settings']['write_files'] ) && $itsec_globals['settings']['write_files'] === true ) {
-
-			do_action( 'itsec_pre_save_rewrites' );
-
-			$rewrites = $this->save_rewrites();
-
-			if ( is_array( $rewrites ) ) {
-
-				if ( $rewrites['success'] === false ) {
-
-					$type    = 'error';
-					$message = $rewrites['text'];
-
-					add_settings_error( 'itsec', esc_attr( 'settings_updated' ), $message, $type );
-
-				} elseif ( $rewrites['text'] !== true ) {
-
-					$type    = 'updated';
-					$message = $rewrites['text'];
-
-					add_settings_error( 'itsec', esc_attr( 'settings_updated' ), __( 'Settings Updated', 'it-l10n-better-wp-security' ) . '<br />' . $message, $type );
-
+		
+		if ( true === $this->rewrites_changed ) {
+			if ( isset( $itsec_globals['settings']['write_files'] ) && true === $itsec_globals['settings']['write_files'] ) {
+				do_action( 'itsec_pre_save_rewrites' );
+				
+				$rewrites = $this->save_rewrites();
+				
+				if ( is_array( $rewrites ) ) {
+					if ( false === $rewrites['success'] ) {
+						add_settings_error( 'itsec', esc_attr( 'settings_updated' ), $rewrites['text'], 'error' );
+						
+						require_once( trailingslashit( $GLOBALS['itsec_globals']['plugin_dir'] ) . 'core/lib/class-itsec-lib-config-file.php' );
+						$file = ITSEC_Lib_Config_File::get_server_config_file_path();
+						
+						$message = sprintf( __( 'Unable to update the <code>%1$s</code> file. You may need to manually remove the existing iThemes Security modifications and replace them with the rules found at <a href="%2$s">Security > Dashboard</a> under the "Rewrite Rules" section.', 'it-l10n-better-wp-security' ), $file, admin_url( 'admin.php?page=itsec#itsec_rewrite' ) );
+						add_settings_error( 'itsec', esc_attr( 'settings_updated' ), $message, 'error' );
+					} else if ( true !== $rewrites['text'] ) {
+						add_settings_error( 'itsec', esc_attr( 'settings_updated' ), __( 'Settings Updated', 'it-l10n-better-wp-security' ) . '<br />' . $rewrites['text'], 'updated' );
+					}
+				} else {
+					add_site_option( 'itsec_manual_update', true );
 				}
-
 			} else {
-
 				add_site_option( 'itsec_manual_update', true );
-
 			}
-
-		} elseif ( $this->rewrites_changed === true ) {
-
-			add_site_option( 'itsec_manual_update', true );
-
 		}
-
-		if ( $this->config_changed === true && isset( $itsec_globals['settings']['write_files'] ) && $itsec_globals['settings']['write_files'] === true ) {
-
-			do_action( 'itsec_pre_save_configs' );
-
-			$configs = $this->save_wpconfig();
-
-			if ( is_array( $configs ) ) {
-
-				if ( $configs['success'] === false ) {
-
-					$type    = 'error';
-					$message = $configs['text'];
-
-					add_settings_error( 'itsec', esc_attr( 'settings_updated' ), $message, $type );
-
+		
+		if ( true === $this->config_changed ) {
+			if ( isset( $itsec_globals['settings']['write_files'] ) && true === $itsec_globals['settings']['write_files'] ) {
+				do_action( 'itsec_pre_save_configs' );
+				
+				$configs = $this->save_wpconfig();
+				
+				if ( is_array( $configs ) ) {
+					if ( false === $configs['success'] ) {
+						add_settings_error( 'itsec', esc_attr( 'settings_updated' ), $configs['text'], 'error' );
+						
+						$message = sprintf( __( 'Unable to update the <code>%1$s</code> file. You may need to manually remove the existing iThemes Security modifications and replace them with the rules found at <a href="%2$s">Security > Dashboard</a> under the "wp-config.php Rules" section.', 'it-l10n-better-wp-security' ), ABSPATH . 'wp-config.php', admin_url( 'admin.php?page=itsec#itsec_wpconfig' ) );
+						add_settings_error( 'itsec', esc_attr( 'settings_updated' ), $message, 'error' );
+					}
+					
+					if ( 1 == get_site_option( 'itsec_clear_login' ) ) {
+						delete_site_option( 'itsec_clear_login' );
+						
+						wp_clear_auth_cookie();
+						
+						$redirect_to = ! empty( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : ITSEC_Lib::get_home_root() . 'wp-login.php?loggedout=true';
+						wp_safe_redirect( $redirect_to );
+						exit();
+					}
+				} else {
+					add_site_option( 'itsec_manual_update', true );
 				}
-
-				if ( get_site_option( 'itsec_clear_login' ) == 1 ) {
-
-					delete_site_option( 'itsec_clear_login' );
-
-					wp_clear_auth_cookie();
-
-					$redirect_to = ! empty( $_REQUEST['redirect_to'] ) ? $_REQUEST['redirect_to'] : '/wp-login.php?loggedout=true';
-					wp_safe_redirect( $redirect_to );
-					exit();
-
-				}
-
 			} else {
-
 				add_site_option( 'itsec_manual_update', true );
-
 			}
-
-		} elseif ( $this->config_changed === true ) {
-
-			add_site_option( 'itsec_manual_update', true );
-
 		}
-
-	}
-
-	/**
-	 * Builds server appropriate rewrite rules.
-	 *
-	 * Build the actually rewrite rules that can be written to the server or
-	 * echoed to the user.
-	 *
-	 * @since  4.0
-	 *
-	 * @access private
-	 *
-	 * @return array|bool The rewrite rules to use or false if there are none
-	 */
-	private function build_rewrites() {
-
-		$out_values    = array();
-		$rewrite_rules = $this->rewrite_rules; //only get the htaccess portion
-
-		uasort( $rewrite_rules, array( $this, 'priority_sort' ) ); //sort by priority
-
-		foreach ( $rewrite_rules as $key => $value ) {
-
-			if ( is_array( $value['rules'] ) && sizeof( $value['rules'] ) > 0 ) {
-
-				$out_values[] = "\t# BEGIN " . $value['name']; //add section header
-
-				foreach ( $value['rules'] as $rule ) {
-
-					$out_values[] = "\t\t" . $rule; //write all the rules
-
-				}
-
-				$out_values[] = "\t# END " . $value['name']; //add section footer
-
-			}
-
-		}
-
-		if ( sizeof( $out_values ) > 0 ) {
-			return $out_values;
-		} else {
-			return false;
-		}
-
 	}
 
 	/**
 	 * Calls config metabox action.
 	 *
-	 * @since 4.0
+	 * Allows a hook to add to the metabox containing the wp-config.php rules.
+	 *
+	 * @since 4.0.0
 	 *
 	 * @return void
 	 */
@@ -237,136 +218,22 @@ final class ITSEC_Files {
 	/**
 	 * Echos content metabox contents.
 	 *
-	 * @since 4.0
+	 * Echos the contents of the wp-config.php metabox
+	 *
+	 * @since 4.0.0
 	 *
 	 * @return void
 	 */
 	public function config_metabox_contents() {
-
-		foreach ( $this->file_modules as $module ) {
-
-			if ( isset( $module['config'] ) ) {
-
-				call_user_func_array( $module['config'], array() );
-
-			}
-
-		}
-
-		$rules_to_write = ''; //String of rules to insert into wp-config
-
-		//build the rules we need to write, replace or delete
-		foreach ( $this->wpconfig_rules as $section_rule ) {
-
-			if ( is_array( $section_rule['rules'] ) ) {
-
-				foreach ( $section_rule['rules'] as $rule ) {
-
-					if ( ( isset( $rule['type'] ) && $rule['type'] === 'add' ) && $rule['rule'] !== false ) { //new rule or replacing a rule that doesn't exist
-
-						$rules_to_write .= $rule['rule'] . PHP_EOL;
-
-					}
-
-				}
-
-			}
-
-		}
-
-		if ( strlen( $rules_to_write ) > 1 ) {
-
-			echo '<div class="itsec_rewrite_rules">' . highlight_string( $rules_to_write, true ) . '</div>';
-
-		} else {
-
+		require_once( trailingslashit( $GLOBALS['itsec_globals']['plugin_dir'] ) . 'core/lib/class-itsec-lib-config-file.php' );
+		
+		$config = ITSEC_Lib_Config_File::get_wp_config();
+		
+		if ( empty( $config ) ) {
 			_e( 'There are no rules to write.', 'it-l10n-better-wp-security' );
-
+		} else {
+			echo '<div class="itsec_rewrite_rules">' . highlight_string( $config, true ) . '</div>';
 		}
-
-	}
-
-	/**
-	 * Delete htaccess rules when plugin is deactivated.
-	 *
-	 * Deletes existing rules from .htaccess allowing for a  "clean slate"
-	 * for writing the new rules.
-	 *
-	 * @since  4.0
-	 *
-	 * @access private
-	 *
-	 * @return bool true on success of false
-	 */
-	private function delete_rewrites() {
-
-		$rule_open  = array( '# BEGIN iThemes Security', '# BEGIN Better WP Security' );
-		$rule_close = array( '# END iThemes Security', '# END Better WP Security' );
-
-		$htaccess_file = ITSEC_Lib::get_htaccess();
-
-		//Make sure we can write to the file
-		$perms = substr( sprintf( '%o', @fileperms( $htaccess_file ) ), - 4 );
-
-		if ( $perms == '0444' || $this->write_files === true ) {
-			@chmod( $htaccess_file, 0664 );
-		}
-
-		//make sure the file exists and create it if it doesn't
-		if ( ! file_exists( $htaccess_file ) ) {
-
-			@touch( $htaccess_file );
-
-		}
-
-		$htaccess_contents = @file_get_contents( $htaccess_file ); //get the contents of the htaccess or nginx file
-
-		if ( $htaccess_contents === false ) { //we couldn't get the file contents
-
-			return false;
-
-		} else { //write out what we need to.
-
-			$lines = explode( PHP_EOL, $htaccess_contents ); //create an array to make this easier
-			$state = false;
-
-			foreach ( $lines as $line_number => $line ) { //for each line in the file
-
-				if ( in_array( trim( $line ), $rule_open ) !== false ) { //if we're at the beginning of the section
-					$state = true;
-				}
-
-				if ( $state == true ) { //as long as we're not in the section keep writing
-
-					unset( $lines[ $line_number ] );
-
-				}
-
-				if ( in_array( trim( $line ), $rule_close ) !== false ) { //see if we're at the end of the section
-					$state = false;
-				}
-
-			}
-
-			$htaccess_contents = trim( implode( PHP_EOL, $lines ) );
-
-			if ( strlen( $htaccess_contents ) < 1 ) {
-				$htaccess_contents = PHP_EOL;
-			}
-
-			if ( ! @file_put_contents( $htaccess_file, $htaccess_contents, LOCK_EX ) ) {
-				return false;
-			}
-
-		}
-
-		//reset file permissions if we changed them
-		if ( $perms == '0444' || $this->write_files === true ) {
-			@chmod( $htaccess_file, 0444 );
-		}
-
-		return true;
-
 	}
 
 	/**
@@ -374,15 +241,13 @@ final class ITSEC_Files {
 	 *
 	 * Writes necessary information to wp-config and .htaccess upon plugin activation.
 	 *
-	 * @since  4.0
+	 * @since  4.0.0
 	 *
 	 * @return void
 	 */
 	public function do_activate() {
-
 		$this->save_wpconfig();
 		$this->save_rewrites();
-
 	}
 
 	/**
@@ -390,15 +255,15 @@ final class ITSEC_Files {
 	 *
 	 * Writes necessary information to wp-config and .htaccess upon plugin deactivation.
 	 *
-	 * @since  4.0
+	 * @since  4.0.0
 	 *
 	 * @return void
 	 */
 	public function do_deactivate() {
-
-		$this->delete_rewrites();
-		$this->save_wpconfig();
-
+		require_once( trailingslashit( $GLOBALS['itsec_globals']['plugin_dir'] ) . 'core/lib/class-itsec-lib-config-file.php' );
+		
+		ITSEC_Lib_Config_File::reset_wp_config();
+		ITSEC_Lib_Config_File::reset_server_config();
 	}
 
 	/**
@@ -407,7 +272,7 @@ final class ITSEC_Files {
 	 * Sets up initial information such as file locations and more to make
 	 * calling quicker.
 	 *
-	 * @since  4.0
+	 * @since  4.0.0
 	 *
 	 * @return void
 	 */
@@ -415,7 +280,7 @@ final class ITSEC_Files {
 
 		$this->file_modules = apply_filters( 'itsec_file_modules', $this->file_modules );
 
-		if ( get_site_option( 'itsec_config_changed' ) == '1' || get_site_option( 'itsec_rewrites_changed' ) == '1' ) {
+		if ( '1' == get_site_option( 'itsec_config_changed' ) || '1' == get_site_option( 'itsec_rewrites_changed' ) ) {
 
 			$this->rewrites_changed = get_site_option( 'itsec_rewrites_changed' ) == '1' ? true : false;
 			$this->config_changed   = get_site_option( 'itsec_config_changed' ) == '1' ? true : false;
@@ -430,7 +295,10 @@ final class ITSEC_Files {
 	/**
 	 * Attempt to get a lock for atomic operations.
 	 *
-	 * @since  4.0
+	 * Tries to get a more robust lock on the file in question. Useful in situations where automatic
+	 * file locking doesn't work.
+	 *
+	 * @since  4.0.0
 	 *
 	 * @param string $lock_file file name of lock
 	 * @param int    $exp       seconds until lock expires
@@ -443,7 +311,7 @@ final class ITSEC_Files {
 
 		clearstatcache();
 
-		if ( isset( $itsec_globals['settings']['lock_file'] ) && $itsec_globals['settings']['lock_file'] === true ) {
+		if ( isset( $itsec_globals['settings']['lock_file'] ) && true === $itsec_globals['settings']['lock_file'] ) {
 			return true;
 		}
 
@@ -460,9 +328,9 @@ final class ITSEC_Files {
 		$lock_file = $itsec_globals['ithemes_dir'] . '/' . sanitize_text_field( $lock_file ) . '.lock';
 		$dir_age   = @filectime( $lock_file );
 
-		if ( @mkdir( $lock_file ) === false ) {
+		if ( false === @mkdir( $lock_file ) ) {
 
-			if ( $dir_age !== false ) {
+			if ( false !== $dir_age ) {
 
 				if ( ( time() - $dir_age ) > intval( $exp ) ) { //see if the lock has expired
 
@@ -486,37 +354,15 @@ final class ITSEC_Files {
 		return true; //file lock was achieved
 
 	}
-
-	/**
-	 * Retrieve config rules
-	 *
-	 * @since 4.0
-	 *
-	 * @return array rewrite rules
-	 */
-	public function get_config_rules() {
-
-		return $this->wpconfig_rules;
-
-	}
-
-	/**
-	 * Retrieve rewrite rules
-	 *
-	 * @since 4.0
-	 *
-	 * @return array rewrite rules
-	 */
-	public function get_rewrite_rules() {
-
-		return $this->rewrite_rules;
-
-	}
-
+	
 	/**
 	 * Sorts given arrays py priority key
 	 *
-	 * @since  4.0
+	 * Allows for sorting of the rules array by a specified priority deeper in the array
+	 *
+	 * @since  4.0.0
+	 *
+	 * @access private
 	 *
 	 * @param  string $a value a
 	 * @param  string $b value b
@@ -534,86 +380,65 @@ final class ITSEC_Files {
 			return $a['priority'] > $b['priority'] ? 1 : - 1;
 
 		} else {
+
 			return 1;
+
 		}
 
 	}
 
+	/**
+	 * Process quick ban of host.
+	 *
+	 * Immediately adds the supplied host to the .htaccess file for banning.
+	 *
+	 * @since 4.0.0
+	 *
+	 * @param string $host the host to ban
+	 *
+	 * @return bool true on success or false on failure
+	 */
 	public static function quick_ban( $host ) {
-
 		$host = trim( $host );
-
-		if ( ITSEC_Lib::validates_ip_address( trim( $host ) ) ) {
-
-			$htaccess_file = ITSEC_Lib::get_htaccess();
-
-			$host_rule = '#Quick ban IP. Will be updated on next formal rules save.' . PHP_EOL;
-
-			if ( ITSEC_Lib::get_server() === 'nginx' ) { //NGINX rules
-
-				$host_rule .= "\tdeny " . $host . ';' . PHP_EOL;
-
-			} else { //rules for all other servers
-
-				$dhost = str_replace( '.', '\\.', trim( $host ) ); //re-define $dhost to match required output for SetEnvIf-RegEX
-
-				$host_rule .= "SetEnvIF REMOTE_ADDR \"^" . $dhost . "$\" DenyAccess" . PHP_EOL; //Ban IP
-				$host_rule .= "SetEnvIF X-FORWARDED-FOR \"^" . $dhost . "$\" DenyAccess" . PHP_EOL; //Ban IP from Proxy-User
-				$host_rule .= "SetEnvIF X-CLUSTER-CLIENT-IP \"^" . $dhost . "$\" DenyAccess" . PHP_EOL; //Ban IP for Cluster/Cloud-hosted WP-Installs
-				$host_rule .= 'order allow,deny' . PHP_EOL;
-				$host_rule .= 'deny from env=DenyAccess' . PHP_EOL;
-				$host_rule .= 'deny from ' . trim( $host ) . PHP_EOL;
-				$host_rule .= 'allow from all' . PHP_EOL;
-
-			}
-
-			//Make sure we can write to the file
-			$perms = substr( sprintf( '%o', @fileperms( $htaccess_file ) ), - 4 );
-
-			@chmod( $htaccess_file, 0664 );
-
-			$htaccess_contents = @file_get_contents( $htaccess_file ); //get the contents of the htaccess or nginx file
-
-			if ( $htaccess_contents === false ) {
-				return false;
-			}
-
-			$htaccess_contents = preg_replace( "/(\\r\\n|\\n|\\r)/", PHP_EOL, $htaccess_contents );
-
-			if ( strpos( $htaccess_contents, '# BEGIN iThemes Security' ) !== false ) {
-
-				$htaccess_contents = str_replace( '# BEGIN iThemes Security' . PHP_EOL, '# BEGIN iThemes Security' . PHP_EOL . $host_rule, $htaccess_contents );
-
-			} else {
-
-				$htaccess_contents = '# BEGIN iThemes Security' . PHP_EOL . $host_rule . '# BEGIN iThemes Security' . PHP_EOL . $htaccess_contents;
-
-			}
-
-			@file_put_contents( $htaccess_file, $htaccess_contents, LOCK_EX );
-
-			//look for the tweaks module to see if we should reset to 0444
-			$tweaks = get_site_option( 'itsec_tweaks' );
-
-			if ( $tweaks !== false && isset( $tweaks['write_permissions'] ) ) {
-
-				$write_files = $tweaks['write_permissions'];
-
-			} else {
-
-				$write_files = false;
-
-			}
-
-			//reset file permissions if we changed them
-			if ( $perms == '0444' || $write_files === true ) {
-				@chmod( $htaccess_file, 0444 );
-			}
-
+		
+		if ( ! ITSEC_Lib::validates_ip_address( $host ) ) {
+			return false;
 		}
-
+		
+		
+		$host_rule = '# ' . __( 'Quick ban IP. Will be updated on next formal rules save.', 'it-l10n-better-wp-security' ) . "\n";
+		
+		if ( 'nginx' === ITSEC_Lib::get_server() ) {
+			$host_rule .= "\tdeny $host;\n";
+		} else if ( 'apache' === ITSEC_Lib::get_server() ) {
+			$dhost = str_replace( '.', '\\.', $host ); //re-define $dhost to match required output for SetEnvIf-RegEX
+			
+			$host_rule .= "SetEnvIF REMOTE_ADDR \"^$dhost$\" DenyAccess\n"; //Ban IP
+			$host_rule .= "SetEnvIF X-FORWARDED-FOR \"^$dhost$\" DenyAccess\n"; //Ban IP from Proxy-User
+			$host_rule .= "SetEnvIF X-CLUSTER-CLIENT-IP \"^$dhost$\" DenyAccess\n"; //Ban IP for Cluster/Cloud-hosted WP-Installs
+			$host_rule .= "<IfModule mod_authz_core.c>\n";
+			$host_rule .= "\t<RequireAll>\n";
+			$host_rule .= "\t\tRequire all granted\n";
+			$host_rule .= "\t\tRequire not env DenyAccess\n";
+			$host_rule .= "\t\tRequire not ip $host\n";
+			$host_rule .= "\t</RequireAll>\n";
+			$host_rule .= "</IfModule>\n";
+			$host_rule .= "<IfModule !mod_authz_core.c>\n";
+			$host_rule .= "\tOrder allow,deny\n";
+			$host_rule .= "\tDeny from env=DenyAccess\n";
+			$host_rule .= "\tDeny from $host\n";
+			$host_rule .= "\tAllow from all\n";
+			$host_rule .= "</IfModule>\n";
+		}
+		
+		require_once( trailingslashit( $GLOBALS['itsec_globals']['plugin_dir'] ) . 'core/lib/class-itsec-lib-config-file.php' );
+		$result = ITSEC_Lib_Config_File::append_server_config( $host_rule );
+		
+		if ( is_error( $result ) ) {
+			return false;
+		}
+		
 		return true;
-
 	}
 
 	/**
@@ -621,7 +446,7 @@ final class ITSEC_Files {
 	 *
 	 * Releases a file lock to allow others to use it.
 	 *
-	 * @since  4.0
+	 * @since  4.0.0
 	 *
 	 * @param string $lock_file file name of lock
 	 *
@@ -631,7 +456,7 @@ final class ITSEC_Files {
 
 		global $itsec_globals;
 
-		if ( isset( $itsec_globals['settings']['lock_file'] ) && $itsec_globals['settings']['lock_file'] === true ) {
+		if ( isset( $itsec_globals['settings']['lock_file'] ) && true === $itsec_globals['settings']['lock_file'] ) {
 			return true;
 		}
 
@@ -666,7 +491,9 @@ final class ITSEC_Files {
 	/**
 	 * Calls rewrite metabox action.
 	 *
-	 * @since 4.0
+	 * Executes the action to draw the htaccess rewrite rules metabox
+	 *
+	 * @since 4.0.0
 	 *
 	 * @return void
 	 */
@@ -679,43 +506,22 @@ final class ITSEC_Files {
 	/**
 	 * Echos rewrite metabox content.
 	 *
-	 * @since 4.0
+	 * Echos the rewrite rules in the dashboard.
+	 *
+	 * @since 4.0.0
 	 *
 	 * @return void
 	 */
 	public function rewrite_metabox_contents() {
-
-		foreach ( $this->file_modules as $module ) {
-
-			if ( isset( $module['rewrite'] ) ) {
-
-				call_user_func_array( $module['rewrite'], array() );
-
-			}
-
-		}
-
-		$rewrite_rules = $this->build_rewrites();
-
-		if ( is_array( $rewrite_rules ) && sizeof( $rewrite_rules ) > 0 ) {
-
-			echo '<div class="itsec_rewrite_rules" readonly>';
-			echo highlight_string( '# BEGIN iThemes Security', true ) . PHP_EOL;
-
-			foreach ( $rewrite_rules as $rule ) {
-				echo highlight_string( $rule, true ) . PHP_EOL;
-			}
-
-			echo highlight_string( '# END iThemes Security', true ) . PHP_EOL;
-
-			echo '</div>';
-
-		} else {
-
+		require_once( trailingslashit( $GLOBALS['itsec_globals']['plugin_dir'] ) . 'core/lib/class-itsec-lib-config-file.php' );
+		
+		$config = ITSEC_Lib_Config_File::get_server_config();
+		
+		if ( empty( $config ) ) {
 			_e( 'There are no rules to write.', 'it-l10n-better-wp-security' );
-
+		} else {
+			echo '<div class="itsec_rewrite_rules">' . highlight_string( $config, true ) . '</div>';
 		}
-
 	}
 
 	/**
@@ -723,70 +529,37 @@ final class ITSEC_Files {
 	 *
 	 * Gets a file lock for .htaccess and calls the writing function if successful.
 	 *
-	 * @since  4.0
+	 * @since  4.0.0
 	 *
 	 * @return mixed array or false if writing disabled or error message
 	 */
 	public function save_rewrites() {
-
-		global $itsec_globals;
-
-		if ( ! is_array( $this->file_modules ) ) {
-			return;
-		}
-
-		foreach ( $this->file_modules as $module ) {
-
-			if ( isset( $module['rewrite'] ) ) {
-
-				call_user_func_array( $module['rewrite'], array() );
-
-			}
-
-		}
-
-		if ( ITSEC_Lib::get_server() == 'nginx' || ( isset( $itsec_globals['settings']['write_files'] ) && $itsec_globals['settings']['write_files'] === true ) ) {
-
-			$success = $this->write_rewrites(); //save the return value for success/error flag
-
-			if ( $success === true ) {
-
-				if ( ITSEC_Lib::get_server() == 'nginx' ) {
-
-					return array(
-						'success' => true,
-						'text'    => sprintf(
-							'%s %s. %s',
-							__( 'Your rewrite rules have been saved to', 'it-l10n-better-wp-security' ),
-							$itsec_globals['settings']['nginx_file'],
-							__( 'You must restart your NGINX server for the settings to take effect', 'it-l10n-better-wp-security' )
-						),
-					);
-
-				} else {
-
-					return array(
-						'success' => true,
-						'text'    => true,
-					);
-
-				}
-
-			} else {
-
-				return array(
-					'success' => false,
-					'text'    => __( 'Unable to write to your .htaccess or nginx.conf file. If the problem persists contact support.', 'it-l10n-better-wp-security' ),
-				);
-
-			}
-
+		require_once( trailingslashit( $GLOBALS['itsec_globals']['plugin_dir'] ) . 'core/lib/class-itsec-lib-config-file.php' );
+		
+		$result = ITSEC_Lib_Config_File::update_server_config();
+		
+		if ( is_wp_error( $result ) ) {
+			$retval = array(
+				'success' => false,
+				'text'    => $result->get_error_message(),
+			);
 		} else {
-
-			return false;
-
+			$server = ITSEC_Lib_Utility::get_web_server();
+			
+			if ( 'nginx' === $server ) {
+				$retval = array(
+					'success' => true,
+					'text'    => __( 'You must restart your NGINX server for the settings to take effect', 'it-l10n-better-wp-security' ),
+				);
+			} else {
+				$retval = array(
+					'success' => true,
+					'text'    => true,
+				);
+			}
 		}
-
+		
+		return $retval;
 	}
 
 	/**
@@ -794,458 +567,27 @@ final class ITSEC_Files {
 	 *
 	 * Gets a file lock for wp-config.php and calls the writing function if successful.
 	 *
-	 * @since  4.0
+	 * @since  4.0.0
 	 *
 	 * @return mixed array or false if writing disabled or error message
 	 */
 	public function save_wpconfig() {
-
-		global $itsec_globals;
-
-		if ( ! is_array( $this->file_modules ) ) {
-			return;
-		}
-
-		foreach ( $this->file_modules as $module ) {
-
-			if ( isset( $module['config'] ) ) {
-
-				call_user_func_array( $module['config'], array() );
-
-			}
-
-		}
-
-		if ( isset( $itsec_globals['settings']['write_files'] ) && $itsec_globals['settings']['write_files'] === true ) {
-
-			$success = $this->write_wpconfig(); //save the return value for success/error flag
-
-			if ( $success === true ) {
-
-				return array(
-					'success' => true,
-					'text'    => true,
-				);
-
-			} else {
-
-				return array(
-					'success' => false,
-					'text'    => __( 'Unable to write to your wp-config.php file. If the problem persists contact support.', 'it-l10n-better-wp-security' ),
-				);
-
-			}
-
+		require_once( trailingslashit( $GLOBALS['itsec_globals']['plugin_dir'] ) . 'core/lib/class-itsec-lib-config-file.php' );
+		
+		$result = ITSEC_Lib_Config_File::update_wp_config();
+		
+		if ( is_wp_error( $result ) ) {
+			$retval = array(
+				'success' => false,
+				'text'    => $result->get_error_message(),
+			);
 		} else {
-
-			return false;
-
+			$retval = array(
+				'success' => true,
+				'text'    => true,
+			);
 		}
-
+		
+		return $retval;
 	}
-
-	/**
-	 * Set rewrite rules
-	 *
-	 * @since 4.0
-	 *
-	 * @param array $rewrite_rules rewrite rules
-	 *
-	 * @return void
-	 */
-	public function set_rewrite_rules( $rewrite_rules ) {
-
-		$this->rewrite_rules = $rewrite_rules;
-
-	}
-
-	/**
-	 * Set config rules
-	 *
-	 * @since 4.0
-	 *
-	 * @param array $wpconfig_rules rewrite rules
-	 *
-	 * @return void
-	 */
-	public function set_config_rules( $wpconfig_rules ) {
-
-		$this->wpconfig_rules = $wpconfig_rules;
-
-	}
-
-	/**
-	 * Sets rewrite rules (if updated after initialization).
-	 *
-	 * @since  4.0
-	 *
-	 * @param array $rules array of rules to add or replace
-	 *
-	 * @return void
-	 */
-	public function set_rewrites( $rules ) {
-
-		if ( is_array( $rules ) ) {
-
-			//Loop through each rule we send and have to find duplicates
-			foreach ( $rules as $rule ) {
-
-				$found = false;
-
-				if ( is_array( $rule ) ) {
-
-					if ( sizeof( $this->rewrite_rules ) > 0 ) {
-
-						foreach ( $this->rewrite_rules as $key => $rewrite_rule ) {
-
-							if ( $rule['name'] == $rewrite_rule['name'] ) {
-
-								$found                       = true;
-								$this->rewrite_rules[ $key ] = $rule;
-
-							}
-
-							if ( $found === true ) { //don't keep looping if we don't have to
-								break;
-							}
-
-						}
-
-					}
-
-					if ( $found === false ) {
-
-						$this->rewrite_rules[] = $rule;
-
-					} else {
-
-						break;
-
-					}
-
-				}
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Sets wp-config.php rules (if updated after initialization).
-	 *
-	 * @since  4.0
-	 *
-	 * @param array $rules array of rules to add or replace
-	 */
-	public function set_wpconfig( $rules ) {
-
-		if ( is_array( $rules ) ) {
-
-			//Loop through each rule we send and have to find duplicates
-			foreach ( $rules as $rule ) {
-
-				$found = false;
-
-				if ( is_array( $rule ) ) {
-
-					if ( sizeof( $this->wpconfig_rules ) > 0 ) {
-
-						foreach ( $this->wpconfig_rules as $key => $wpconfig_rule ) {
-
-							if ( $rule['name'] == $wpconfig_rule['name'] ) {
-
-								$found                        = true;
-								$this->wpconfig_rules[ $key ] = $rule;
-
-							}
-
-							if ( $found === true ) { //don't keep looping if we don't have to
-								break;
-							}
-
-						}
-
-					}
-
-					if ( $found === false ) {
-
-						$this->wpconfig_rules[] = $rule;
-
-					} else {
-
-						break;
-
-					}
-
-				}
-
-			}
-
-		}
-
-	}
-
-	/**
-	 * Writes given rules to htaccess or related file
-	 *
-	 * @since  4.0
-	 *
-	 * @access private
-	 *
-	 * @return bool true on success, false on failure
-	 */
-	private function write_rewrites() {
-
-		$rules_to_write = $this->build_rewrites(); //String of rules to insert into
-
-		if ( $rules_to_write === false ) { //if there is nothing to write make sure we clean up the file
-
-			return $this->delete_rewrites();
-
-		}
-
-		$rule_open  = array( '# BEGIN iThemes Security', '# BEGIN Better WP Security' );
-		$rule_close = array( '# END iThemes Security', '# END Better WP Security' );
-
-		$htaccess_file = ITSEC_Lib::get_htaccess();
-
-		//make sure the file exists and create it if it doesn't
-		if ( ! file_exists( $htaccess_file ) ) {
-
-			@touch( $htaccess_file );
-
-		}
-
-		$htaccess_contents = @file_get_contents( $htaccess_file ); //get the contents of the htaccess or nginx file
-
-		$htaccess_contents = preg_replace( "/(\\r\\n|\\n|\\r)/", PHP_EOL, $htaccess_contents );
-
-		if ( $htaccess_contents === false ) { //we couldn't get the file contents
-
-			return false;
-
-		} else { //write out what we need to.
-
-			$lines = explode( PHP_EOL, $htaccess_contents ); //create an array to make this easier
-			$state = false;
-
-			foreach ( $lines as $line_number => $line ) { //for each line in the file
-
-				if ( in_array( $line, $rule_open ) !== false ) { //if we're at the beginning of the section
-					$state = true;
-				}
-
-				if ( $state == true ) { //as long as we're not in the section keep writing
-
-					unset( $lines[ $line_number ] );
-
-				}
-
-				if ( in_array( $line, $rule_close ) !== false ) { //see if we're at the end of the section
-					$state = false;
-				}
-
-			}
-
-			if ( sizeof( $rules_to_write ) > 0 ) { //make sure we have something to write
-
-				$htaccess_contents = $rule_open[0] . PHP_EOL . implode( PHP_EOL, $rules_to_write ) . PHP_EOL . $rule_close[0] . PHP_EOL . implode( PHP_EOL, $lines );
-
-			}
-
-			//Actually write the new content to wp-config.
-			if ( $htaccess_contents !== false ) {
-
-				//Make sure we can write to the file
-				$perms = substr( sprintf( '%o', @fileperms( $htaccess_file ) ), - 4 );
-
-				@chmod( $htaccess_file, 0664 );
-
-				if ( ! @file_put_contents( $htaccess_file, $htaccess_contents, LOCK_EX ) ) {
-
-					//reset file permissions if we changed them
-					if ( $perms == '0444' || $this->write_files === true ) {
-						@chmod( $htaccess_file, 0444 );
-					}
-
-					return false;
-
-				}
-
-				//reset file permissions if we changed them
-				if ( $perms == '0444' || $this->write_files === true ) {
-					@chmod( $htaccess_file, 0444 );
-				}
-
-			}
-
-		}
-
-		return true;
-
-	}
-
-	/**
-	 * Writes given rules to wp-config.php.
-	 *
-	 * @since  4.0
-	 *
-	 * @access private
-	 *
-	 * @return bool true on success, false on failure
-	 */
-	private function write_wpconfig() {
-
-		$config_file = ITSEC_Lib::get_config();
-
-		if ( file_exists( $config_file ) ) { //check wp-config.php exists where we think it should
-
-			$config_contents = @file_get_contents( $config_file ); //get the contents of wp-config.php
-
-			if ( ! $config_contents ) { //we couldn't get wp-config.php contents
-
-				return false;
-
-			} else { //write out what we need to.
-
-				$rules_to_write  = ''; //String of rules to insert into wp-config
-				$rule_to_replace = ''; //String containing a rule to be replaced
-				$rules_to_delete = false; //assume we're not deleting anything to start
-				$replace         = false; //assume we're note replacing anything to start with
-
-				//build the rules we need to write, replace or delete
-				foreach ( $this->wpconfig_rules as $section_rule ) {
-
-					if ( is_array( $section_rule['rules'] ) ) {
-
-						foreach ( $section_rule['rules'] as $rule ) {
-
-							$found = false;
-
-							if ( ( $rule['type'] === 'add' ) && $rule['rule'] !== false ) { //new rule or replacing a rule that doesn't exist
-
-								$rules_to_write .= $rule['rule'] . PHP_EOL;
-
-							} elseif ( $rule['type'] === 'replace' && $rule['rule'] !== false && strpos( $config_contents, $rule['search_text'] ) !== false ) {
-
-								//Replacing a rule that does exist. Note this will only work on one rule at a time
-								$replace = $rule['search_text'];
-								$rule_to_replace .= $rule['rule'];
-								$found = true;
-
-							}
-
-							if ( $found !== true ) {
-
-								//deleting a rule.
-								if ( $rules_to_delete === false ) {
-									$rules_to_delete = array();
-								}
-
-								$rules_to_delete[] = $rule;
-
-							}
-
-						}
-
-					}
-
-				}
-
-				//deleting a rule.
-				if ( $rules_to_delete === false ) {
-					$rules_to_delete = array();
-				}
-
-				$rules_to_delete[]['search_text'] = "BWPS_FILECHECK";
-				$rules_to_delete[]['search_text'] = "BWPS_AWAY_MODE";
-
-				//delete and replace
-				if ( $replace !== false || is_array( $rules_to_delete ) ) {
-
-					$config_array = explode( PHP_EOL, $config_contents );
-
-					if ( is_array( $rules_to_delete ) ) {
-						$delete_count = 0;
-						$delete_total = sizeof( $rules_to_delete );
-					} else {
-						$delete_total = 0;
-						$delete_count = 0;
-					}
-
-					foreach ( $config_array as $line_number => $line ) {
-
-						if ( strpos( $line, $replace ) !== false ) {
-							$config_array[ $line_number ] = $rule_to_replace;
-						}
-
-						if ( $delete_count < $delete_total ) {
-
-							foreach ( $rules_to_delete as $rule ) {
-
-								if ( strpos( $line, $rule['search_text'] ) !== false ) {
-
-									unset( $config_array[ $line_number ] );
-
-									//delete the following line(s) if they is blank
-									$count = 1;
-									while ( isset( $config_array[ $line_number + $count ] ) && strlen( trim( $config_array[ $line_number + $count ] ) ) < 1 ) {
-
-										unset( $config_array[ $line_number + 1 ] );
-
-									}
-
-									$delete_count ++;
-
-								}
-
-							}
-
-						}
-
-					}
-
-					$config_contents = implode( PHP_EOL, $config_array );
-
-				}
-
-				//Adding a new rule or replacing rules that don't exist
-				if ( strlen( $rules_to_write ) > 1 ) {
-					$config_contents = str_replace( '<?php' . PHP_EOL, '<?php' . PHP_EOL . $rules_to_write . PHP_EOL, $config_contents );
-				}
-
-			}
-
-		}
-
-		//Actually write the new content to wp-config.
-		if ( isset( $config_contents ) && $config_contents !== false ) {
-
-			//Make sure we can write to the file
-			$perms = substr( sprintf( '%o', @fileperms( $config_file ) ), - 4 );
-
-			@chmod( $config_file, 0664 );
-
-			if ( ! @file_put_contents( $config_file, $config_contents, LOCK_EX ) ) {
-
-				//reset file permissions if we changed them
-				if ( $perms == '0444' || $this->write_files === true ) {
-					@chmod( $config_file, 0444 );
-				}
-
-				return false;
-			}
-
-			//reset file permissions if we changed them
-			if ( $perms == '0444' || $this->write_files === true ) {
-				@chmod( $config_file, 0444 );
-			}
-
-		}
-
-		return true;
-
-	}
-
 }
