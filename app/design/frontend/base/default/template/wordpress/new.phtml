@@ -1,0 +1,21 @@
+ 
+<?php if (($_products = $this->getProductCollection()) && $_products->getSize()): ?>
+<h2 class="subtitle"><?php echo $this->__('Our Featured Products') ?></h2>
+<?php $_columnCount = $this->getColumnCount(); ?>
+    <?php $i=0; foreach ($_products->getItems() as $_product): ?>
+        <?php if ($i++%$_columnCount==0): ?>
+        <ul class="products-grid">
+        <?php endif ?>
+            <li style="width:15%; margin-right:1%; clear:none;" class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>" class="product-image">
+                	<img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(135) ?>" width="135" height="135" alt="<?php echo $this->escapeHtml($_product->getName()) ?>" />
+                </a>
+                <h3 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->escapeHtml($_product->getName()) ?>"><?php echo $this->escapeHtml($_product->getName()) ?></a></h3>
+                <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+ 
+            </li>
+        <?php if ($i%$_columnCount==0 || $i==count($_products)): ?>
+        </ul>
+        <?php endif ?>
+    <?php endforeach; ?>
+<?php endif; ?>
