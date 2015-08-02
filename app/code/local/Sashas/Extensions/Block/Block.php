@@ -13,6 +13,7 @@ class Sashas_Extensions_Block_Block extends Mage_Cms_Block_Block
      */
     public function getCacheKeyInfo()
     {
+        
         if ($this->getBlockId()) {
             return array(
                     Mage_Cms_Model_Block::CACHE_TAG,
@@ -23,5 +24,5 @@ class Sashas_Extensions_Block_Block extends Mage_Cms_Block_Block
         } else {
             return parent::getCacheKeyInfo();
         }
-    }
+    } 
 }
