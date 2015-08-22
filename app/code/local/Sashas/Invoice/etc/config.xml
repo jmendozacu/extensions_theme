@@ -31,7 +31,7 @@
         		<class>Sashas_Invoice_Helper</class>        		
         	</invoice>
         </helpers> 
-        <resources>
+		<resources>
             <invoice_setup>
                 <setup>
                     <module>Sashas_Invoice</module>
@@ -50,7 +50,12 @@
                     <use>core_read</use>
                 </connection>
             </invoice_read>
-       </resources>   
+		</resources>   
+		<pdf>
+            <sashas_invoice>
+                <default>invoice/pdf_items_default</default>                 
+            </sashas_invoice>
+		</pdf>       
   </global>
   <admin>
 	 <routers>

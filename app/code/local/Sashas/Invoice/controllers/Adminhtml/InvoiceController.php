@@ -40,7 +40,14 @@ class Sashas_Invoice_Adminhtml_InvoiceController extends Mage_Sales_Controller_A
 	
 	public function saveAction()
 	{  
-		$pdf = Mage::getModel('invoice/pdf_invoice')->getPdf($orders);	    
+	    /*dummy data*/
+	    $invoice= new Varien_Object;
+	    $data=array('invoice_id'=>'123',
+	            
+	            	);
+	    $invoice->setData($data);
+	    /*live*/
+		$pdf = Mage::getModel('invoice/pdf_invoice')->getPdf($invoice);	    
 		    	     	    
         return $this->_prepareDownloadResponse(
 			'sashasitsupport_invoice_'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf', $pdf->render(),
