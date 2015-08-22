@@ -196,7 +196,7 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
 					),
 			);		              
         }
-        die('invoice.php');
+        
         $this->y -= 20;
         $page = $this->drawLineBlocks($page, array($lineBlock));
         return $page;

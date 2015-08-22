@@ -46,6 +46,7 @@ class Sashas_Invoice_Helper_Data extends Mage_Core_Helper_Abstract
 			                'label'=>'Total',
 			                'amount'=>$total_amount,
 			        );
+			         
 			        $totalItems->addItem(new Varien_Object($totalData1));
 			        $totalItems->addItem(new Varien_Object($totalData2));
 			        $totalItems->addItem(new Varien_Object($totalData3));
