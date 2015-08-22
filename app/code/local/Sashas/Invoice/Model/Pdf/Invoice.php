@@ -8,7 +8,7 @@
  */
 
 class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstract{
-    
+       
     /**
      * Insert logo to pdf page
      *
@@ -47,7 +47,8 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
          
         $this->_beforeGetPdf();
         $this->_initRenderer('sashas_invoice');
-    
+    	$this->_invoice_type=$invoice->getType();
+    	 
         $pdf = new Zend_Pdf();
         $this->_setPdf($pdf);
         $style = new Zend_Pdf_Style();
@@ -64,35 +65,29 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
     
 		/* Add head */
 		$this->insertOrder($page, $invoice);    
-    		
-		$this->_setFontRegular($page);              
-		/* Add table */		 
-		$page->setLineColor(new Zend_Pdf_Color_GrayScale(0));
-		$page->setLineWidth(0.5);
-    
+		    			            
+		/* Add table */
+		$this->_setFontRegular($page);
+		$page->setLineWidth(0.5);    
+		$page->setFillColor(new Zend_Pdf_Color_GrayScale(1));
 		$page->drawRectangle(25, $this->y, 570, $this->y -15);
 		$this->y -=10;
     
 		/* Add table head */
-		//$page->setFillColor(new Zend_Pdf_Color_RGB(0.4, 0.4, 0.4));
-		$page->drawText(Mage::helper('sales')->__('Description'), 35, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('SKU'), 255, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('Price'), 380, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('Qty'), 430, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('Tax'), 480, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('Subtotal'), 535, $this->y, 'UTF-8');
-    
-            $this->y -=15;
-    
-            $page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
-    
+		$page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
+		$page->drawText(Mage::helper('sales')->__('Date'), 35, $this->y, 'UTF-8');
+            $page->drawText(Mage::helper('sales')->__('Description'), 85, $this->y, 'UTF-8');           
+            $page->drawText(Mage::helper('sales')->__('Time/Price'), 535, $this->y, 'UTF-8');
+  
+            $this->y -=15; 
+            $this->_setFontRegular($page);
             /* Add body */
-            foreach ($invoice->getAllItems() as $item){
+            foreach ($invoice->getItems() as $item){
                 if ($this->y < 15) {
                     $page = $this->newPage(array('table_header' => true));
-                }
-    
-                /* Draw item */
+                }                
+                /* Draw item */             
+                 
                 $page = $this->_drawItem($item, $page, $invoice);
             }
     
@@ -119,18 +114,16 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
     
         if (!empty($settings['table_header'])) {
             $this->_setFontRegular($page);
-            $page->setFillColor(new Zend_Pdf_Color_RGB(0.93, 0.92, 0.92));
-            $page->setLineColor(new Zend_Pdf_Color_GrayScale(0.5));
+            $page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
+            $page->setLineColor(new Zend_Pdf_Color_GrayScale(0));
             $page->setLineWidth(0.5);
             $page->drawRectangle(25, $this->y, 570, $this->y-15);
             $this->y -=10;
                
-            $page->drawText(Mage::helper('sales')->__('Product'), 35, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('SKU'), 255, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('Price'), 380, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('Qty'), 430, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('Tax'), 480, $this->y, 'UTF-8');
-            $page->drawText(Mage::helper('sales')->__('Subtotal'), 535, $this->y, 'UTF-8');
+            $page->drawText(Mage::helper('sales')->__('Date'), 35, $this->y, 'UTF-8');
+            $page->drawText(Mage::helper('sales')->__('Description'), 85, $this->y, 'UTF-8');           
+            $page->drawText(Mage::helper('sales')->__('Time/Price'), 535, $this->y, 'UTF-8');
+             
     
             $page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
             $this->y -=20;
@@ -139,17 +132,14 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
         return $page;
     }  
 
-    protected function _drawItem(Varien_Object $item, Zend_Pdf_Page $page, Mage_Sales_Model_Order $invoice)
-    {
-        $item->setQty($item->getQtyOrdered());
-        $type = $item->getProductType();
-        $renderer = $this->_getRenderer($type);
-        $renderer->setOrder($invoice);
+    protected function _drawItem(Varien_Object $item, Zend_Pdf_Page $page, Varien_Object $invoice)
+    {        
+        $renderer = $this->_getRenderer('default');
+        $renderer->setInvoice($invoice);
         $renderer->setItem($item);
         $renderer->setPdf($this);
         $renderer->setPage($page);
         $renderer->setRenderedModel($this);
-
         $renderer->draw();
 
         return $renderer->getPage();
@@ -166,12 +156,8 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
      
         $page->drawText(Mage::helper('sales')->__('Invoice Date: ') . date( 'n/d/Y', strtotime( 'now')), 35, $this->y-10, 'UTF-8');
         $page->drawText(Mage::helper('sales')->__('Paypal Email: ') . 'asashas@mail.ru', 35, $this->y-20, 'UTF-8');
-             
-        $page->setLineColor(new Zend_Pdf_Color_GrayScale(0));
-        $page->setLineWidth(0); 
-        $this->_setFontRegular($page);
+ 
         $this->y = $this->y-40;         
     }
-    
-    
+   
 }

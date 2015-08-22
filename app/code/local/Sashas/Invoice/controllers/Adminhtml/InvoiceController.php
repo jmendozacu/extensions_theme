@@ -42,10 +42,33 @@ class Sashas_Invoice_Adminhtml_InvoiceController extends Mage_Sales_Controller_A
 	{  
 	    /*dummy data*/
 	    $invoice= new Varien_Object;
-	    $data=array('invoice_id'=>'123',
-	            
+	    $data=array(
+	            	 'invoice_id'=>'123',	            	
 	            	);
+	    
+	    $nvoiceItems=new Varien_Data_Collection();
+	    
+	    $invoiceItem= new Varien_Object;
+	    $itemData=array(
+	            'date'=>strtotime('now'),
+	            'description'=>'asdasdasdasdasdasd',
+	            'value'=>'1:43',
+	            );
+	    $invoiceItem->setData($itemData);
+	    
+	    $itemData2=array(
+	            'date'=>strtotime('now'),
+	            'description'=>'bbbbbbbbbbbbbbbbbbbbbbbbasdasdasdasdsadasdasdasasdasdsadasdasdasdasdasdasdasdasddasdasdsadasdasdasdasdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+	            'value'=>'20',
+	    );	    
+	    $invoiceItem2= new Varien_Object;	    
+	    $invoiceItem2->setData($itemData2);	    
+	    
+	    $nvoiceItems->addItem($invoiceItem);
+	    $nvoiceItems->addItem($invoiceItem2);
+	    $data['items']=$nvoiceItems;
 	    $invoice->setData($data);
+	    
 	    /*live*/
 		$pdf = Mage::getModel('invoice/pdf_invoice')->getPdf($invoice);	    
 		    	     	    
@@ -54,7 +77,7 @@ class Sashas_Invoice_Adminhtml_InvoiceController extends Mage_Sales_Controller_A
 			'application/pdf'
 		);        
 	   
-	    die();
+	    die('controller');
 	    /*File*/
 		if(isset($_FILES['filecsv']['name']) and (file_exists($_FILES['filecsv']['tmp_name']))) {
 			try {
