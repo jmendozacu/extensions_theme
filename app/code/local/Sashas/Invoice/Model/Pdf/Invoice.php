@@ -178,7 +178,7 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
                 $amount=Mage::helper('core')->currency($total->getAmount(), true, false);
             else
                 $amount=Mage::helper('core/string')->str_split($total->getAmount(),10);
-            
+             
 			$lineBlock['lines'][] = array(
 				array(
 					'text' => $total->getlabel(), 
@@ -196,7 +196,7 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
 					),
 			);		              
         }
-    
+        die('invoice.php');
         $this->y -= 20;
         $page = $this->drawLineBlocks($page, array($lineBlock));
         return $page;

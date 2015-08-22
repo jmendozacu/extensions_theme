@@ -21,7 +21,7 @@ class Sashas_Invoice_Helper_Data extends Mage_Core_Helper_Abstract
 				 
 		$invoiceData=array();
 		
-		$invoiceItems=new Varien_Data_Collection();
+		$invoiceItems=new Varien_Data_Collection();		 
 		
 		if (($handle = $fileStream->streamOpen($file, "r")) !== FALSE) {
 			while (($data = $fileStream->streamReadCsv()) !== FALSE) {
@@ -31,6 +31,7 @@ class Sashas_Invoice_Helper_Data extends Mage_Core_Helper_Abstract
 			        $total_amount=trim($data[2]);
 			        $subtotal_amount=trim($data[3]);
 			        $invoiceData['invoice_id']=$invoice_id;
+			        
 			        /*Totals*/
 			        $totalItems=new Varien_Data_Collection();
 			        $totalData1=array(
@@ -48,8 +49,10 @@ class Sashas_Invoice_Helper_Data extends Mage_Core_Helper_Abstract
 			        $totalItems->addItem(new Varien_Object($totalData1));
 			        $totalItems->addItem(new Varien_Object($totalData2));
 			        $totalItems->addItem(new Varien_Object($totalData3));
+			        
 			        $invoiceData['totals']=$totalItems;			        
 			        /*Totals*/
+			        $row++;
 			        continue;
 			    }
 			    
@@ -63,9 +66,10 @@ class Sashas_Invoice_Helper_Data extends Mage_Core_Helper_Abstract
 				        'value'=>$time,
 				);
 				$invoiceItems->addItem(new Varien_Object($itemData));
-				
+				$row++;
 			}
 			$invoiceData['items']=$invoiceItems;
+			 
 			$invoice->setData($invoiceData); 
 		}
 		fclose($handle);
