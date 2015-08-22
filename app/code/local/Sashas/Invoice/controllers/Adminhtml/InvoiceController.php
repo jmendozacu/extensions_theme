@@ -40,44 +40,7 @@ class Sashas_Invoice_Adminhtml_InvoiceController extends Mage_Adminhtml_Controll
 	
 	public function saveAction()
 	{  
-	    /*dummy data*/
-	    $invoice= new Varien_Object;
-	    $data=array(
-	            	 'invoice_id'=>'123',	            	
-	            	);
-	    
-	    $nvoiceItems=new Varien_Data_Collection();
-	    
-	    $invoiceItem= new Varien_Object;
-	    $itemData=array(
-	            'date'=>strtotime('now'),
-	            'description'=>'asdasdasdasdasdasd',
-	            'value'=>'1:43',
-	            );
-	    $invoiceItem->setData($itemData);
-	    
-	    $itemData2=array(
-	            'date'=>strtotime('now'),
-	            'description'=>'bbbbbbbbbbbbbbbbbbbbbbbbasdasdasdasdsadasdasdasasdasdsadasdasdasdasdasdasdasdasddasdasdsadasdasdasdasdbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-	            'value'=>'20',
-	    );	    
-	    $invoiceItem2= new Varien_Object;	    
-	    $invoiceItem2->setData($itemData2);	    
-	    
-	    $nvoiceItems->addItem($invoiceItem);
-	    $nvoiceItems->addItem($invoiceItem2);
-	    $data['items']=$nvoiceItems;
-	    $invoice->setData($data);
-	    
-	    /*live*/
-		$pdf = Mage::getModel('invoice/pdf_invoice')->getPdf($invoice);	    
-		    	     	    
-        return $this->_prepareDownloadResponse(
-			'sashasitsupport_invoice_'.Mage::getSingleton('core/date')->date('Y-m-d_H-i-s').'.pdf', $pdf->render(),
-			'application/pdf'
-		);        
-	   
-	    die('controller');
+ 
 	    /*File*/
 		if(isset($_FILES['filecsv']['name']) and (file_exists($_FILES['filecsv']['tmp_name']))) {
 			try {
@@ -89,8 +52,15 @@ class Sashas_Invoice_Adminhtml_InvoiceController extends Mage_Adminhtml_Controll
 				if (file_exists($path.$filename))
 					unlink ($path.$filename);
 				$uploader->save($path, $filename);
-				$this->_getHelper()->processfile($path.$filename);
-				Mage::getSingleton('core/session')->addSuccess("File was succefully processed.");
+				$invoice=$this->_getHelper()->processfile($path.$filename);
+				/*Generate Invoice Pdf*/				 
+				$pdf = Mage::getModel('invoice/pdf_invoice')->getPdf($invoice);
+				 
+				return $this->_prepareDownloadResponse(
+				        'sashasitsupport_invoice_'.$invoice->getInvoiceId().'.pdf', $pdf->render(),
+				        'application/pdf'
+				);				
+				/*Generate Invoice Pdf*/
 			}catch(Exception $e) {
 				Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
 			}

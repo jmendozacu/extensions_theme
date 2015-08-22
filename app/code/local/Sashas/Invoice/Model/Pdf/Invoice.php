@@ -86,13 +86,12 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
                 if ($this->y < 15) {
                     $page = $this->newPage(array('table_header' => true));
                 }                
-                /* Draw item */             
-                 
+                /* Draw item */                              
                 $page = $this->_drawItem($item, $page, $invoice);
             }
     
 		/* Add totals */            
-		//$page = $this->insertTotals($page, $invoice);
+		$page = $this->insertTotals($page, $invoice);
               
         $this->_afterGetPdf();
     
@@ -160,4 +159,46 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
         $this->y = $this->y-40;         
     }
    
+    
+    /**
+     * Insert totals to pdf page
+     *
+     * @param  Zend_Pdf_Page $page
+     * @param  Mage_Sales_Model_Abstract $source
+     * @return Zend_Pdf_Page
+     */
+    protected function insertTotals($page, $source){
+        $invoice= $source;         
+        $lineBlock = array(
+                'lines'  => array(),
+                'height' => 15
+        );
+        foreach ($invoice->getTotals() as $total) {            
+            if (strpos($total->getAmount(), ":")===false )
+                $amount=Mage::helper('core')->currency($total->getAmount(), true, false);
+            else
+                $amount=Mage::helper('core/string')->str_split($total->getAmount(),10);
+            
+			$lineBlock['lines'][] = array(
+				array(
+					'text' => $total->getlabel(), 
+					'feed' => 475, 
+					'align' => 'right', 
+					'font_size' => 10, 
+					'font' => 'bold'
+				),
+				array(
+					'text'      => $amount,
+					'feed'      => 565,
+					'align'     => 'right',
+					'font_size' => 10,
+					'font'      => 'bold'
+					),
+			);		              
+        }
+    
+        $this->y -= 20;
+        $page = $this->drawLineBlocks($page, array($lineBlock));
+        return $page;
+    }
 }
