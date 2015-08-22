@@ -8,7 +8,7 @@ class Sashas_Extensions_Block_Block extends Mage_Cms_Block_Block
 
     /**
      * If this block has a block id, use that as the cache key.
-     *
+     * @todo replaced in 1.9.2.1
      * @return array
      */
     public function getCacheKeyInfo()
