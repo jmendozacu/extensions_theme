@@ -7,11 +7,11 @@
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
 
-class Sashas_Invoice_Adminhtml_InvoiceController extends Mage_Sales_Controller_Abstract {
+class Sashas_Invoice_Adminhtml_InvoiceController extends Mage_Adminhtml_Controller_Action {
 	
 	public function _initAction()
 	{
-		$this->loadLayout()->_setActiveMenu('sales/invoice') ->_addBreadcrumb(
+		$this->loadLayout()->_setActiveMenu('sales') ->_addBreadcrumb(
                 Mage::helper('invoice')->__('Invoice'),
                 Mage::helper('invoice')->__('Upload')
             );		 
