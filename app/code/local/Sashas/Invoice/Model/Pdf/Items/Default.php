@@ -22,7 +22,7 @@ class Sashas_Invoice_Model_Pdf_Items_Default extends Mage_Sales_Model_Order_Pdf_
         $lines  = array();
         $this->_setFontRegular();
         $lines[0] = array(array(
-            'text' => Mage::helper('core/string')->str_split(date( 'n/d/Y', strtotime($item->getDate())), 20),
+            'text' => Mage::helper('core/string')->str_split(date( 'n/d/Y', $item->getDate()), 20),
             'feed' => 35,
             'align' => 'left',
             'font'=>'regular',

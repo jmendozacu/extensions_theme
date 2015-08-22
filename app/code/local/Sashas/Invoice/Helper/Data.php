@@ -28,8 +28,8 @@ class Sashas_Invoice_Helper_Data extends Mage_Core_Helper_Abstract
 			    if ($row==0) {
 			        $invoice_id=trim($data[0]);
 			        $total_time=trim($data[1]);
-			        $total_amount=trim($data[2]);
-			        $subtotal_amount=trim($data[3]);
+			        $total_amount=str_replace('$','',trim($data[2]));
+			        $subtotal_amount=str_replace('$','',trim($data[3]));
 			        $invoiceData['invoice_id']=$invoice_id;
 			        
 			        /*Totals*/
@@ -60,7 +60,7 @@ class Sashas_Invoice_Helper_Data extends Mage_Core_Helper_Abstract
 				$date = trim($data[0]);				 
 				$time=trim($data[3]);
 				$description=trim($data[4]);
-
+ 
 				$itemData=array(
 				        'date'=>strtotime($date),
 				        'description'=>$description,
