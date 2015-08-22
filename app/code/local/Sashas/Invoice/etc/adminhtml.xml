@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Invoice
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+     <menu>
+     	<sales>
+        	<children>
+        		<invoice translate="title" module="invoice">
+                	<title>Sashas Invoice</title>
+                	<action>adminhtml/invoice/</action> 
+                	<sort_order>250</sort_order>
+		            <depends>
+		                <module>Mage_Sales</module>
+		            </depends>                	
+            	</invoice>
+        	</children>
+     	</sales>            
+    </menu> 
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>             
+		            <sales>
+		                <children>                                                                            	
+		                	<invoice translate="title"  module="invoice">
+		                    	<title>Sashas Invoice</title>	                    	
+		               		</invoice>                                			
+		                </children>
+		            </sales>
+            	</children>
+           	</admin>               
+        </resources>
+    </acl>
+</config>

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Invoice
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+-->
+<config>
+    <modules>
+        <Sashas_Invoice>
+            <version>1.0.0</version>
+        </Sashas_Invoice>
+    </modules> 
+ <global>
+        <blocks>
+            <invoice>
+                <class>Sashas_Invoice_Block</class>
+            </invoice>                  
+        </blocks>   
+        <models>
+        	<invoice>
+        		<class>Sashas_Invoice_Model</class>
+        		<resourceModel>invoice_mysql4</resourceModel>
+        	</invoice> 
+        </models>  
+        <helpers>
+        	<invoice>
+        		<class>Sashas_Invoice_Helper</class>        		
+        	</invoice>
+        </helpers> 
+        <resources>
+            <invoice_setup>
+                <setup>
+                    <module>Sashas_Invoice</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </invoice_setup>
+            <invoice_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </invoice_write>
+            <invoice_read>
+                <connection> 
+                    <use>core_read</use>
+                </connection>
+            </invoice_read>
+       </resources>   
+  </global>
+  <admin>
+	 <routers>
+		 <invoice>
+			 <use>admin</use>
+			 <args>
+			 	<module>Sashas_Invoice</module>
+			 	<frontName>invoice</frontName>
+			 </args>
+		 </invoice>
+            <adminhtml>                 
+                <args>
+                    <modules> 
+                    	<Sashas_Invoice before="Mage_Adminhtml">Sashas_Invoice_Adminhtml</Sashas_Invoice>
+                    </modules>
+                </args>
+            </adminhtml>       	 
+	 </routers>
+  </admin> 
+</config>
+
+
