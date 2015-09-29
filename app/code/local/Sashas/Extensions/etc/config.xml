@@ -59,7 +59,17 @@
                     <use>core_read</use>
                 </connection>
             </extensions_read>
-		</resources>                         
+		</resources>
+		<page>
+			<layouts>
+				<extensions_aboutus>
+					<label>Extensions About Us</label>
+					<template>extensions/page/about-us.phtml</template>
+					 <layout_handle>extensions_aboutus</layout_handle>
+				</extensions_aboutus>
+			</layouts>  		
+		</page>       
+                 
 	</global>  	  
 	<frontend>
 		<routers>
