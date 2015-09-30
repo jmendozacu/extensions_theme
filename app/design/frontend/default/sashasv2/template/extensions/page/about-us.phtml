@@ -25,8 +25,7 @@
 	                    <span class="icon-bar"></span>
 	                </button>
 					                    <a href="http://www.thematicwebs.com/demo/wp/eventix/layout1" class="navbar-brand logo">
-						<img src="Eventix%20%E2%80%93%20Layout1%20%E2%80%93%20Demo_files/logo.png" alt="" style="height:32px !important; width:157px !important;">
-						<img src="Eventix%20%E2%80%93%20Layout1%20%E2%80%93%20Demo_files/logo-dark.png" class="dark-logo-img" alt="" style="height: 32px ! important; width: 157px ! important; display: block;">
+						<img src="<?php  echo  $this->getSkinUrl(Mage::getStoreConfig('design/header/logo_src')); ?>" alt="" >						
 					</a>
 					                </div><!-- Collect the nav links, forms, and other content for toggling -->
 				                <div class="collapse navbar-collapse" id="header-navigation">
@@ -116,7 +115,7 @@
 			</div>
 			<div class="col-md-4 text-center rounded_image">
 				<a href="https://vimeo.com/110802348" class="video-link">
-				<img style="visibility: visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: bounceIn;" src="Eventix%20%E2%80%93%20Layout1%20%E2%80%93%20Demo_files/video.png" class="wow bounceIn img-responsive animated" data-wow-duration="1s" data-wow-offset="10" data-wow-delay=".3s" alt=""></a>
+				<img style="visibility: visible; animation-duration: 1s; animation-delay: 0.3s; animation-name: bounceIn;" src="<?php  echo  $this->getSkinUrl('images/aboutus/video.png'); ?>" class="wow bounceIn img-responsive animated" data-wow-duration="1s" data-wow-offset="10" data-wow-delay=".3s" alt=""></a>
 			</div>
 			<div class="col-md-4 text-left right-wrapper">
 				<h3>Lorem ipsum set</h3>

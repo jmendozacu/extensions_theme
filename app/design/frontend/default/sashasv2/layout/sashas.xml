@@ -128,12 +128,13 @@
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/styles.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/bootstrap/bootstrap.min.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/styles.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/owl/owl.carousel.css</name></action>
+			 
 			<action method="addItem"><type>skin_js</type><name>js/aboutus/bootstrap/bootstrap.min.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/aboutus/parallax/jquery.parallax-1.1.3.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/aboutus/waypoints/jquery.waypoints.min.js</name></action>
-			<action method="addItem"><type>link_rel</type><href>//fonts.googleapis.com/css?family=Montserrat:400,700</href></action>
-			 
-			  
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/owl/owl.carousel.min.js</name></action>					 
+			   
 			<!-- About Us Files -->
  		</reference>
  >
