@@ -70,7 +70,8 @@
  	</checkout_cart_index>
  	
  	<extensions_aboutus  translate="label">
- 		<reference name="head"> 			 
+ 		<reference name="head"> 	
+ 			<action method="setTemplate"><template>page/html/aboutus-head.phtml</template></action>		 
 			<action method="removeItem"><type>skin_css</type><name>css/sh/shThemeDefault.css</name></action>
 			<action method="removeItem"><type>skin_css</type><name>css/sh/shCore.css</name></action>
 			<action method="removeItem"><type>skin_css</type><name>css/qanda/style.css</name></action>
@@ -118,6 +119,23 @@
 			<action method="removeItem"><type>skin_css</type><name>css/styles.css</name></action>
 			<action method="removeItem"><type>skin_css</type><name>css/madisonisland.css</name></action>
 			<!-- General Styles --> 	
+			<!-- Remove Blocks -->
+			<remove name="js_cookies"/>
+			 
+			<!-- Remove Blocks -->
+			
+			<!-- About Us Files -->
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/styles.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/bootstrap/bootstrap.min.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/styles.css</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/bootstrap/bootstrap.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/parallax/jquery.parallax-1.1.3.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/waypoints/jquery.waypoints.min.js</name></action>
+			<action method="addItem"><type>link_rel</type><href>//fonts.googleapis.com/css?family=Montserrat:400,700</href></action>
+			 
+			  
+			<!-- About Us Files -->
  		</reference>
+ >
  	</extensions_aboutus>
 </layout>
