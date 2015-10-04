@@ -94,7 +94,7 @@
             <action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
             <action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
             <action method="removeItem"><type>skin_js</type><name>js/lib/imagesloaded.js</name></action>
-             <action method="removeItem"><type>skin_js</type><name>js/lib/enquire.js</name></action>
+            <action method="removeItem"><type>skin_js</type><name>js/lib/enquire.js</name></action>
             <action method="removeItem"><type>link_rel</type><href>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href></action>
             <action method="removeItem"><type>skin_js</type><name>js/minicart.js</name></action>			
 			<!-- RWD -->			 			
@@ -129,14 +129,27 @@
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/bootstrap/bootstrap.min.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/styles.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/owl/owl.carousel.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/owl/owl.theme.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/awesome/font-awesome.min.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/animate/animate.min.css</name></action>
 			 
 			<action method="addItem"><type>skin_js</type><name>js/aboutus/bootstrap/bootstrap.min.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/aboutus/parallax/jquery.parallax-1.1.3.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/aboutus/waypoints/jquery.waypoints.min.js</name></action>
 			<action method="addItem"><type>skin_js</type><name>js/aboutus/owl/owl.carousel.min.js</name></action>					 
-			   
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/aboutus.js</name></action>			
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/jquery.nav.js</name></action>	
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/wow/wow.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/circletype/circletype.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/circletype/plugins.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/jquery.lettering.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/jquery.easing.1.3.js</name></action>
+			
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/respond/respond.min.js</name><params/><if>lt IE 9</if></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/html5shiv-printshiv.js</name><params/><if>lt IE 9</if></action>
+	 
 			<!-- About Us Files -->
  		</reference>
- >
+  
  	</extensions_aboutus>
 </layout>

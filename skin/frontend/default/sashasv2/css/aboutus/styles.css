@@ -2720,3 +2720,12 @@ table a
 }
 /* Orange.css*/
  
+.not-visible {visibility: hidden !important;}
+
+/*Parallax*/
+#testimonials {background: url(../../images/aboutus/parallax/gallery-bg.jpg) transparent no-repeat fixed;}
+/*
+ * background: transparent url(&quot;http://www.thematicwebs.com/demo/wp/eventix/layout1/wp-content/uploads/2015/07/gallery-bg.jpg&quot;) no-repeat fixed
+ */
+#features {background: url(../../images/aboutus/parallax/feature-bg.png) transparent  no-repeat fixed;}
+#main-section { background-image: url(../../images/aboutus/parallax/main-bg.jpg);}
