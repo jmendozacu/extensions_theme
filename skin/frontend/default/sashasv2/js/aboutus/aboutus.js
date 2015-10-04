@@ -10,6 +10,14 @@ jQuery(document).ready(function(jQuery) {
 		}
 	})
 	
+	jQuery(window).on('resize', function(){
+		if( jQuerywindow .width() > 800){
+			jQuery('.parallax-scroll1').parallax("50%", 0.5);
+			jQuery('.parallax-scroll2').parallax("50%", 0.5);
+			jQuery('.parallax-scroll3').parallax("50%", 0.5);		 
+		}
+	});
+	
 	jQuerywindow = jQuery(window);
 	if( jQuerywindow .width() > 800){
 		jQuery('.parallax-scroll1').parallax("50%", 0.5);
@@ -45,19 +53,19 @@ jQuery(document).ready(function(jQuery) {
 	var test = 0;
 	
 	var jQuerynavbar = jQuery('.navbar');
-	var jQuerywhite_logo_img = jQuery('.white-logo-img');
-	var jQuerydark_logo_img = jQuery('.dark-logo-img');
-	
+	var jQuery_logo_img = jQuery('.logo img');
+ 
 	function scrolled(test){
 		
 		if(test === 0){
 			jQuerynavbar.stop().addClass("sticky-navbar");
-			jQuerywhite_logo_img.fadeOut();
-			jQuerydark_logo_img.fadeIn();
+			var src =jQuery_logo_img.attr("src").replace("gray", "white");
+			jQuery_logo_img.attr("src", src);			
+			 
 		}else{
 			jQuerynavbar.stop().removeClass("sticky-navbar");
-			jQuerydark_logo_img.fadeOut();
-			jQuerywhite_logo_img.fadeIn();
+			var src =jQuery_logo_img.attr("src").replace("white", "gray");
+			jQuery_logo_img.attr("src", src);	
 		}
 	}
 	jQuery(document).on('click','.navbar-collapse.in',function(e) {

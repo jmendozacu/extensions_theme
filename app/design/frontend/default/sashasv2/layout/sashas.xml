@@ -96,7 +96,9 @@
             <action method="removeItem"><type>skin_js</type><name>js/lib/imagesloaded.js</name></action>
             <action method="removeItem"><type>skin_js</type><name>js/lib/enquire.js</name></action>
             <action method="removeItem"><type>link_rel</type><href>//fonts.googleapis.com/css?family=Raleway:300,400,500,700,600</href></action>
-            <action method="removeItem"><type>skin_js</type><name>js/minicart.js</name></action>			
+            <action method="removeItem"><type>skin_js</type><name>js/minicart.js</name></action>	
+            <action method="removeItem"><type>skin_css</type><name>css/styles-ie8.css</name></action>
+            <action method="removeItem"><type>skin_css</type><name>css/madisonisland-ie8.css</name></action>				
 			<!-- RWD -->			 			
 			
 			<!-- Core -->
