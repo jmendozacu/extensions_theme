@@ -30,12 +30,12 @@
 				<div class="collapse navbar-collapse" id="header-navigation">
                     <ul class="nav navbar-nav main-navigation navbar-right">
 						<li class="current"><a href="#sec_23">What</a></li>
-						<li class=""><a href="#sec_41">Technology</a></li>
-						<li class=""><a href="#sec_29">Who</a></li>
-						<li class=""><a href="#sec_43">How</a></li>
-						<li><a href="#sec_49">Where</a></li>
-						<li><a href="http://www.extensions.sashas.org/">Magento Extensions</a></li>		
-						<li><a href="http://www.extensions.sashas.org/">Blog</a></li>																		
+						<li class=""><a href="#sec_41"><?php echo $this->__('Tech')?></a></li>
+						<li class=""><a href="#sec_29"><?php echo $this->__('Who')?></a></li>
+						<li class=""><a href="#sec_43"><?php echo $this->__('Testimonials')?></a></li>
+						<li><a href="#sec_49"><?php echo $this->__('Partners')?></a></li>
+						<li><a href="<?php echo Mage::getBaseUrl();?>"><?php echo $this->__('Magento Extensions')?></a></li>		
+						<li><a href="<?php echo Mage::getUrl('blog/');?>"><?php echo $this->__('Blog')?></a></li>																		
 					</ul>
 				</div><!-- /.navbar-collapse -->
 			</div><!-- /.container-fluid -->
@@ -53,10 +53,10 @@
 					</div>
 					<div class="main-intro col-md-6 ">						
 						<p style="position: relative; visibility: visible; height: 70.8px;" class="curved-text"><span style="position: absolute; left: 50%; margin-left: -0.575em; transform: rotate(-34.1443deg); transform-origin: center 5em 0px;" class="char1">W</span><span style="position: absolute; left: 50%; margin-left: -0.3875em; transform: rotate(-21.3194deg); transform-origin: center 5em 0px;" class="char2">E</span><span style="position: absolute; left: 50%; margin-left: -0.35em; transform: rotate(-11.4925deg); transform-origin: center 5em 0px;" class="char3">L</span><span style="position: absolute; left: 50%; margin-left: -0.425em; transform: rotate(-1.1659deg); transform-origin: center 5em 0px;" class="char4">C</span><span style="position: absolute; left: 50%; margin-left: -0.475em; transform: rotate(10.8262deg); transform-origin: center 5em 0px;" class="char5">O</span><span style="position: absolute; left: 50%; margin-left: -0.5375em; transform: rotate(24.3174deg); transform-origin: center 5em 0px;" class="char6">M</span><span style="position: absolute; left: 50%; margin-left: -0.3875em; transform: rotate(36.6427deg); transform-origin: center 5em 0px;" class="char7">E</span></p>	
-						<span class="medium-text">to the awesome</span>	
-						<h1>internet</h1>	
-						<span class="medium-text">Conference</span>						
-						<a href="#" class="main-button gradient">Register Here</a>						
+						<!-- <span class="medium-text">to the awesome</span> -->	
+						<h1>S</h1>	
+						<!-- <span class="medium-text">Conference</span>				 -->		
+						<a href="#" class="main-button gradient">Contact Us</a>						
 					</div>	
 					<div class="col-md-3 hidden-sm visible-lg visible-md side-text">
 						<p class="small-text pull-right">Extensions</p>
@@ -99,10 +99,8 @@
 		<section id="sec_41" class=" general-row">
 			<div class="wpb_column ">
 				<section id="features" class="parallax-scroll2 no_color">
-					<div class="container">
-			
-						<span class="section-title">Some features</span>
-						<h2>More Details</h2>
+					<div class="container">									 
+						<h2><?php echo $this->__('Technologies')?></h2>
 						<div id="features-slider" class="owl-carousel owl-theme">
 						
 							<div  class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
@@ -322,23 +320,22 @@
 		<section id="sec_49" class=" general-row">
 			<div class="wpb_column ">
 				<section id="partners">
-					<div class="container">		
-						<span class="section-title">Our Partners</span>
-						<h2>Who Make it Possible</h2>
+					<div class="container">								 
+						<h2>Our Partners</h2>
 						<div class="first-row">
 							<div class="item pull-left">
-								<a href="#">
-									<img  src="https://placeholdit.imgix.net/~text?txtsize=13&txt=119%C3%9797&w=119&h=97" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								<a href="javascript:void(0);">
+									<img  src="<?php echo $this->getSkinUrl('images/aboutus/partners/synapse.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
 								</a>
 							</div>
 							<div class="item pull-left">
-								<a href="#">
-									<img   src="https://placeholdit.imgix.net/~text?txtsize=13&txt=119%C3%9797&w=119&h=97" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								<a href="javascript:void(0);">
+									<img   src="<?php echo $this->getSkinUrl('images/aboutus/partners/avortex.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
 								</a>
 							</div>				
 							<div class="item pull-left">
-								<a href="#">
-									<img   src="https://placeholdit.imgix.net/~text?txtsize=13&txt=119%C3%9797&w=119&h=97" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								<a href="javascript:void(0);">
+									<img   src="<?php echo $this->getSkinUrl('images/aboutus/partners/eltrino.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
 								</a>
 							</div>		
 						</div>						
@@ -346,18 +343,18 @@
 						<hr>
 						<div class="second-row">				
 							<div class="item pull-left">
-								<a href="#">
-									<img  src="https://placeholdit.imgix.net/~text?txtsize=13&txt=119%C3%9797&w=119&h=97" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								<a href="javascript:void(0);">
+									<img  src="<?php echo $this->getSkinUrl('images/aboutus/partners/magento.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
 								</a>
 							</div>							
 							<div class="item pull-left">
-								<a href="#">
-									<img  src="https://placeholdit.imgix.net/~text?txtsize=13&txt=119%C3%9797&w=119&h=97" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								<a href="javascript:void(0);">
+									<img  src="<?php echo $this->getSkinUrl('images/aboutus/partners/neovisio.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
 								</a>
 							</div>							
 							<div class="item pull-left">
-								<a href="#">
-									<img  src="https://placeholdit.imgix.net/~text?txtsize=13&txt=119%C3%9797&w=119&h=97" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								<a href="javascript:void(0);">
+									<img  src="<?php echo $this->getSkinUrl('images/aboutus/partners/cartstack.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
 								</a>
 							</div>							
 						</div>
