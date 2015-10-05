@@ -1236,6 +1236,7 @@ footer ul li a:hover{
 /* Orange.css*/
  
 .not-visible {visibility: hidden !important;}
+a {   outline: 0 !important; }
 
 /*Parallax*/
 #testimonials {background: url(../../images/aboutus/parallax/gallery-bg.jpg) transparent no-repeat fixed;}
