@@ -317,7 +317,7 @@ header .logo:before {
   color: #fff;
   font-family: "Montserrat", sans-serif;
   font-size: 92px;
-  font-weight: 700;
+  font-weight: 400;
   margin-top: 40px;
   text-transform: uppercase;
   letter-spacing: 7px;
@@ -1241,3 +1241,16 @@ footer ul li a:hover{
 #testimonials {background: url(../../images/aboutus/parallax/gallery-bg.jpg) transparent no-repeat fixed;}
 #features {background: url(../../images/aboutus/parallax/feature-bg.png) transparent  no-repeat fixed;}
 #main-section { background-image: url(../../images/aboutus/parallax/main-bg.jpg);}
+
+/* Technologies */
+.fa-magento:before{ content: url(../../images/aboutus/tech/magento-tech.png);}
+.fa-responsive:before{ content: url(../../images/aboutus/tech/responsive.png);}
+.fa-wp:before{ content: url(../../images/aboutus/tech/wp.png);}
+.fa-css33:before{ content: url(../../images/aboutus/tech/css3.png);}
+.fa-html55:before{ content: url(../../images/aboutus/tech/html5.png);}
+.fa-js:before{ content: url(../../images/aboutus/tech/js.png);}
+.fa-php:before{ content: url(../../images/aboutus/tech/php.png);}
+.fa-mysql:before{ content: url(../../images/aboutus/tech/mysql.png);}
+.fa-jquery:before{ content: url(../../images/aboutus/tech/jquery.png);}
+.fa-joomla2:before{ content: url(../../images/aboutus/tech/joomla.png);}
+.fa-bootstrap:before{ content: url(../../images/aboutus/tech/bootstrap.png);}
