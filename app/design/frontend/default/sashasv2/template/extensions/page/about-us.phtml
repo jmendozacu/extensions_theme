@@ -49,17 +49,17 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3 hidden-sm visible-lg visible-md side-text">
-						<p class="small-text">Websites</p>
+						<p class="small-text">Web Solutions &amp; Analysis</p>
 					</div>
 					<div class="main-intro col-md-6 ">						
 						<p style="position: relative; visibility: visible; height: 70.8px;" class="curved-text"><span style="position: absolute; left: 50%; margin-left: -0.575em; transform: rotate(-34.1443deg); transform-origin: center 5em 0px;" class="char1">W</span><span style="position: absolute; left: 50%; margin-left: -0.3875em; transform: rotate(-21.3194deg); transform-origin: center 5em 0px;" class="char2">E</span><span style="position: absolute; left: 50%; margin-left: -0.35em; transform: rotate(-11.4925deg); transform-origin: center 5em 0px;" class="char3">L</span><span style="position: absolute; left: 50%; margin-left: -0.425em; transform: rotate(-1.1659deg); transform-origin: center 5em 0px;" class="char4">C</span><span style="position: absolute; left: 50%; margin-left: -0.475em; transform: rotate(10.8262deg); transform-origin: center 5em 0px;" class="char5">O</span><span style="position: absolute; left: 50%; margin-left: -0.5375em; transform: rotate(24.3174deg); transform-origin: center 5em 0px;" class="char6">M</span><span style="position: absolute; left: 50%; margin-left: -0.3875em; transform: rotate(36.6427deg); transform-origin: center 5em 0px;" class="char7">E</span></p>	
 						<!-- <span class="medium-text">to the awesome</span> -->	
-						<h1><br/><span style="color: #EC4918;" >S</span> Group</h1>	
+						<h1>The<br/><span style="color: #EC4918;" >S</span> Group</h1>	
 						<!-- <span class="medium-text">Conference</span>				 -->		
-						<a href="#" class="main-button gradient">Contact Us</a>						
+						<a href="javascript:void(0);" id="email-contact" class="main-button gradient"><?php echo $this->__('Contact Us');?></a>						
 					</div>	
 					<div class="col-md-3 hidden-sm visible-lg visible-md side-text">
-						<p class="small-text pull-right">Development</p>
+						<p class="small-text pull-right">eCommerce Development</p>
 					</div>					
 				</div>
 			</div>
@@ -83,7 +83,7 @@
 								<img src="<?php echo $this->getSkinUrl('images/aboutus/video2.png'); ?>" class="wow  img-responsive not-visible"  data-wow-duration="1s" data-wow-offset="10" data-wow-delay=".3s" alt=""></a>
 							</div>
 							<div class="col-md-4 text-left right-wrapper">
-								<h3>Who We Are?</h3>
+								<h3>Who We Are</h3>
 								<p class="medium-text">We are goup of talented and project focused developers with exprience of work with different technologies and businnes areas.</p>
 								<br>
 								<h3>What Are We Do?</h3>
@@ -302,20 +302,29 @@
 									<ul class="owl-carousel owl-theme"  id="testi-slider">
  
 										<li class="testi-slide testi_img">											 
-											<p>We started working with S Group almost a year ago, their experience and proficiency on the Magento 
+											<p>We started working with The S Group almost a year ago, their experience and proficiency on the Magento 
 												platform has helped us integrate all the features we needed to bring our online platform to the next level.  
 												Magento is one of the most powerful platforms out there but we have learned through experience that to harness its power, 
 												you must work with a very capable developers which fortunately for us we have found at S Group!</p>
 											<hr>
-											<span>Jean-Michel Basque -	 <a href="javascipt:void(0);">Lumenco.ca</a></span>
+											<span>Jean-Michel B.</span>
 										</li> 
 
 										<li class="testi-slide testi_img">											 
-											<p>It's a pleasure to work with S Group. 
+											<p>It's a pleasure to work with The S Group. 
 												Their insight and experience with web development and Magento specifically is extremely valuable as we make decisions for our online business. 
 												Their responsiveness and quick turnaround has ensured our project has stayed on time with minimal disruptions. They are highly recommended.</p>
 											<hr>
-											<span>Joshua Williams -	 <a href="javascipt:void(0);">JM.ca</a></span>
+											<span>Joshua W.</span>
+										</li> 
+										<li class="testi-slide testi_img">											
+											<p>Had a Magento update that broke my online store. 
+												Was not able to place orders or checkout. Got online looking for help and came across this guys.
+												The S Group quickly assessed the situation and rectified the issues and fixed the problems. 
+												Also currently working with them on redesigning the website to a new more modern (responsive) look and feel. 
+												Definitely recommend to other people. </p>
+											<hr>
+											<span>Anna M.</span>
 										</li> 
 										<li class="testi-slide testi_img">											
 											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus 
@@ -323,15 +332,7 @@
 												consectetur. Quisque laoreet dolor nec est pellentesque, sed gravida 
 												ligula com modo suspendisse tempus sit amet nisi id aliquet.</p>
 											<hr>
-											<span>John Doer -	 <a href="javascipt:void(0);">kraususa.com</a></span>
-										</li> 
-										<li class="testi-slide testi_img">											
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus 
-												accumsan egestas neque in placerat sed dictum purus non sollicitudin 
-												consectetur. Quisque laoreet dolor nec est pellentesque, sed gravida 
-												ligula com modo suspendisse tempus sit amet nisi id aliquet.</p>
-											<hr>
-											<span>John Doer -	 <a href="javascipt:void(0);">kraususa.com</a></span>
+											<span>John D. -	 <a href="javascipt:void(0);">kraususa.com</a></span>
 										</li>
 										<li class="testi-slide testi_img">											
 											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus 
@@ -339,23 +340,19 @@
 												consectetur. Quisque laoreet dolor nec est pellentesque, sed gravida 
 												ligula com modo suspendisse tempus sit amet nisi id aliquet.</p>
 											<hr>
-											<span>John Doer -	 <a href="javascipt:void(0);">octopusmarket.cl</a></span>
+											<span>John D. -	 <a href="javascipt:void(0);">octopusmarket.cl</a></span>
 										</li> 			
 										<li class="testi-slide testi_img">											
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus 
-												accumsan egestas neque in placerat sed dictum purus non sollicitudin 
-												consectetur. Quisque laoreet dolor nec est pellentesque, sed gravida 
-												ligula com modo suspendisse tempus sit amet nisi id aliquet.</p>
+											<p>The S Group is a fast and a company you can rely to in terms of high quality performed magento development tasks. 
+													Was a pleasure to work with them and I would recommended them to all my friends. </p>
 											<hr>
-											<span>John Doer -	 <a href="javascipt:void(0);">economunimited.com</a></span>
+											<span>Vlad T.</span>
 										</li> 					
 										<li class="testi-slide testi_img">											
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus 
-												accumsan egestas neque in placerat sed dictum purus non sollicitudin 
-												consectetur. Quisque laoreet dolor nec est pellentesque, sed gravida 
-												ligula com modo suspendisse tempus sit amet nisi id aliquet.</p>
+											<p>Was an amazing experience working with The S Group. Was able to get everything planned done in astonishingly fast manner. 
+												They was professional as well as very descriptive of all the processes that needed to be done. Looking forward to working with The S Group again.</p>
 											<hr>
-											<span>John Doer -	 <a href="javascipt:void(0);">fashionandbeautystore.com</a></span>
+											<span>Mike L.</span>
 										</li> 																							 										
 									</ul>
 								</div>
@@ -407,13 +404,41 @@
 								</a>
 							</div>							
 						</div>
-						<a href="#" class="button center-block"><?php echo $this->__('Become a Partner');?></a>
+						<a href="javacript:void(0);" id="email-partner" class="button center-block"><?php echo $this->__('Become a Partner');?></a>
 					</div>
 				</section>	
 			</div>
 			<div class="clearfix"></div>
 		</section>	
 	</section>
+	<div id="contactus" style="display:none;">
+		<div class="contactus-form">
+		  <div class="form-group">
+		    <label for="name"><?php echo $this->__('Company Name'); ?></label>
+		    <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+		  </div>
+		  <div class="form-group">
+		    <label for="email"><?php echo $this->__('Email address'); ?></label>
+		    <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+		  </div>
+		  <div class="form-group">
+		    <label for="website"><?php echo $this->__('Website Url'); ?></label>
+		    <input type="text" class="form-control" name="website" id="website" placeholder="http://">
+		  </div>		 
+		  <div class="form-group">
+		    <label for="comment"><?php echo $this->__('Request'); ?></label>
+		    <textarea name="comment" id="comment" class="form-control" rows="3"></textarea>		    
+		  </div>
+		  <div class="form-group">		    
+		    <?php $siteKey= Mage::getStoreConfig('recaptcha/recaptcha_group/site_key');?>
+			 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+			 <div class="g-recaptcha" data-sitekey="<?php echo $siteKey; ?>"></div>			  
+		  </div>		  
+		   <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />   	 
+		  <button type="submit" class="btn-modal btn-contactus"><?php echo $this->__('Submit');?></button>
+		</div>
+	</div>	
+ 	 
 	<footer>
 		<div class="container">
 			<div class="row">

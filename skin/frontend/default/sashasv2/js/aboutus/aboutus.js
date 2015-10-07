@@ -1,4 +1,4 @@
-jQuery(document).ready(function(jQuery) {
+jQuery(document).ready(function() {
 
 	jQuery(window).load(function() {		 
 		
@@ -113,8 +113,51 @@ jQuery(document).ready(function(jQuery) {
 		singleItem: true,
 		slideSpeed : 400
 	});
+	/*Contact Us Window*/ /* Become a Partner*/
+	jQuery('#email-contact').fancybox({
+		 href 			: '#contactus',
+		 openEffect		: 'none',
+		 closeEffect	: 'none',
+		 autoSize	: false,
+		 maxWidth	: 400,
+		 maxHeight	: 500,       
+	}); 
+	
+	jQuery('#email-partner').fancybox({
+		 href 			: '#contactus',
+		 openEffect		: 'none',
+		 closeEffect	: 'none',
+		 autoSize	: false,
+		 maxWidth	: 400,
+		 maxHeight	: 500,       
+	}); 
+	
+	jQuery('.btn-contactus').click(function(){	
+		var validated=1;			
+		jQuery('#contactus input, #contactus textarea').each(function(){
+			jQuery(this).parent().removeClass('has-error');
+			jQuery(this).parent().removeClass('has-success');
+			var regexEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+			
+			if (jQuery(this).val().length<1 && jQuery(this).attr('name')!='hideit'){ 					 
+				jQuery(this).parent().addClass('has-error');
+				validated=0;						
+			} else if (jQuery(this).attr('name')=='email' && regexEmail.test(jQuery(this).val())==false ){
+				jQuery(this).parent().addClass('has-error');
+				validated=0;
+			}else if (jQuery(this).attr('name')!='hideit')
+				jQuery(this).parent().addClass('has-success');
 
-
+			if (validated) {
+				/*Ajax*/
+			}
+			 
+		});
+	});
+	 
+	 
+	
+	
 });
 
 function runAnimations(){
@@ -135,3 +178,6 @@ function runAnimations(){
 	});		
 	 
 }
+
+ 
+ 

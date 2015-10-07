@@ -150,6 +150,8 @@
 			<action method="addItem"><type>skin_js</type><name>js/aboutus/respond/respond.min.js</name><params/><if>lt IE 9</if></action>
 			<action method="addItem"><type>skin_js</type><name>js/aboutus/html5shiv-printshiv.js</name><params/><if>lt IE 9</if></action>
 	 
+			<action method="addItem"><type>skin_css</type><script>css/fancybox/jquery.fancybox.css</script></action> 
+ 			<action method="addItem"><type>skin_js</type><script>js/fancybox/jquery.fancybox.pack.js</script></action>	 
 			<!-- About Us Files -->
  		</reference>
   
