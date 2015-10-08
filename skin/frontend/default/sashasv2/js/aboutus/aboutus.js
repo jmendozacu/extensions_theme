@@ -100,14 +100,6 @@ jQuery(document).ready(function() {
 		items : 3,
 		itemsDesktop : [1199,3],
 	});
-	
-	jQuery("#team-slider").owlCarousel({
-		items : 3,
-		itemsDesktop : [1199,3],
-		itemsDesktopSmall : [996,2],
-		itemsTablet: [600,1],
-		itemsMobile : false
-	});
 
 	jQuery("#testi-slider").owlCarousel({
 		singleItem: true,
@@ -129,35 +121,37 @@ jQuery(document).ready(function() {
 		 closeEffect	: 'none',
 		 autoSize	: false,
 		 maxWidth	: 400,
-		 maxHeight	: 500,       
+		 maxHeight	: 500,   
+		 afterClose: function() {
+			 	jQuery('.contactus-form').show();
+				jQuery('.success-submitted').hide(); 
+			}     
 	}); 
 	
 	jQuery('.btn-contactus').click(function(){	
 		var validated=1;			
 		jQuery('#contactus input, #contactus textarea').each(function(){
+			if (jQuery(this).attr('name')=='recaptcha-token' || jQuery(this).attr('name')=='hideit' || jQuery(this).attr('name')=='g-recaptcha-response' )
+				 return true;			 
+			
+			//	g-recaptcha-response
 			jQuery(this).parent().removeClass('has-error');
 			jQuery(this).parent().removeClass('has-success');
 			var regexEmail = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 			
-			if (jQuery(this).val().length<1 && jQuery(this).attr('name')!='hideit'){ 					 
+			if (jQuery(this).val().length<1){ 					 
 				jQuery(this).parent().addClass('has-error');
 				validated=0;						
-			} else if (jQuery(this).attr('name')=='email' && regexEmail.test(jQuery(this).val())==false ){
+			} else if (jQuery(this).attr('name')=='email' && regexEmail.test(jQuery(this).val())==false){
 				jQuery(this).parent().addClass('has-error');
 				validated=0;
-			}else if (jQuery(this).attr('name')!='hideit')
-				jQuery(this).parent().addClass('has-success');
-
-			if (validated) {
-				/*Ajax*/
-			}
-			 
+			}else
+				jQuery(this).parent().addClass('has-success');					 
 		});
-	});
 	 
-	 
-	
-	
+		if (validated) 
+			sendRequest();				 
+	});		 		
 });
 
 function runAnimations(){
