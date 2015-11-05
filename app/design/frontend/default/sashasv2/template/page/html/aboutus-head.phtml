@@ -1,5 +1,11 @@
 <meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>" />
 <title><?php echo $this->getTitle() ?></title>
+<meta property="og:title"content="<?php echo $this->getTitle() ?>" />
+<meta property="og:site_name" content="Legendary Ecommerce Development. Legendary Experience. Legendary Results."/>
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="en_US" />    
+<meta property="og:description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+<meta property="og:image" content="<?php echo $this->getSkinUrl('images/aboutus/video2.png'); ?>" />
 <meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
 <meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
 <meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
