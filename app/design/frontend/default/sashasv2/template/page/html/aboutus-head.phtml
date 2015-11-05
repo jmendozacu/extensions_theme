@@ -1,0 +1,24 @@
+<meta http-equiv="Content-Type" content="<?php echo $this->getContentType() ?>" />
+<title><?php echo $this->getTitle() ?></title>
+<meta property="og:title"content="<?php echo $this->getTitle() ?>" />
+<meta property="og:site_name" content="Legendary Ecommerce Development. Legendary Experience. Legendary Results."/>
+<meta property="og:type" content="article" />
+<meta property="og:locale" content="en_US" />    
+<meta property="og:description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+<meta property="og:image" content="<?php echo $this->getSkinUrl('images/aboutus/video2.png'); ?>" />
+<meta name="description" content="<?php echo htmlspecialchars($this->getDescription()) ?>" />
+<meta name="keywords" content="<?php echo htmlspecialchars($this->getKeywords()) ?>" />
+<meta name="robots" content="<?php echo htmlspecialchars($this->getRobots()) ?>" />
+<link rel="icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+<link rel="shortcut icon" href="<?php echo $this->getFaviconFile(); ?>" type="image/x-icon" />
+<!--[if lt IE 7]>
+<script type="text/javascript">
+//<![CDATA[
+    var BLANK_URL = '<?php echo $this->helper('core/js')->getJsUrl('blank.html') ?>';
+    var BLANK_IMG = '<?php echo $this->helper('core/js')->getJsUrl('spacer.gif') ?>';
+//]]>
+</script>
+<![endif]-->
+<?php echo $this->getCssJsHtml() ?>
+<?php echo $this->getChildHtml() ?> 
+<?php echo $this->getIncludes() ?>

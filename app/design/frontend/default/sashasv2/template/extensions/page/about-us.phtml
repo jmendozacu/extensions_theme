@@ -1,0 +1,358 @@
+<?php
+/**
+ * Template for Mage_Page_Block_Html
+ */
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xml:lang="<?php echo $this->getLang() ?>"
+	lang="<?php echo $this->getLang() ?>">
+<head>
+	<?php echo $this->getChildHtml('head')?>
+</head>
+<body <?php echo $this->getBodyClass()?' class="  '.$this->getBodyClass().'"':'' ?>>
+	 
+	<header>
+		<nav class="navbar main-navigation-header navbar-fixed-top">
+            <div class="container">
+                <!-- Brand and toggle get grouped for better mobile display -->				
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#header-navigation">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>
+						<a href="<?php echo Mage::getBaseUrl();?>" class="navbar-brand logo">
+						<img src="<?php echo $this->getSkinUrl('images/aboutus/logo_gray.png'); ?>" alt="" >						
+					</a>
+				</div><!-- Collect the nav links, forms, and other content for toggling -->
+				<div class="collapse navbar-collapse" id="header-navigation">
+                    <ul class="nav navbar-nav main-navigation navbar-right">
+						<li class="current"><a href="#sec_23"><?php echo $this->__('About')?></a></li>
+						<li class=""><a href="#sec_41"><?php echo $this->__('Tech')?></a></li>					
+						<li class=""><a href="#sec_43"><?php echo $this->__('Testimonials')?></a></li>
+						<li><a href="#sec_49"><?php echo $this->__('Partners')?></a></li>
+						<li><a href="<?php echo Mage::getBaseUrl();?>"><?php echo $this->__('Magento Extensions')?></a></li>		
+						<li><a href="<?php echo Mage::getUrl('blog/');?>"><?php echo $this->__('Blog')?></a></li>																		
+					</ul>
+				</div><!-- /.navbar-collapse -->
+			</div><!-- /.container-fluid -->
+        </nav>
+	</header><!-- Navigation -->
+		
+		
+	<section id="main-section" class="parallax-scroll1">
+			
+			<div class="overlay"></div>
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 hidden-sm visible-lg visible-md side-text">
+						<p class="small-text">Web Solutions &amp; Analysis</p>
+					</div>
+					<div class="main-intro col-md-6 ">						
+						<p style="position: relative; visibility: visible; height: 70.8px;" class="curved-text"><span style="position: absolute; left: 50%; margin-left: -0.575em; transform: rotate(-34.1443deg); transform-origin: center 5em 0px;" class="char1">W</span><span style="position: absolute; left: 50%; margin-left: -0.3875em; transform: rotate(-21.3194deg); transform-origin: center 5em 0px;" class="char2">E</span><span style="position: absolute; left: 50%; margin-left: -0.35em; transform: rotate(-11.4925deg); transform-origin: center 5em 0px;" class="char3">L</span><span style="position: absolute; left: 50%; margin-left: -0.425em; transform: rotate(-1.1659deg); transform-origin: center 5em 0px;" class="char4">C</span><span style="position: absolute; left: 50%; margin-left: -0.475em; transform: rotate(10.8262deg); transform-origin: center 5em 0px;" class="char5">O</span><span style="position: absolute; left: 50%; margin-left: -0.5375em; transform: rotate(24.3174deg); transform-origin: center 5em 0px;" class="char6">M</span><span style="position: absolute; left: 50%; margin-left: -0.3875em; transform: rotate(36.6427deg); transform-origin: center 5em 0px;" class="char7">E</span></p>	
+						<!-- <span class="medium-text">to the awesome</span> -->	
+						<h1>The<br/><span style="color: #EC4918;" >S</span> Group</h1>	
+						<!-- <span class="medium-text">Conference</span>				 -->		
+						<a href="javascript:void(0);" id="email-contact" class="main-button gradient"><?php echo $this->__('Contact Us');?></a>						
+					</div>	
+					<div class="col-md-3 hidden-sm visible-lg visible-md side-text">
+						<p class="small-text pull-right">eCommerce Development</p>
+					</div>					
+				</div>
+			</div>
+	</section>
+ 			
+	<section id="sec_23" style="padding:0px !important; margin:0px !important;">
+		<h2 style="display:none">empty</h2>
+		
+		<section class=" general-row">
+			<div class="wpb_column ">
+				<section id="about-section">
+					<span class="section-title">About Us</span>
+					<h2>Legendary Ecommerce Development.<br/>Legendary Experience.<br/>Legendary Results.</h2>
+					<div class="container">
+						<div class="row">
+							<div class="col-md-4 text-left left-wrapper">
+								<p class="large-text">The most talented group of eCommerce Magento developers to build your website and boost your online sales.</p>
+							</div>
+							<div class="col-md-4 text-center rounded_image">
+								<a href="javascript:void(0);" class="video-link">
+								<img src="<?php echo $this->getSkinUrl('images/aboutus/video2.png'); ?>" class="wow  img-responsive not-visible"  data-wow-duration="1s" data-wow-offset="10" data-wow-delay=".3s" alt="Discover The S Group—Magento developers and eCommerce development wizards."></a>
+							</div>
+							<div class="col-md-4 text-left right-wrapper">
+								<h3>Our Goals</h3>
+								<p class="medium-text">Our sole mission is to bring you results and online sales. Because when our customers succeed, we succeed. Ecommerce is an art and we are development architects that deliver, every single time.</p>
+								<br>
+								<h3>What Are We Do?</h3>
+								<p class="medium-text">Cost-effective development, strategy, and consulting—all at your fingertips. We are specialized Magento developers that bring results, no matter what the ecommerce platform.</p>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+			<div class="clearfix"></div>
+		</section>
+	
+		<section id="sec_41" class=" general-row">
+			<div class="wpb_column ">
+				<section id="features" class="parallax-scroll2 no_color">
+					<div class="container">									 
+						<h2><?php echo $this->__('Technologies')?></h2>
+						<div id="features-slider" class="owl-carousel owl-theme">
+						
+							<div  class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa fa-magento"></i>
+								<h3>Magento</h3>
+								<p>Magento is a very powerful and fast growing open source ecommerce platform. Magento offers great flexibility through its modular architecture, is completely scalable and has a wide range of control options that its users appreciate.</p>								 
+							</div>
+							<div class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa  fa-wp"></i>
+								<h3>Wordpress</h3>
+								<p>Wordpress is the easiest and most powerful blogging and website content management system (or CMS) in existence today.</p>							
+							</div>
+							<div class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa  fa-joomla2"></i>
+								<h3>Joomla</h3>
+								<p>Joomla is an award-winning content management system (CMS), which enables you to build Web sites and powerful online applications.</p>							
+							</div>
+															
+							<div class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa  fa-opencart"></i>
+								<h3>OpenCart</h3>
+								<p>A free shopping cart system. OpenCart is an open source PHP-based online e-commerce solution.</p>							
+							</div>													
+							<div class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa fa-responsive"></i>
+								<h3>Responsive Design</h3>
+								<p>Responsive Design uses flexible or fluid grids, fluid images, and CSS3 Media Queries to adapt to the different device widths and resolutions.</p>								
+							</div>	
+							<div class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa fa-bootstrap"></i>
+								<h3>Bootstrap</h3>
+								<p>Bootstrap, a sleek, intuitive, and powerful mobile first front-end framework for faster and easier web development.</p>								
+							</div>								
+													
+							<div  class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa fa-css33"></i>
+								<h3>CSS3</h3>
+								<p>CSS3 is the latest evolution of the Cascading Style Sheets language. It brings a lot of long-awaited novelties, like rounded corners, shadows, gradients, transitions or animations.</p>								
+							</div>											
+							<div class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa  fa-html55"></i>
+								<h3>HTML 5</h3>
+								<p>HTML5 is the last version of a markup language used for structuring and presenting content on the World Wide Web.</p>								
+							</div>													
+							<div  class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa fa-js"></i>
+								<h3>Javascript</h3>
+								<p>JavaScript is a high level, dynamic, untyped, and interpreted programming language. It has been standardized in the ECMAScript language specification.</p>								 
+							</div>
+						
+							<div class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa fa-php"></i>
+								<h3>PHP</h3>
+								<p>PHP is a widely-used open source general-purpose scripting language that is especially suited for web development and can be embedded into HTML.</p>								
+							</div>						
+							<div class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa fa-mysql"></i>
+								<h3>Mysql</h3>
+								<p>MySQL is a freely available open source Relational Database Management System (RDBMS) that uses Structured Query Language (SQL).</p>							
+							</div>
+							<div class="feature-item wow not-visible" data-wow-duration="1s" data-wow-delay=".3s">
+								<i class="fa fa-jquery"></i>
+								<h3>jQuery</h3>
+								<p>jQuery it is a fast and concise JavaScript Library that simplifies HTML document traversing, event handling, animating, and Ajax interactions for rapid web development</p>							
+							</div>							
+						</div>
+					</div>
+				</section>
+			</div>
+ 			<div class="clearfix"></div>
+		</section>	
+	</section> 	
+	<section id="sec_43" style="padding:0px !important; margin:0px !important;">
+		<h2 style="display:none">empty</h2>
+ 
+		<section class=" general-row">
+			<div class="wpb_column ">
+				<div class="hr_black">
+					<div id="testimonials" class="parallax-scroll3 no_color">
+						<div class="overlay no_color"></div>
+						<div class="container">
+							<div class="row">
+								<div class="col-md-12">
+									<ul class="owl-carousel owl-theme"  id="testi-slider">
+ 
+										<li class="testi-slide testi_img">											 
+											<p>We started working with The S Group almost a year ago, their experience and proficiency on the Magento 
+												platform has helped us integrate all the features we needed to bring our online platform to the next level.  
+												Magento is one of the most powerful platforms out there but we have learned through experience that to harness its power, 
+												you must work with a very capable developers which fortunately for us we have found at S Group!</p>
+											<hr>
+											<span>Jean-Michel B.</span>
+										</li> 
+
+										<li class="testi-slide testi_img">											 
+											<p>It's a pleasure to work with The S Group. 
+												Their insight and experience with web development and Magento specifically is extremely valuable as we make decisions for our online business. 
+												Their responsiveness and quick turnaround has ensured our project has stayed on time with minimal disruptions. They are highly recommended.</p>
+											<hr>
+											<span>Joshua W.</span>
+										</li> 
+										<li class="testi-slide testi_img">											
+											<p>Had a Magento update that broke my online store. 
+												Was not able to place orders or checkout. Got online looking for help and came across this guys.
+												The S Group quickly assessed the situation and rectified the issues and fixed the problems. 
+												Also currently working with them on redesigning the website to a new more modern (responsive) look and feel. 
+												Definitely recommend to other people. </p>
+											<hr>
+											<span>Anna M.</span>
+										</li> 			
+										<li class="testi-slide testi_img">											
+											<p>The S Group is a fast and a company you can rely to in terms of high quality performed magento development tasks. 
+													Was a pleasure to work with them and I would recommended them to all my friends. </p>
+											<hr>
+											<span>Vlad T.</span>
+										</li> 					
+										<li class="testi-slide testi_img">											
+											<p>Was an amazing experience working with The S Group. Was able to get everything planned done in astonishingly fast manner. 
+												They was professional as well as very descriptive of all the processes that needed to be done. Looking forward to working with The S Group again.</p>
+											<hr>
+											<span>Mike L.</span>
+										</li> 																							 										
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clearfix"></div>
+		</section>
+		<section id="sec_49" class=" general-row">
+			<div class="wpb_column ">
+				<section id="partners">
+					<div class="container">								 
+						<h2>Our Partners</h2>
+						<div class="first-row">
+							<div class="item pull-left">
+								<a href="javascript:void(0);">
+									<img  src="<?php echo $this->getSkinUrl('images/aboutus/partners/synapse.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								</a>
+							</div>
+							<div class="item pull-left">
+								<a href="javascript:void(0);">
+									<img   src="<?php echo $this->getSkinUrl('images/aboutus/partners/avortex.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								</a>
+							</div>				
+							<div class="item pull-left">
+								<a href="javascript:void(0);">
+									<img   src="<?php echo $this->getSkinUrl('images/aboutus/partners/eltrino.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								</a>
+							</div>		
+						</div>						
+					 
+						<hr>
+						<div class="second-row">				
+							<div class="item pull-left">
+								<a href="javascript:void(0);">
+									<img  src="<?php echo $this->getSkinUrl('images/aboutus/partners/magento.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								</a>
+							</div>							
+							<div class="item pull-left">
+								<a href="javascript:void(0);">
+									<img  src="<?php echo $this->getSkinUrl('images/aboutus/partners/neovisio.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								</a>
+							</div>							
+							<div class="item pull-left">
+								<a href="javascript:void(0);">
+									<img  src="<?php echo $this->getSkinUrl('images/aboutus/partners/cartstack.png'); ?>" class="wow not-visible" data-wow-duration="1s" data-wow-delay=".3s" alt="">
+								</a>
+							</div>							
+						</div>
+						<a href="javacript:void(0);" id="email-partner" class="button center-block"><?php echo $this->__('Become a Partner');?></a>
+					</div>
+				</section>	
+			</div>
+			<div class="clearfix"></div>
+		</section>	
+	</section>
+	<div id="contactus" style="display:none;">
+		<div class="contactus-form">
+		  <div class="form-group">
+		    <label for="name"><?php echo $this->__('Company Name'); ?></label>
+		    <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+		  </div>
+		  <div class="form-group">
+		    <label for="email"><?php echo $this->__('Email address'); ?></label>
+		    <input type="email" class="form-control" name="email" id="email" placeholder="Email">
+		  </div>
+		  <div class="form-group">
+		    <label for="website"><?php echo $this->__('Website Url'); ?></label>
+		    <input type="text" class="form-control" name="website" id="website" placeholder="http://">
+		  </div>		 
+		  <div class="form-group">
+		    <label for="comment"><?php echo $this->__('Request'); ?></label>
+		    <textarea name="comment" id="comment" class="form-control" rows="3"></textarea>		    
+		  </div>
+		  <div class="form-group">		    
+		    <?php $siteKey= Mage::getStoreConfig('recaptcha/recaptcha_group/site_key');?>
+			 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+			 <div class="g-recaptcha" data-sitekey="<?php echo $siteKey; ?>"></div>			  
+		  </div>		  
+		   <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />   	 
+		  <button type="submit" class="btn-modal btn-contactus"><?php echo $this->__('Submit');?></button>
+		</div>
+		<div class="success-submitted"><?php echo $this->__('Your request has been submitted. Thank you');?></div>
+	</div>	
+	<div class="ajax-loader"><div></div></div>
+ 	<script type="text/javascript">
+ 		function sendRequest() {
+ 			jQuery('.ajax-loader').show();	
+ 			jQuery('.btn-contactus').attr('disabled'); 
+			jQuery.ajax({
+		        url: '<?php echo Mage::getUrl('contacts/index/postAjax');?>',
+		        type: 'post',
+		        dataType: 'json',
+		        data: jQuery('#contactus input, #contactus textarea').serialize(),
+		        success: function(response) {		 
+		        	jQuery('.ajax-loader').hide();	  
+		        	 
+			        if (response.status=='success') {    	 		     
+			        jQuery('.fancybox-inner').css('height','auto');   	 
+		        	jQuery('.contactus-form').hide();
+		        	jQuery('.success-submitted').html(response.response);		        	
+		        	jQuery('.success-submitted').show();		        	
+			        } else {			        				        	
+				        alert(response.response);
+			        }			
+			        jQuery('.btn-contactus').removeAttr('disabled'); 	         	
+		        },
+		        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                	alert( '<?php echo $this->__('There was issue with request. Please try again');?>' );
+                	jQuery('.ajax-loader').hide();	                 	
+                	jQuery('.btn-contactus').removeAttr('disabled'); 	
+               	}
+		    }); 	 		
+ 		}	
+ 	</script>
+	<footer>
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-5">
+					<p class="copyright">&copy; <?php echo date('Y')?> Sashas IT Support Inc, All Rights Reserved</p>
+				</div>
+				<div class="col-sm-7">
+					<ul class="list-inline pull-right">
+						<li><a href="<?php echo Mage::getUrl('contacts');?>"><?php echo $this->__('Contact Us');?></a></li>
+						<li><a href="<?php echo Mage::getUrl('customer/account');?>"><?php echo $this->__('Our Extensions');?></a></li>
+						<li><a href="<?php echo Mage::getUrl('privacy-and-refund-policy.html');?>"><?php echo $this->__('Privacy Policy');?></a></li>						 
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>
