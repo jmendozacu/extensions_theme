@@ -25,9 +25,9 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
             if (is_file($image)) {
                 $image       = Zend_Pdf_Image::imageWithPath($image);
                 $top         = 820; //top border of the page
-                $widthLimit  = 180; //half of the page width
+                $widthLimit  = 150; //half of the page width
                 $heightLimit = 50; //assuming the image is not a "skyscraper"
-                $width       = 90;
+                $width       = 75;
                 $height      = 25;
  
                 $y1 = $top - $height;
