@@ -27,3 +27,4 @@ blog/wp-content/cache/*
 skin/frontend/default/sashasv2/.sass-cache/
 blog/sitemap-video.xml
 downloader/.cache/
+blog/error_log
