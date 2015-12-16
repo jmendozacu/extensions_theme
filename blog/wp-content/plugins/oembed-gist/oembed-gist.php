@@ -4,7 +4,7 @@ Plugin Name: oEmbed Gist
 Plugin URI: https://github.com/miya0001/oembed-gist
 Description: Embed source from gist.github.
 Author: Takayuki Miyauchi
-Version: 1.8.0
+Version: 2.0.3
 Author URI: http://firegoby.jp/
 */
 
@@ -44,6 +44,12 @@ class gist {
 			'jetpack_shortcodes_to_include',
 			array( $this, 'jetpack_shortcodes_to_include' )
 		 );
+
+		add_filter(
+			'oembed_providers',
+			array( $this, 'oembed_providers' )
+		);
+
 	}
 
 	public function jetpack_shortcodes_to_include( $incs )
@@ -55,6 +61,19 @@ class gist {
 			}
 		}
 		return $includes;
+	}
+
+	function oembed_providers( $providers )
+	{
+		//Support to Press This.
+		global $pagenow;
+		if ( 'press-this.php' == $pagenow && ! array_key_exists( $this->get_gist_regex(), $providers ) ) {
+			$providers[ $this->get_gist_regex() ] = array(
+				'https://gist.github.com/{id}.{format}', //dummy value
+				true
+			);
+		}
+		return $providers;
 	}
 
 	public function wp_head()
@@ -122,11 +141,15 @@ class gist {
 			$url = $url . '?file=' . $file;
 		}
 
-		return sprintf(
-			'<div class="oembed-gist"><script src="%s"></script><noscript>%s</noscript></div>',
-			$url,
-			$noscript
-		);
+		if( is_feed() ){
+			return $noscript;
+		}else{
+			return sprintf(
+				'<div class="oembed-gist"><script src="%s"></script><noscript>%s</noscript></div>',
+				$url,
+				$noscript
+			);
+		}
 	}
 
 	public function get_gist_regex()
