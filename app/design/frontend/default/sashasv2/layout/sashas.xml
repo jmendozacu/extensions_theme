@@ -1,4 +1,14 @@
 <?xml version="1.0"?> 
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Extensions
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+
 <layout version="0.1.0">
 	<cms_page>
 		<reference name="head">			
@@ -41,6 +51,7 @@
  		<reference name="head">	
  			<action method="addItem"><type>skin_css</type><script>css/fancybox/jquery.fancybox.css</script></action> 
  			<action method="addItem"><type>skin_js</type><script>js/fancybox/jquery.fancybox.pack.js</script></action>
+ 			<block type="page/html" name="twitter_cards" template="extensions/catalog/product/twitter.phtml" />
  		</reference> 
  	</catalog_product_view>
  

@@ -1,0 +1,23 @@
+<?php 
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Extensions
+ * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php  if(Mage::registry('current_product')):?>
+<?php  
+	$product=Mage::registry('current_product');
+	$productName = $product->getName();		
+	$shortDescription = $product->getShortDescription();
+	$image =Mage::helper('catalog/image')->init($product, 'image');	
+?>
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@sashas777">
+<meta name="twitter:creator" content="@sashas777">
+<meta name="twitter:title" content="<?php echo $productName;?>">
+<meta name="twitter:description" content="<?php echo $shortDescription; ?>">
+<meta name="twitter:image" content="<?php echo $image; ?>">
+<?php endif;?>

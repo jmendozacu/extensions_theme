@@ -1,87 +1,86 @@
 <?xml version="1.0"?>
 <!--
 /**
- * @author		Sashas
- * @category    Sashas
- * @package     Sashas_Extensions
- * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
- * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
- */
+* @author		Sashas
+* @category    Sashas
+* @package     Sashas_Extensions
+* @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
+* @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+*/
 -->
 <config>
-    <modules>
-        <Sashas_Extensions>
-            <version>1.0.0</version>
-        </Sashas_Extensions>
-    </modules>
+	<modules>
+		<Sashas_Extensions>
+			<version>1.0.0</version>
+		</Sashas_Extensions>
+	</modules>
 	<global>
-		 <models>
-		 	<extensions>
-		 		<class>Sashas_Extensions_Model</class>
-		 	</extensions>
-		 </models>
-         <blocks>
-        	<extensions>
-        		<class>Sashas_Extensions_Block</class>        		
-        	</extensions>       
-        	<checkout>
-        		<rewrite>
-        			<cart_crosssell>Sashas_Extensions_Block_Crosssell</cart_crosssell>
-        		</rewrite>
-        	</checkout>  
-        	<cms>
-        		<rewrite>
-        			<block>Sashas_Extensions_Block_Block</block>
-        		</rewrite>
-        	</cms>
-        </blocks> 
-        <helpers>
-        	<extensions>
-        		<class>Sashas_Extensions_Helper</class>        		
-        	</extensions>
-        </helpers>      
+		<models>
+			<extensions>
+				<class>Sashas_Extensions_Model</class>
+			</extensions>
+		</models>
+		<blocks>
+			<extensions>
+				<class>Sashas_Extensions_Block</class>
+			</extensions>
+			<checkout>
+				<rewrite>
+					<cart_crosssell>Sashas_Extensions_Block_Crosssell</cart_crosssell>
+				</rewrite>
+			</checkout>
+			<cms>
+				<rewrite>
+					<block>Sashas_Extensions_Block_Block</block>
+				</rewrite>
+			</cms>
+		</blocks>
+		<helpers>
+			<extensions>
+				<class>Sashas_Extensions_Helper</class>
+			</extensions>
+		</helpers>
 		<resources>
-            <extensions_setup>
-                <setup>
-                    <module>Sashas_Extensions</module>                 
-                </setup>
-                <connection>
-                    <use>core_setup</use>
-                </connection>
-            </extensions_setup>
-            <extensions_write>
-                <connection>
-                    <use>core_write</use>
-                </connection>
-            </extensions_write>
-            <extensions_read>
-                <connection> 
-                    <use>core_read</use>
-                </connection>
-            </extensions_read>
+			<extensions_setup>
+				<setup>
+					<module>Sashas_Extensions</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</extensions_setup>
+			<extensions_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</extensions_write>
+			<extensions_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</extensions_read>
 		</resources>
 		<page>
 			<layouts>
 				<extensions_aboutus>
 					<label>Extensions About Us</label>
 					<template>extensions/page/about-us.phtml</template>
-					 <layout_handle>extensions_aboutus</layout_handle>
+					<layout_handle>extensions_aboutus</layout_handle>
 				</extensions_aboutus>
-			</layouts>  		
-		</page>       
-                 
-	</global>  	  
+			</layouts>
+		</page>
+
+	</global>
 	<frontend>
 		<routers>
-            <contacts>
-                <args>
-                    <modules>
-                        <extensions before="Mage_Customer">Sashas_Extensions_Contacts</extensions>
-                    </modules>
-                </args>
-            </contacts>
-        </routers>	
+			<contacts>
+				<args>
+					<modules>
+						<extensions before="Mage_Customer">Sashas_Extensions_Contacts</extensions>
+					</modules>
+				</args>
+			</contacts>
+		</routers>
 	</frontend>
 </config>
-
 
