@@ -3,8 +3,8 @@ Contributors: javitxu123
 Donate link: http://poselab.com/
 Tags: widget, gallery, youtube, channel, user, sidebar, video, youtube playlist, html5, iframe, Youtube channel, youtube videos, API 3
 Requires at least: 2.8
-Tested up to: 3.8.8
-Stable tag: 2.2.2
+Tested up to: 4.3.1
+Stable tag: 2.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,7 +92,26 @@ Description of the different fields of the plugin:
 
 * **Show info (title, uploader):** display information like the video title and rating before the video starts playing. Shortcode attribute: showinfo; values: 0 (default) or 1. (Optional).
 
-* **Order:** order of player. Shortcode attribute: player_order; values: Number. 1 (default). (Optional).
+* **Show title:** it displays the title of the player. Shortcode attribute: player_title; values: 0 (default) or 1. (Optional).
+
+* **Show published date:** it shows the date of the video of the player in the format set in the General Settings of Wordpress. Shortcode attribute: player_published_date; values: 0 (default) or 1. (Optional).
+
+* **Show description:** it shows the description of the video of the player. Shortcode attribute: player_description; values: 0 (default) or 1. (Optional).
+
+* **Title tag:** select an appropriate tag for the title of the video of the player. Shortcode attribute: player_title_tag; values: h1, h2, h3 (default), h4, h5, h6. (Optional).
+
+* **Description words number:** the maximum number of words displayed in the description of the video of the player. Shortcode attribute: player_description_words_number; value: Number. (Optional).
+
+* **Tab order:** order of player. Shortcode attribute: player_order; values: Number. 1 (default). (Optional).
+
+
+**Search tab:**
+
+* **Search input text:** The text to be displayed on the search input to search in the youtube account. Shortcode attribute: search_input_text; values: String. Search... (default). (Optional).
+
+* **Show search box:** select where you want to play the video. Shortcode attribute: search_input_show; values: 0, 1 (default) or 2. (Optional).
+
+* **Tab order:** order of Search tab. Shortcode attribute: thumb_order; values: Number. 2 (default). (Optional).
 
 
 **Thumbnails tab:**
@@ -105,7 +124,11 @@ Description of the different fields of the plugin:
 
 * **Thumbnail columns:** it allows to control the number of columns in which the thumbnails are distributed. It uses [Bootstrap Grid system](http://getbootstrap.com/css/#grid) to allow responsive behavior. Shortcode attribute: thumb_columns_phones (Phones), thumb_columns_tablets (Tablets), thumb_columns_md (Medium Desktops), thumb_columns_ld (Large Desktops); value: Number. Max value 12. (Optional).
 
+* **Show duration:** it displays the duration of each video. Shortcode attribute: duration; values: 0 (default) or 1. (Optional).
+
 * **Show title:** it displays the title of the thumbnail with a link to play the video in the player. Shortcode attribute: title; values: 0 (default) or 1. (Optional).
+
+* **Show published date:** it shows the date of the video in the format set in the General Settings of Wordpress . Shortcode attribute: published_date; values: 0 (default) or 1. (Optional).
 
 * **Show description:** it shows the description of the thumbnail with the number of specified words. Shortcode attribute: description; values: 0 (default) or 1. (Optional).
 
@@ -125,6 +148,10 @@ Description of the different fields of the plugin:
 
 * **Show pagination:** It shows a simple pagination with Next and Previous buttons, and information of page number and total pages. Take into account the warning from google: "Please note that the value is an approximation and may not represent an exact value. In addition, the maximum value is 1,000,000". I have observed that this value does not work properly on Youtube accounts with many videos. Shortcode attribute: thumb_pagination; values: 0 or 1 (default). (Optional).
 
+* **Thumbnail content tab order:** order of elements of Thumbnail content tab. Default order: Thumbnail, Title, Published date, Description. Shortcode attributes: thumb_order_thumb, thumb_order_title, thumb_order_publishedAt, thumb_order_desc; values: Number. (Optional).
+
+* **Tab 0rder:** order of Thumbnails tab. Shortcode attribute: thumb_order; values: Number. 3 (default). (Optional).
+
 
 **Link tab:**
 
@@ -136,19 +163,23 @@ Description of the different fields of the plugin:
 
 * **Show link to thank the developer:** option to add a small link to home page of the developer . Shortcode attribute: promotion; values: 0 or 1 (default). (Optional).
 
+* **Tab 0rder:** order of Link tab. Shortcode attribute: link_order; values: Number. 4 (default). (Optional).
+
 
 = Shortcode syntax: =
-Example of shortcode use:
+Example of shortcode use, remember to change your_Google_API_key for your own. Look at the [help](http://poselab.com/en/youtube-channel-gallery-help):
 
-`[Youtube_Channel_Gallery user="apple" maxitems="16" thumb_columns_phones="2" thumb_columns_tablets="4" ]`
+`[Youtube_Channel_Gallery user="googledevelopers" key="your_Google_API_key" maxitems="16" thumb_columns_tablets="4" title="1"]`
 
 
 = Languages: =
 * Brazilian portuguese (pt_BR) - [lojainterativa.com](http://www.lojainterativa.com).
 * Italian (it_IT) - [Marco Milesi](https://profiles.wordpress.org/milmor).
+* Norwegian bokmål (nb_NO) - Harald Fjogstad
+* Serbo-Croatian (sr_RS) - [WebHostingGeeks.com](http://webhostinggeeks.com)
 * Spanish (es_ES) - [PoseLab](http://poselab.com/)
 
-If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:javier@poselab.com) your gettext PO and MO so that I can bundle it into the Youtube Channel Gallery. You can also translate, improve or update a plugin translation in [Transifex](https://www.transifex.com/projects/p/youtube-channel-gallery). Go to [Youtube Channel Galllery project page of Transifex](https://www.transifex.com/projects/p/youtube-channel-gallery), click "Request language", Select the language you want to translate and wait until your request is accepted. When the language is translated it will be included in the plugin.
+If you have created your own language pack, or have an update of an existing one, you can [send me](mailto:javier@poselab.com) your gettext PO and MO so that I can bundle it into the Youtube Channel Gallery.
 
 
 == Installation ==
@@ -166,28 +197,23 @@ The “widgets” admin page is found in the administrator part (wp-admin) of yo
 
 = How do I find the YouTube user id? =
 
-The username who uploaded a video to Youtube is located below each video, where says something like in this example, "Published on June 25, 2012 by DisneyShorts", where DisneyShorts is the username. Click on the user name and you will find the user id in the url of that page: https://www.youtube.com/user/DisneyShorts. DisneyShorts is the id of that user.
+To find your channel's user ID and channel ID, sign in to YouTube and check your [advanced account settings](https://www.youtube.com/account) page.
+
+= How do I get a Google API key? =
+
+You can find how to get your Google API key and use it in the plugin in the [video tutorials](http://poselab.com/en/youtube-channel-gallery-help).
 
 = How do I find a YouTube playlist id? =
 
 If you go to a playlist you will get the following url format: https://www.youtube.com/playlist?list=PL33942589618ABDE3. The playlist id is what you have after list=. In this example, the playlist id is PL33942589618ABDE3.
 
-= I selected showing my playlist in descending order but the latest videos are not displayed, why? =
-
-This will happen if your playlist has more than 1000 videos because YouTube API has this limit.
-
 = Thumbnails links go to the YouTube page instead of playing the video in the player? =
 
 If another plugin or your theme throws a javascript error before Youtube Channel Gallery has been executed, it will prevent Youtube Channel Gallery JavaScript from functioning properly, so thumbnails links will go to the YouTube page instead of playing the video in the player.
 
-= The plugin throws the following error in the error console of Google Chrome: Blocked a frame with origin "http://www.youtube.com" from accessing a frame with origin "http://myweb.com". Protocols, domains, and ports must match.  =
+= Are you using a CDN, such as Cloudflare, MaxCDN,..., a cache plugin, sucha as WP Super Cache, W3 Total Cache,... or minification plugin, and the plugin is not working correctly?  =
 
-I think this is a browser error because this also happens to players that can be seen in https://developers.google.com/youtube/.
-
-= If the plugin is used on a page using SSL, the player will throw warnings in the browser console =
-
-See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-support-for-youtube-embeds.html):
-"The actual video bitstream, and some additional content loaded by the YouTube player may still be accessed via standard HTTP connections when you use an HTTPS URL in your embed code."
+You have to purge or delete de cache of the CDN, plugin chache or minification plugin. Maybe, your website is using an old version of CSS or JS.
 
 
 == Screenshots ==
@@ -200,6 +226,42 @@ See [HTTPS Support for YouTube Embeds](http://apiblog.youtube.com/2011/02/https-
 
 
 == Changelog ==
+
+= 2.4 =
+* Added search tab.
+* Fixed thumbnail alignment not working correctly.
+* Added Serbo-Croatian translation (sr_RS).
+* RTL language Support in the front-end.
+* Added Arab translation with "Next»" and "«Previous" strings to check RTL language support.
+* Updated Magnific Popup to v1.0.0 - 2015-09-17.
+* Added Text Domain in the plugin header to be imported into the translate.wordpress.org translation system.
+* Fields for change text of pagination.
+* Improvements in CSS.
+
+
+= 2.3.2 =
+* Deleted file_get_contents function for avoid error in some hostings.
+* Added Norwegian bokmål (nb_NO).
+
+= 2.3.2 =
+* Stop other videos if there is more than one instance of the plugin in the same page.
+* Corrected problem with pagination when there are multiple instances in the same page.
+* Added option to show video duration in thumbnails.
+* Added options to show title, description and published date below the player.
+* Added option to select description words number in player description.
+* Option to select title tag of player.
+* Added option to show published date in thumbnail content.
+* Added option to order published date.
+* Convert plain text URI to HTML links in description text.
+* Added Customizer support.
+* Correction for shortcodes inside pre tags.
+* Error control in thumbnail alignment.
+* Error control in max columns.
+* Help as jquery tooltips.
+* Some little optimizations.
+* Error message optimization.
+* Deleted default Google API Key because quota exceded and added link to Googl Developers Console and hto help.
+* Updated spanish translation and pot file.
 
 = 2.2.2 =
 * Error message optimization to improve users' debug.

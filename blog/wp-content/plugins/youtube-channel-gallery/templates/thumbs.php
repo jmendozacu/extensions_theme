@@ -7,11 +7,14 @@
 
 	<?php $i = 0; ?>
 	<?php $col = 1; ?>
-    <?php $columns = max($ytchag_thumb_columns_phones, $ytchag_thumb_columns_tablets, $ytchag_thumb_columns_md, $ytchag_thumb_columns_ld); ?>
+    <?php
+    	$columns = max($ytchag_thumb_columns_phones, $ytchag_thumb_columns_tablets, $ytchag_thumb_columns_md, $ytchag_thumb_columns_ld);
+    	$columns == 0 ? 1 : $columns;
+    ?>
 	<?php foreach ($thumbs as $thumb): ?>
 
     <?php if ($multiplos): ?>
-	    <?php  if ($i % $columns === 0): ?>
+	    <?php if ( $columns!=0 & $i % $columns === 0 ): ?>
 		<?php    if ($i > 0): ?>
 			</div>
 		<?php    endif; ?>
@@ -33,15 +36,18 @@
 ?>
 		<div class="ytc-column <?php echo $col_xs?> <?php echo $col_sm?> <?php echo $col_md?> <?php echo $col_lg?>">
 				<?php
-					if ($ytchag_thumbnail_alignment == 'none') {
+					if ($ytchag_thumbnail_alignment !== 'left' && $ytchag_thumbnail_alignment !== 'right') {
 						foreach ($thumb->modules as $module) {
 							if ($module === 'title' && $ytchag_title) {
 								include 'title.php';
 							}
+							elseif ($module === 'publishedAt' && $ytchag_publishedAt) {
+								include 'publishedAt.php';
+							}
 							elseif ($module === 'desc' && $ytchag_description) {
 								include 'desc.php';
 							}
-							elseif ($module !== 'title' && $module !== 'desc') {
+							elseif ($module !== 'title' && $module !== 'publishedAt' && $module !== 'desc') {
 								include $module . '.php';
 							}
 						}
@@ -81,6 +87,9 @@
 							if ($module === 'title' && $ytchag_title) {
 								include 'title.php';
 							}
+							elseif ($module === 'publishedAt' && $ytchag_publishedAt) {
+								include 'publishedAt.php';
+							}
 							elseif ($module === 'desc' && $ytchag_description) {
 								include 'desc.php';
 							}
@@ -107,16 +116,22 @@
 		<div class="ytc-pagination row">
 			<div class="col-xs-4 ytc-previous">
 				<?php if (isset($ytchag_prev_token)): ?>
-				<a class="ytc-paginationlink ytc-previous" data-cid="<?php echo $ytchag_id ?>" data-wid="<?php echo $plugincount ?>" data-playlist="<?php echo $ytchag_playlist?>" data-token="<?php echo $ytchag_prev_token?>"><?php _e( '«Previous', 'youtube-channel-gallery' );?></a>
+					<a class="ytc-paginationlink ytc-previous" data-cid="<?php echo $ytchag_id ?>" data-wid="<?php echo $plugincount ?>" data-playlist="<?php echo $ytchag_playlist?>" data-token="<?php echo $ytchag_prev_token?>">
+						<?php echo ($ytchag_prev_text ? $ytchag_prev_text : _e('«Previous', 'youtube-channel-gallery'))?>
+					</a>
 				<?php endif; ?>
 			</div>
 			<div class="col-xs-4 ytc-numeration">
-				<?php $total_pages = ceil( $ytchag_total_results / $ytchag_results_per_page );?>
+				<div class="ytc-numeration-inner">
+					<?php $total_pages = ceil( $ytchag_total_results / $ytchag_results_per_page );?>
 					<span class="ytc-currentpage">1</span><span class="ytc-separator">/</span><span class="ytc-totalpages"><?php echo $total_pages ?></span>
+				</div>
 			</div>
 			<div class="col-xs-4 ytc-next">
 				<?php if (isset($ytchag_next_token)): ?>
-				<a class="ytc-paginationlink ytc-next" data-cid="<?php echo $ytchag_id ?>" data-wid="<?php echo $plugincount ?>" data-playlist="<?php echo $ytchag_playlist?>" data-token="<?php echo $ytchag_next_token?>"><?php _e( 'Next»', 'youtube-channel-gallery' );?></a>
+					<a class="ytc-paginationlink ytc-next" data-cid="<?php echo $ytchag_id ?>" data-wid="<?php echo $plugincount ?>" data-playlist="<?php echo $ytchag_playlist?>" data-token="<?php echo $ytchag_next_token?>">
+						<?php echo ($ytchag_next_text ? $ytchag_next_text : _e('Next»', 'youtube-channel-gallery'))?>
+					</a>
 				<?php endif; ?>
 			</div>
 		</div>
