@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage
- * @copyright  Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -47,7 +47,6 @@ umask(0);
 $disabledFuncs = explode(',', ini_get('disable_functions'));
 $isShellDisabled = is_array($disabledFuncs) ? in_array('shell_exec', $disabledFuncs) : true;
 $isShellDisabled = (stripos(PHP_OS, 'win') === false) ? $isShellDisabled : true;
-$isShellDisabled = true;
 
 try {
     if (stripos(PHP_OS, 'win') === false) {
@@ -61,10 +60,11 @@ try {
                 Mage::throwException('Unrecognized cron mode was defined');
             }
         } else if (!$isShellDisabled) {
-            $fileName = basename(__FILE__);
-            $baseDir = dirname(__FILE__);
-            shell_exec("/bin/sh $baseDir/cron.sh $fileName -mdefault 1 > /dev/null 2>&1 &");
-            shell_exec("/bin/sh $baseDir/cron.sh $fileName -malways 1 > /dev/null 2>&1 &");
+            $fileName = escapeshellarg(basename(__FILE__));
+            $cronPath = escapeshellarg(dirname(__FILE__) . '/cron.sh');
+
+            shell_exec(escapeshellcmd("/bin/sh $cronPath $fileName -mdefault 1 > /dev/null 2>&1 &"));
+            shell_exec(escapeshellcmd("/bin/sh $cronPath $fileName -malways 1 > /dev/null 2>&1 &"));
             exit;
         }
     }
