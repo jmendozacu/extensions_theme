@@ -10761,3 +10761,23 @@ div.calendar table td.button {
 .catalog-product-view .product-options .support-option input.checkbox.product-custom-option {
   margin-left: 0px;
 }
+
+.cms-index-index .banners {
+  min-height: 1px;
+  overflow: auto;
+  padding-bottom: 15px;
+}
+.cms-index-index .banners div {
+  float: left;
+}
+.cms-index-index .banners .left-banner {
+  width: 46.5%;
+  margin-right: 6.8%;
+}
+
+.std ul.products-grid {
+  list-style: outside none none;
+}
+.std ul.products-grid li {
+  margin-left: 0px;
+}

@@ -36,4 +36,20 @@
 		 .support-option input.checkbox.product-custom-option {margin-left:0px;} 
 	 } 
 } 
- 
+
+.cms-index-index {
+  .banners {
+     min-height:1px;
+     overflow:auto;
+     div {float:left;}
+     padding-bottom:15px;
+     .left-banner {width:46.5%; margin-right:6.8%;}
+  }
+}
+
+.std ul.products-grid {
+  list-style: outside none none;
+  li {
+    margin-left:0px;
+  }
+}
