@@ -28,3 +28,13 @@ skin/frontend/default/sashasv2/.sass-cache/
 blog/sitemap-video.xml
 downloader/.cache/
 blog/error_log
+dist/
+magento_optimize/
+test.php
+v.php
+RELEASE_NOTES.txt
+node_modules/
+.project
+.buildpath
+README.md.save
+media/sales/

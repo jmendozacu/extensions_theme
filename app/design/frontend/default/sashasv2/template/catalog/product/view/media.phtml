@@ -8,57 +8,53 @@
 /* @var $this Mage_Catalog_Block_Product_View_Media */
 ?>
 <?php
-    $_product = $this->getProduct();
-    $_helper = $this->helper('catalog/output');
-?>
-<div    class="product-image product-image-zoom">
-    <div class="product-image-gallery">
-        <img id="image-main"
-             class="gallery-image visible"
-             src="<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>"
-             alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
-             title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
 
-        <?php
-            $i=0;
-            foreach ($this->getGalleryImages() as $_image):
-                $_imageUrl = $this->helper('catalog/image')
-                                  ->init($_product, 'image', $_image->getFile())
-                                  ->keepFrame(false)
-                                  ->constrainOnly(true)
-                                  ->resize(1200);
-        ?>
-            <img itemprop="image"  id="image-<?php echo $i; ?>"
-                 class="gallery-image"
-                 src="<?php echo $_imageUrl; ?>"
-                 data-zoom-image="<?php echo  $_imageUrl; ?>" />
-        <?php
-            $i++;
-            endforeach;
-        ?>
-    </div>
-    
+$_product = $this->getProduct ();
+$_helper = $this->helper ( 'catalog/output' );
+?>
+<div class="product-image product-image-zoom">
+	<div class="product-image-gallery">
+		<img id="image-main" class="gallery-image visible"   
+			src="<?php echo $this->helper('catalog/image')->init($_product, 'image') ?>"
+			alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+			title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+	</div>
 </div>
 
 <?php if (count($this->getGalleryImages()) > 0): ?>
 <div class="more-views">
-    <h2><?php echo $this->__('More Views') ?></h2>
-    <ul class="product-image-thumbs" id="gallery">
+	<h2><?php echo $this->__('More Views') ?></h2>
+	<ul class="product-image-thumbs" id="gallery">
     <?php $i=0; foreach ($this->getGalleryImages() as $_image): ?>
         <?php
-        if (($filterClass = $this->getGalleryFilterHelper()) && ($filterMethod = $this->getGalleryFilterMethod()) && !Mage::helper($filterClass)->$filterMethod($_product, $_image)):
-            continue;
+		if (($filterClass = $this->getGalleryFilterHelper ()) && ($filterMethod = $this->getGalleryFilterMethod ()) && ! Mage::helper ( $filterClass )->$filterMethod ( $_product, $_image )) :
+			continue;
+		
+		
         endif;
-        ?>
-        <li>
-            <a class="thumb-link" href="#" title="<?php echo $this->escapeHtml($_image->getLabel()) ?>" data-image-index="<?php echo $i; ?>"  data-image="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepFrame(false)->constrainOnly(true); ?>" data-zoom-image="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepFrame(false)->constrainOnly(true); ?>">
-                <img   src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(75); ?>"
-                     width="75" height="75" alt="<?php echo $this->escapeHtml($_image->getLabel()) ?>" />
-            </a>
-        </li>
+		?>
+        <li><a class="product-thumb fancybox" rel="gallery1"
+			title="<?php echo $this->escapeHtml($_image->getLabel()) ?>"
+			href="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->keepFrame(false)->constrainOnly(true); ?>">
+				<img
+				src="<?php echo $this->helper('catalog/image')->init($this->getProduct(), 'thumbnail', $_image->getFile())->resize(75); ?>" />
+
+		</a></li>         
     <?php $i++; endforeach; ?>
+    
     </ul>
 </div>
+<script type="text/javascript">
+<!--
+jQuery(document).ready(function() {
+	jQuery(".fancybox").fancybox({
+		openEffect	: 'none',
+		closeEffect	: 'none'
+	});
+});
+//-->
+</script>
 <?php endif; ?>
-  
+
+ 
 <?php echo $this->getChildHtml('after'); ?>
