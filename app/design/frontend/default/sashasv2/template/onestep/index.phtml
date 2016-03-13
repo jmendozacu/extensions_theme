@@ -99,4 +99,18 @@ function saveOrder(){
   	  });  
 }
 
+function newBillingAddress(isNew){ 
+	var selectElement = $('billing-address-select')
+     
+	 if (isNew) {
+		 if (selectElement) {
+		        selectElement.value='';
+		 }
+		 jQuery('#billing-new-address-form').show();
+	 } else {
+		 jQuery('#billing-new-address-form').hide();
+	 }
+    
+}
+
 </script>
