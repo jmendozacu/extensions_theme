@@ -1,0 +1,85 @@
+<?xml version="1.0"?> 
+<!--
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Extensions
+ * @copyright   Copyright (c) 2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+-->
+
+<layout version="0.1.0">
+ 	<checkout_onestep_index translate="label">
+ 		<remove name="left"/>
+ 		<remove name="right"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference> 		
+ 		<reference name="head">	
+ 			<action method="addItem"><type>skin_css</type><script>css/fancybox/jquery.fancybox.css</script></action> 
+ 			<action method="addItem"><type>skin_js</type><script>js/fancybox/jquery.fancybox.pack.js</script></action> 			 
+ 		</reference>         
+ 		<reference name="content">
+ 			 <block type="onestep/index" name="checkout.onestep" template="onestep/index.phtml">
+ 			 	<block type="onestep/billing" name="checkout.onestep.billing" as="billing" template="onestep/billing.phtml" />
+                 
+                <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="payment" template="onestep/payment/methods.phtml">
+                    <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
+                </block>
+                              
+		        <block type="checkout/onepage_review_info" name="review"  template="onestep/review/info.phtml">
+		            <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>checkout/onepage/review/item.phtml</template></action>
+		            <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>checkout/onepage/review/item.phtml</template></action>
+		            <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>checkout/onepage/review/item.phtml</template></action>
+		            <block type="checkout/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="checkout/onepage/review/totals.phtml"/>
+		            <block type="core/text_list" name="checkout.onepage.review.info.items.before" as="items_before" translate="label">
+		                <label>Items Before</label>
+		            </block>
+		            <block type="core/text_list" name="checkout.onepage.review.info.items.after" as="items_after" translate="label">
+		                <label>Items After</label>
+		            </block>
+		            <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="checkout/onepage/agreements.phtml"/>
+		            <block type="core/template" name="checkout.onepage.review.button" as="button" template="checkout/onepage/review/button.phtml"/>
+		        </block> 
+
+ 			 </block>
+ 		</reference>
+ 		<reference name="before_body_end">
+ 			 <block type="onestep/login" name="checkout.login" template="onestep/login.phtml"/>
+ 		</reference> 		
+ 	</checkout_onestep_index>
+ 	
+ 	<checkout_onestep_billing>
+ 		<remove name="left"/>
+ 		<remove name="right"/>
+ 		 <block type="onestep/billing" name="root" output="toHtml" template="onestep/billing.phtml" />             
+ 	</checkout_onestep_billing>
+ 	
+ 	<checkout_onestep_payment>
+ 		<remove name="left"/>
+ 		<remove name="right"/>
+ 		 <block type="checkout/onepage_payment_methods" name="root" output="toHtml" template="onestep/payment/methods.phtml"> 		 	  
+         	<action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>                
+        </block>             
+ 	</checkout_onestep_payment>
+ 	
+ 	<checkout_onestep_review>
+ 		<remove name="left"/>
+ 		<remove name="right"/> 		 
+        <block type="checkout/onepage_review_info" name="root" output="toHtml" template="onestep/review/info.phtml">
+            <action method="addItemRender"><type>default</type><block>checkout/cart_item_renderer</block><template>onestep/review/item.phtml</template></action>
+            <action method="addItemRender"><type>grouped</type><block>checkout/cart_item_renderer_grouped</block><template>onestep/review/item.phtml</template></action>
+            <action method="addItemRender"><type>configurable</type><block>checkout/cart_item_renderer_configurable</block><template>onestep/review/item.phtml</template></action>
+            <block type="checkout/cart_totals" name="checkout.onepage.review.info.totals" as="totals" template="onestep/review/totals.phtml"/>
+            <block type="core/text_list" name="checkout.onepage.review.info.items.before" as="items_before" translate="label">
+                <label>Items Before</label>
+            </block>
+            <block type="core/text_list" name="checkout.onepage.review.info.items.after" as="items_after" translate="label">
+                <label>Items After</label>
+            </block>
+            <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="checkout/onepage/agreements.phtml"/>
+            <block type="core/template" name="checkout.onepage.review.button" as="button" template="onestep/review/button.phtml"/>
+        </block> 		         
+ 	</checkout_onestep_review> 	 	
+</layout>

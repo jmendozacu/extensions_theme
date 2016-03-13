@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @author		Sashas
+* @category    Sashas
+* @package     Sashas_Onestep
+* @copyright   Copyright (c) 2016 Sashas IT Support Inc. (http://www.sashas.org)
+* @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+*/
+-->
+<config>
+	<modules>
+		<Sashas_Onestep>
+			<version>1.0.0</version>
+		</Sashas_Onestep>
+	</modules>
+	<global>
+		<models>
+			<onestep>
+				<class>Sashas_Onestep_Model</class>
+			</onestep>
+		</models>
+		<blocks>
+			<onestep>
+				<class>Sashas_Onestep_Block</class>
+			</onestep>
+		</blocks>
+		<helpers>
+			<onestep>
+				<class>Sashas_Onestep_Helper</class>
+			</onestep>
+		</helpers>
+		<resources>
+			<onestep_setup>
+				<setup>
+					<module>Sashas_Onestep</module>
+				</setup>
+				<connection>
+					<use>core_setup</use>
+				</connection>
+			</onestep_setup>
+			<onestep_write>
+				<connection>
+					<use>core_write</use>
+				</connection>
+			</onestep_write>
+			<onestep_read>
+				<connection>
+					<use>core_read</use>
+				</connection>
+			</onestep_read>
+		</resources>
+	</global>
+	<frontend>
+		<routers>
+			<checkout>
+				<args>
+					<modules>
+						<checkout before="Mage_Checkout">Sashas_Onestep</checkout>
+					</modules>
+				</args>
+			</checkout>
+		</routers>
+        <layout>
+            <updates>
+                <onestep>
+                    <file>onestep.xml</file>
+                </onestep>
+            </updates>
+        </layout>  		
+	</frontend>
+</config>
+

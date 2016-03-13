@@ -1,0 +1,91 @@
+<?php 
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Extensions
+ * @copyright   Copyright (c) 2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+?>
+<div class="page-title">
+    <h1><?php echo $this->__('Checkout') ?></h1>
+</div>
+
+<div class="col3-set">
+	<div class="col-1">
+		<div class="step-title">             
+            <h2><?php  echo $this->__('Billing Information');?></h2>           
+        </div>
+        <div class="step1-content">
+        	<?php echo $this->getChildHtml('billing');?>
+        </div>
+	</div>
+
+	<div class="col-2">
+		<div class="step-title">             
+            <h2><?php  echo $this->__('Payment Information');?></h2>           
+        </div>	
+        <div class="step2-content">
+        	<?php echo $this->getChildHtml('payment');?>
+        </div>        
+	</div>
+	
+	<div class="col-3">
+		<div class="step-title">             
+            <h2><?php  echo $this->__('Order Review');?></h2>           
+        </div>
+        <div class="step3-content">
+        	<?php echo $this->getChildHtml('review');?>
+        </div>        	
+	</div>	
+</div>
+
+
+<script type="text/javascript">
+
+var ajax_load_html='<div class="please-wait">';
+	ajax_load_html+='<img src="<?php echo $this->getSkinUrl('images/opc-ajax-loader.gif') ?>" alt="<?php echo Mage::helper("core")->quoteEscape($this->__("Loading...")) ?>" title="<?php echo Mage::helper("core")->quoteEscape($this->__("Loading...")) ?>" class="v-middle" />';
+	ajax_load_html+='<?php echo $this->__('Loading...') ?></div>';
+  
+  
+  
+function refreshAddress(){
+    
+    var billingUrl='<?php echo $this->getBillingAction() ?>';   
+    jQuery('.step1-content').html(ajax_load_html);
+    
+    jQuery.ajax({
+  	  method: "POST",
+  	  url: billingUrl  	 
+  	}).done(function( response ) {
+  		  jQuery('.step1-content').html(response.content);   		 
+  	  });  
+}
+
+function refreshPayment(){
+    
+    var paymentUrl='<?php echo $this->getPaymentAction() ?>';   
+    jQuery('.step2-content').html(ajax_load_html);
+    
+    jQuery.ajax({
+  	  method: "POST",
+  	  url: paymentUrl  	 
+  	}).done(function( response ) {
+  		  jQuery('.step2-content').html(response.content);   		 
+  	  });  
+}
+
+function refreshReview(){
+    
+    var reviewUrl='<?php echo $this->getReviewAction() ?>';   
+    jQuery('.step3-content').html(ajax_load_html);
+    
+    jQuery.ajax({
+  	  method: "POST",
+  	  url: reviewUrl  	 
+  	}).done(function( response ) {
+  		  jQuery('.step3-content').html(response.content);   		 
+  	  });  
+}
+
+</script>
