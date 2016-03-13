@@ -167,3 +167,77 @@ label {font-weight:400;}
 .button2 span, .button2 span span {text-decoration:none;}
 .header-minicart .product-details .product-name {font-weight:200; }
 .header-minicart .product-details a  { font-weight:200; }
+.col3-set { 
+   width: 100%;
+
+    .col-1,
+    .col-2,
+    .col-3 {
+        width: 33%;
+        padding: 0;
+
+        @include bp(max-width, $bp-medium) {
+            padding: 0;
+        }
+    }
+
+    .col-1 {
+        float: left;
+        padding-left: 0;
+        
+    }
+
+    .col-2 {
+        float: left;
+        padding-right: 0;
+    }
+
+    .col-3 {
+        float: left;
+        padding-right: 0;
+    }
+    
+    @include bp(max-width, $bp-xsmall) {
+        .col-1,
+        .col-2 {
+            float: none;
+            width: auto;
+            border: 0;
+            padding-right: 0;
+            padding-left: 0;
+        }
+        .col-3 {
+            float: none;
+            width: auto;
+            border: 0;
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+
+    .narrow {
+        width: 33%;
+    }
+
+    .wide {
+        width: 100%;
+    }
+
+    &:after {
+        @include clearfix;
+    }
+  }
+// ---------------------------------------------
+// Onstep Checkout
+
+.checkout-onestep-index {
+   
+  h2, .h2 { font-weight: 200; font-size: 21px;}
+  .checkbox + label, .radio + label {font-weight: 200; }
+  .step2-content {
+    label {
+      img {float:left; padding-right:5px;}
+    }
+  }
+}
+    

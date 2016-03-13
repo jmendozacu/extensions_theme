@@ -7,10 +7,6 @@
  * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
  */
 ?>
-<div class="page-title">
-    <h1><?php echo $this->__('Checkout') ?></h1>
-</div>
-
 <div class="col3-set">
 	<div class="col-1">
 		<div class="step-title">             
@@ -83,6 +79,21 @@ function refreshReview(){
     jQuery.ajax({
   	  method: "POST",
   	  url: reviewUrl  	 
+  	}).done(function( response ) {
+  		  jQuery('.step3-content').html(response.content);   		 
+  	  });  
+}
+
+
+function saveOrder(){
+    
+    var saveUrl='<?php echo $this->getUrl('checkout/onestep/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>';   
+    //jQuery('.step3-content').html(ajax_load_html);
+    
+    jQuery.ajax({
+  	  method: "POST",
+  	  url: saveUrl 
+  	  	 
   	}).done(function( response ) {
   		  jQuery('.step3-content').html(response.content);   		 
   	  });  
