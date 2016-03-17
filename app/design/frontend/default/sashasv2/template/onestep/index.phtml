@@ -87,15 +87,32 @@ function refreshReview(){
 
 function saveOrder(){
     
-    var saveUrl='<?php echo $this->getUrl('checkout/onestep/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>';   
-    //jQuery('.step3-content').html(ajax_load_html);
-    
+    var saveUrl='<?php echo $this->getUrl('checkout/onestep/saveOrder', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>';       
+    jQuery('#review-buttons-container').prepend(ajax_load_html);
+    jQuery('.btn-checkout').attr('disabled', true);
     jQuery.ajax({
   	  method: "POST",
-  	  url: saveUrl 
-  	  	 
-  	}).done(function( response ) {
-  		  jQuery('.step3-content').html(response.content);   		 
+  	  url: saveUrl,
+  	  data: jQuery('#co-payment-form, #co-billing-form').serialize(), 
+  	}).done(function( response ) {  		 
+  	  		if (response.success==true){
+    	  	  if (response.redirect) {
+    	  	     location.href = response.redirect;
+    	  	     return true;
+    	  	  }
+  	  		} else if (response.error==true) {
+  	  	  		alert(response.error_messages);
+  	  		} else if (response.success==false && response.error==false) {
+  	            if (response.update_section) {
+  	                $('checkout-'+response.update_section.name+'-load').update(response.update_section.html);
+  	            }
+    	          jQuery('#review-buttons-container .please-wait').remove();		
+    	          return true;
+  	  		}else if (response.error==false){
+  	  	  		alert('<?php echo $this->__('There was an error processing your order. Please contact us or try again later.');?>');
+  	  		}
+  	  	 jQuery('#review-buttons-container .please-wait').remove();		
+ 		 jQuery('.btn-checkout').attr('disabled', false);	 
   	  });  
 }
 
@@ -109,8 +126,30 @@ function newBillingAddress(isNew){
 		 jQuery('#billing-new-address-form').show();
 	 } else {
 		 jQuery('#billing-new-address-form').hide();
-	 }
-    
+	 }    
 }
+
+jQuery( document ).ready(function() {	
+	jQuery( "input[name='payment[method]']" ).change(function() {
+		 var updateUrl='<?php echo $this->getUrl('checkout/onestep/updatePaypalAjax', array('form_key' => Mage::getSingleton('core/session')->getFormKey())) ?>';       
+		 jQuery('.step2-content').append(ajax_load_html);
+		 jQuery('#co-payment-form').hide();
+		 jQuery('.step3-content').html(ajax_load_html);
+		 jQuery.ajax({
+		  	  method: "POST",
+		  	  url: updateUrl,
+		  	  data: jQuery('#co-payment-form, #co-billing-form').serialize(), 
+		  	}).done(function( response ) {  		 
+		  	  		if (response.success==true){
+		    	  	   jQuery('.paypal_info').html(response.paypal_html);
+			    	   jQuery('.step3-content').html(response.review_html);
+		  	  		} else {
+		  	  	  		alert(response.error_messages);
+		  	  		} 
+		  	  	 jQuery('.step2-content .please-wait').remove();		
+			  	 jQuery('#co-payment-form').show();
+		  	  });  
+	});
+});
 
 </script>

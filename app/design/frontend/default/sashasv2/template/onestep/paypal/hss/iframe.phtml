@@ -1,0 +1,26 @@
+<?php
+/**
+ * @author		Sashas
+ * @category    Sashas
+ * @package     Sashas_Extensions
+ * @copyright   Copyright (c) 2016 Sashas IT Support Inc. (http://www.sashas.org)
+ * @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+ */
+
+
+?>
+<div id="iframe-warning" class="warning-message">
+    <?php echo $this->__('Please do not refresh the page until you complete payment.') ?>
+</div>
+<iframe id="hss-iframe" style="display:none;" scrolling="no" frameborder="0" border="0" src="<?php echo $this->getFrameActionUrl() ?>" height="610" width="100%"></iframe>
+<script type="text/javascript">
+//<![CDATA[
+ 
+$('hss-iframe').observe('load', function(){
+    $('hss-iframe').show();
+    $('iframe-warning').show();
+       
+    jQuery('#checkout-review-submit').hide();    
+});
+//]]>
+</script>

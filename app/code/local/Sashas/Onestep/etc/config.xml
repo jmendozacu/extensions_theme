@@ -67,7 +67,17 @@
                     <file>onestep.xml</file>
                 </onestep>
             </updates>
-        </layout>  		
+        </layout>  	
+        <events>
+            <controller_action_postdispatch_checkout_onestep_saveOrder>
+                <observers>
+                    <hss_save_order_onestep>
+                        <class>onestep/observer</class>
+                        <method>setResponseAfterSaveOrder</method>
+                    </hss_save_order_onestep>
+                </observers>
+            </controller_action_postdispatch_checkout_onestep_saveOrder>
+        </events>      	
 	</frontend>
 </config>
 

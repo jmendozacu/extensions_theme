@@ -26,6 +26,8 @@
                  
                 <block type="checkout/onepage_payment_methods" name="checkout.payment.methods" as="payment" template="onestep/payment/methods.phtml">
                     <action method="setMethodFormTemplate"><method>purchaseorder</method><template>payment/form/purchaseorder.phtml</template></action>
+                     <!-- Paypal Integration -->
+		           <block type="paypal/iframe" name="paypal.iframe" />   
                 </block>
                               
 		        <block type="checkout/onepage_review_info" name="review"  template="onestep/review/info.phtml">
@@ -37,7 +39,7 @@
 		                <label>Items Before</label>
 		            </block>
 		            <block type="core/text_list" name="checkout.onepage.review.info.items.after" as="items_after" translate="label">
-		                <label>Items After</label>
+		                <label>Items After</label> 	            		                
 		            </block>
 		            <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="checkout/onepage/agreements.phtml"/>
 		            <block type="core/template" name="checkout.onepage.review.button" as="button" template="onestep/review/button.phtml"/>
@@ -47,8 +49,12 @@
  		</reference>
  		<reference name="before_body_end">
  			 <block type="onestep/login" name="checkout.login" template="onestep/login.phtml"/>
- 		</reference> 		
+ 		</reference> 		  	
  	</checkout_onestep_index>
+ 	 
+ 	<checkout_onestep_paypal>
+ 		<block type="onestep/paypal_iframe" name="paypal.iframe" />   
+ 	</checkout_onestep_paypal>
  	
  	<checkout_onestep_billing>
  		<remove name="left"/>
