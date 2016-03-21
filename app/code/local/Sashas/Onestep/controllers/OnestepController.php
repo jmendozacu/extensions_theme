@@ -238,6 +238,8 @@ class Sashas_Onestep_OnestepController extends Mage_Checkout_OnepageController {
 			/*Save Payment*/			 		 
 			$data = $this->getRequest()->getPost('payment', array());
 			$result = $this->getOnepage()->savePayment($data);
+			$redirectUrl = $this->getOnepage()->getQuote()->getPayment()->getCheckoutRedirectUrl();
+			
 			
 			if (isset($result['error'])){
 				$result['success'] = false;
@@ -246,6 +248,14 @@ class Sashas_Onestep_OnestepController extends Mage_Checkout_OnepageController {
 				$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
 				$this->setFlag('', self::FLAG_NO_DISPATCH, true);
 				return;
+			} else if ($redirectUrl){
+				if ($redirectUrl) {
+					$result['redirect'] = $redirectUrl;
+					$result['success'] = true;
+					$this->getResponse()->setBody(Mage::helper('core')->jsonEncode($result));
+					$this->setFlag('', self::FLAG_NO_DISPATCH, true);
+					return;
+				}
 			}
 					
 			/*Checkout*/
@@ -354,9 +364,7 @@ class Sashas_Onestep_OnestepController extends Mage_Checkout_OnepageController {
 			$update->load('checkout_onestep_review');
 			$layout->generateXml();
 			$layout->generateBlocks();
-			
-			//$result['paypal_html'] =$layout->createBlock('paypal/iframe')->setName('paypal.iframe')->toHtml();
-
+			 
 			$output = $layout->getOutput();
 			$result['review_html'] = $output;
 		} catch (Mage_Payment_Exception $e) {

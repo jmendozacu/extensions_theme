@@ -175,7 +175,7 @@ label {font-weight:400;}
     .col-3 {
         width: 33%;
         padding: 0;
-
+      
         @include bp(max-width, $bp-medium) {
             padding: 0;
         }
@@ -195,6 +195,7 @@ label {font-weight:400;}
     .col-3 {
         float: left;
         padding-right: 0;
+        
     }
     
     @include bp(max-width, $bp-xsmall) {
@@ -239,5 +240,83 @@ label {font-weight:400;}
       img {float:left; padding-right:5px;}
     }
   }
+  
+  .form-list .control label, 
+  .sp-methods dt label,
+  #checkout-shipping-method-load .sp-methods dd label,
+  #co-shipping-method-form .sp-methods dd label,
+  .product-options ul.options-list label {background-color: #fff;}
+  
+  .data-table tbody td .item-options {
+    margin-left:0px;
+    font-weight: 300;
+    font-size: 12px;
+    margin-top:0px;     
+    }
+  
+  
+  .item-options dt { font-weight:300; font-style: unset;}
+  #review-buttons-container .btn-checkout {  margin-right: 10px;}
+  
+   #login_popup  {
+     h4 { font-weight: 400;}
+     h3 {text-align: center;}
+     .forgot-password  {
+        min-height: 1px;
+        overflow: auto;
+        padding-left: 25px;
+        padding-top: 15px;
+        width: 94%;
+    }
+     .forgot-password a {float:left; margin-right:10px;}
+     .forgot-password p {float: right;}
+   }  
+  
+  .col3-set { 
+    .col-1 { width: 33%;
+            padding-right:1%;         
+          .form-list select { max-width: 365px; width:95%;}
+          input[type="email"],       
+          input[type="number"],
+          input[type="password"],
+          input[type="tel"],
+          input[type="text"] {
+                max-width: 365px;
+                width: 95%;
+         }
+          
+    }
+    .col-2 { width: 25%; padding-right:1%;
+      #co-payment-form dt {padding-bottom:10px;}
+    }
+    .col-3 { 
+      width: 41%;
+      padding-right:0;
+      
+      th, code, cite, caption { font-weight:300;}
+      
+      .data-table td, .data-table th {padding: 5px;}
+      #checkout-review-table-wrapper table { border: 1px solid $c-fieldset-border}
+    }
+    
+    
+      .col-1,
+      .col-2,
+      .col-3 {
+        @include bp(max-width, $bp-medium) {
+              float:none;
+              width:100% !important;
+              .checkout-onestep-index h2, .checkout-onestep-index .h2 {
+                border-bottom: 1px solid #ccc;
+                border-top: 1px solid #ccc;
+                padding-bottom: 10px;
+                padding-top: 10px;
+                text-align: center;
+              }
+          }
+      }
+       
+  }     
+         
 }
     

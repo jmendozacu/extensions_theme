@@ -17,9 +17,12 @@
 //<![CDATA[
  
 $('hss-iframe').observe('load', function(){
+	jQuery('.col-1').hide();
+	jQuery('#co-payment-form').hide();
+	jQuery('.col-2').css('width','58%');
     $('hss-iframe').show();
     $('iframe-warning').show();
-       
+      
     jQuery('#checkout-review-submit').hide();    
 });
 //]]>
