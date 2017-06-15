@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Sashas_Onestep>
-            <active>true</active>
+            <active>false</active>
             <codePool>local</codePool>
         </Sashas_Onestep>
     </modules>
