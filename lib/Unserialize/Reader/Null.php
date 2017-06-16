@@ -18,35 +18,47 @@
  * versions in the future. If you wish to customize Magento for your
  * needs please refer to http://www.magento.com for more information.
  *
- * @category    Varien
- * @package     Varien_Data
+ * @category    Unserialize
+ * @package     Unserialize_Reader
  * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
-
 /**
- * Form Input/Output Filter Interface
- *
- * @category    Varien
- * @package     Varien_Data
- * @author      Magento Core Team <core@magentocommerce.com>
+ * Class Unserialize_Reader_Null
  */
-interface Varien_Data_Form_Filter_Interface
+class Unserialize_Reader_Null
 {
     /**
-     * Returns the result of filtering $value
-     *
-     * @param string $value
-     * @return string
+     * @var int
      */
-    public function inputFilter($value);
+    protected $_status;
 
     /**
-     * Returns the result of filtering $value
-     *
-     * @param string $value
-     * @return string
+     * @var string
      */
-    public function outputFilter($value);
+    protected $_value;
+
+    const NULL_VALUE = 'null';
+
+    const READING_VALUE = 1;
+
+    /**
+     * @param string $char
+     * @param string $prevChar
+     * @return string|null
+     */
+    public function read($char, $prevChar)
+    {
+        if ($prevChar == Unserialize_Parser::SYMBOL_SEMICOLON) {
+            $this->_value = self::NULL_VALUE;
+            $this->_status = self::READING_VALUE;
+            return null;
+        }
+
+        if ($this->_status == self::READING_VALUE && $char == Unserialize_Parser::SYMBOL_SEMICOLON) {
+            return $this->_value;
+        }
+        return null;
+    }
 }
