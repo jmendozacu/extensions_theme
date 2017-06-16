@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 <!--
 /**
- * @author		Sashas
- * @category    Sashas
- * @package     Sashas_Magapp
- * @copyright   Copyright (c) 2015 Sashas IT Support Inc. (http://www.sashas.org)
- * @license    http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
- */
+* @category    Sashas
+* @package     Sashas_Magapp
+* @author      Sashas IT Support <support@sashas.org>
+* @copyright   2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+* @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+* @link        http://www.extensions.sashas.org/magento-android-manager.html
+*/
 -->
 <config>
     <modules>
         <Sashas_Magapp>
-            <version>1.1.0</version>
+            <version>1.2.0</version>
         </Sashas_Magapp>
     </modules>
 	<global>
@@ -19,7 +20,12 @@
         	<magapp>
         		<class>Sashas_Magapp_Helper</class>        		
         	</magapp>
-        </helpers> 
+        </helpers>
+		<blocks>
+			<magapp>
+				<class>Sashas_Magapp_Block</class>
+			</magapp>
+		</blocks>		  
         <models>
         	<magapp>
         		<class>Sashas_Magapp_Model</class>

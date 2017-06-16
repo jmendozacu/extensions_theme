@@ -1,4 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* @category    Sashas
+* @package     Sashas_Magapp
+* @author      Sashas IT Support <support@sashas.org>
+* @copyright   2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+* @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+* @link        http://www.extensions.sashas.org/magento-android-manager.html
+*/
+-->
 <config>
     <api>
         <resources>
@@ -157,10 +167,24 @@
                         <message>Credit  Memo status not changed</message>
                     </status_not_changed>
                 </faults>                
-           </magapp_sales_order_creditmemo>                                            
+           </magapp_sales_order_creditmemo>    
+           <magapp>
+                <title>Magento Manager API</title>
+                <model>magapp/api</model>                
+                <acl>magapp</acl>
+                <methods> 
+                    <version translate="title" module="magapp">
+                        <title>Magento Manager API Version</title>
+                        <acl>magapp/version</acl>
+                    </version>  
+                </methods> 
+                <faults module="magapp">                    
+                </faults>            	
+           </magapp>                             
        </resources>
         <resources_alias>
             <magapp_order>magapp_sales_order</magapp_order>
+            <magapp>magapp</magapp>                 
         </resources_alias>               
         <acl>
             <resources>
@@ -208,6 +232,13 @@
                             <title>Retrieve Charts</title>
                         </charts>              	  
                 </magapp_dashboard>
+                <magapp  translate="title" module="magapp">
+                	 <title>Magento Manager API</title>
+                	  <sort_order>4</sort_order>
+                        <version translate="title" module="magapp">
+                            <title>Magento Manager API Version</title>
+                        </version>              	  
+                </magapp>                               
             </resources>
         </acl>
     </api>

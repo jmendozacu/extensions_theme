@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @category    Sashas
+* @package     Sashas_Magapp
+* @author      Sashas IT Support <support@sashas.org>
+* @copyright   2007-2016 Sashas IT Support Inc. (http://www.sashas.org)
+* @license     http://opensource.org/licenses/GPL-3.0  GNU General Public License, version 3 (GPL-3.0)
+* @link        http://www.extensions.sashas.org/magento-android-manager.html
+*/
+-->
+<config>
+	<tabs>
+		<sashas_modules translate="label" module="magapp">
+			<label>Sashas Extensions</label>
+			<sort_order>10</sort_order>
+		</sashas_modules>
+	</tabs>
+	<sections>
+		<magapp translate="label" module="magapp">
+			<label>Magento Manager</label>
+			<tab>sashas_modules</tab>
+			<sort_order>10000</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>1</show_in_store>
+			<groups>
+				<magapp_group translate="label" module="magapp">
+					<label>Magento Manager Settings</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>1000</sort_order>
+					<show_in_default>1</show_in_default>
+					<show_in_website>1</show_in_website>
+					<show_in_store>1</show_in_store>
+					<comment>
+						<![CDATA[<p class="switcher">Please add API user (System->Web Services->SOAP/XML-RPC - Users) and role with all access (System->Web Services->SOAP/XML-RPC - Roles)</p>]]>
+					</comment>					
+					<fields>						 
+						<version translate="label">
+							<label>Extension version</label>
+							<comment>Extension Version</comment>
+							<frontend_type>text</frontend_type>							 				
+							<sort_order>100</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<frontend_model>magapp/adminhtml_system_config_version</frontend_model>
+						</version>	
+						<api_status translate="label">
+							<label>API Status:</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>10</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<frontend_model>magapp/adminhtml_system_config_status</frontend_model>
+						</api_status>							
+						<api_url translate="label">
+							<label>API Url:</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>20</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<frontend_model>magapp/adminhtml_system_config_url</frontend_model>
+						</api_url>		
+						<api_username translate="label">
+							<label>API Status:</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>30</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>							
+						</api_username>		
+						<api_key translate="label">
+							<label>API Key:</label>
+							<frontend_type>text</frontend_type>
+							<sort_order>40</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>							
+						</api_key>																											 
+					</fields>
+				</magapp_group>
+			</groups>
+		</magapp>
+	</sections>
+</config>
