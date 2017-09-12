@@ -17,6 +17,7 @@ body .site {max-width: 90.5714rem;  box-shadow: none; margin-top:0px; padding-to
     width: 100%;
 }
 
+article header {position:relative;}
 .site-content { margin: 1.014285714rem 0 0; }
  .widget-area { margin-bottom: 1.428571429rem; } 
 .entry-content .more-link {
