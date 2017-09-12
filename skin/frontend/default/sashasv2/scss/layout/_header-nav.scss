@@ -73,10 +73,7 @@
  * ============================================ */
 
 @include bp(min-width, $bp-medium + 1) {
-    .nav-primary {
-        display: block;
-        margin-top: 15px;
-    }
+
 
 }
 
@@ -87,17 +84,16 @@
 $nav-primary-height: 30px;
 
 .nav-primary {
-    a {
-        position: relative;
-        display: block;
-    }
-
     li {
         position: relative;
     }
 
-    li.level1 a {
-        border-bottom: 1px solid $c-module-border;
+    li.level1  {
+        font-size: 12px;
+        font-weight: 500;
+        a::before {
+            bottom: -4px;
+        }
     }
 }
 
@@ -126,6 +122,9 @@ $nav-primary-height: 30px;
         // Hide all sub-menus
         li.level0 ul {
             display: none;
+            li {
+                text-align: left;
+            }
         }
 
         // Indent sub-menus
@@ -170,10 +169,6 @@ $nav-primary-height: 30px;
 
     .nav-primary {
 
-        a.level0 {
-            padding: 0 25px;
-        }
-
         li.level0,
         a.level0 {
             display: inline-block;
@@ -183,11 +178,6 @@ $nav-primary-height: 30px;
             border-bottom: none;
         }
 
-        a:hover,
-        li:hover > a {
-            color: $c-action;
-        }
-
         .menu-active {
             z-index: 200;
         }
@@ -195,13 +185,18 @@ $nav-primary-height: 30px;
         /* Default styles for 1+ drop-down menus */
         li.level0 ul {
             position: absolute;
-            left: 0;
-            top: $nav-primary-height; /* Height of ".nav-primary a.level0" */
+            left: -45%;
+            top: 50px; /* Height of ".nav-primary a.level0" */
             z-index: 10;
             width: 250px;
-            padding-left: $box-spacing;
-            padding-right: $box-spacing;
+            background-color: #fff;
+            border-bottom: 1px solid silver;
+            border-right: 1px solid silver;
+            border-left: 1px solid silver;
             display: none; /* Hide until displayed. */
+            li {
+                padding: 5px;
+            }
         }
 
         /* Level 2+ */

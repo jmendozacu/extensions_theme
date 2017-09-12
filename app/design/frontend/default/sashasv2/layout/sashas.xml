@@ -20,21 +20,42 @@
 			<action method="addItem"><type>skin_js</type><script>js/sh/shBrushPhp.js</script></action>
 			<action method="addItem"><type>skin_js</type><script>js/sh/shBrushXml.js</script></action>
 			<action method="addItem"><type>skin_js</type><script>js/sh/shBrushPlain.js</script></action>  
-			<action method="addItem"><type>skin_js</type><script>js/scripts.js</script></action>		-->	    		 
+			<action method="addItem"><type>skin_js</type><script>js/scripts.js</script></action>		-->
 		</reference>
 	</cms_page>
 	
  	<default>
  		<reference name="head">	
  			<action method="removeItem"><type>skin_css</type><name>css/madisonisland-ie8.css</name><params/></action>
-    		<action method="removeItem"><type>skin_css</type><name>css/madisonisland.css</name><params/></action>    		  	
+    		<action method="removeItem"><type>skin_css</type><name>css/madisonisland.css</name><params/></action>
+
+			<!-- New Files -->
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/styles.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/bootstrap/bootstrap.min.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/owl/owl.carousel.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/owl/owl.theme.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/awesome/font-awesome.min.css</name></action>
+			<action method="addItem"><type>skin_css</type><name>css/aboutus/animate/animate.min.css</name></action>
+
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/bootstrap/bootstrap.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/parallax/jquery.parallax-1.1.3.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/waypoints/jquery.waypoints.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/owl/owl.carousel.min.js</name></action>
+
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/wow/wow.min.js</name></action>
+
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/jquery.lettering.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/jquery.easing.1.3.js</name></action>
+
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/respond/respond.min.js</name><params/><if>lt IE 9</if></action>
+			<action method="addItem"><type>skin_js</type><name>js/aboutus/html5shiv-printshiv.js</name><params/><if>lt IE 9</if></action>
  		</reference>
  		<reference name="right">
  			 <remove name="catalog.compare.sidebar"/>
  		</reference> 	
  		<reference name="footer">
 			<block type="cms/block" name="footer_social_links" after="footer_links2">
-			                    <action method="setBlockId"><block_id>footer_support_links</block_id></action>
+			    <action method="setBlockId"><block_id>footer_support_links</block_id></action>
 			 </block> 		
  		</reference>
  	</default>
@@ -144,7 +165,6 @@
 			<!-- About Us Files -->
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/styles.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/bootstrap/bootstrap.min.css</name></action>
-			<action method="addItem"><type>skin_css</type><name>css/aboutus/styles.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/owl/owl.carousel.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/owl/owl.theme.css</name></action>
 			<action method="addItem"><type>skin_css</type><name>css/aboutus/awesome/font-awesome.min.css</name></action>

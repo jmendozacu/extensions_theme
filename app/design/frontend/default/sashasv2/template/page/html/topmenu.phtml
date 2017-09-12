@@ -9,7 +9,7 @@
 
 <?php if($_menu): ?>
     <nav id="nav">
-        <ol class="nav-primary">
+        <ol class="nav-primary nav navbar-nav main-navigation navbar-right">
             <?php echo $_menu ?>
             <?php echo  $this->getLayout()->createBlock('cms/block')->setBlockId('after_menu')->toHtml(); ?>       
         </ol>
