@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Craig_Tco</name>
+    <version>2.4.2</version>
+    <stability>stable</stability>
+    <license uri="http://www.opensource.org/licenses/osl-3.0.php">OSL v3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>2Checkout Payment Extension</summary>
+    <description>2Checkout Payment Module</description>
+    <notes>IE8 JS fixes</notes>
+    <authors><author><name>Craig Christenson</name><user>Craig2Checkout</user><email>cchristenson@2checkout.com</email></author></authors>
+    <date>2014-03-03</date>
+    <time>01:24:04</time>
+    <contents><target name="mageetc"><dir name="modules"><file name="Craig_Tco.xml" hash="4a6e92678d9b2a310af880d35a4c355f"/></dir></target><target name="magelocal"><dir name="Craig"><dir name="Tco"><dir name="Block"><file name="Form.php" hash="b552018543f57090c42784d939004dd4"/><file name="Iframe.php" hash="c8a410448492f2722d8f9891d8470ef7"/><file name="Info.php" hash="ceb4ec03e4de3e4f1dafaf5d7da9b982"/><file name="Redirect.php" hash="3e14d21923564ffebbda371461904895"/></dir><dir name="controllers"><file name="NotificationController.php" hash="5bf12db9cfc0719deea1f82dfe3fe1a2"/><file name="RedirectController.php" hash="116f9d6b3a5bf6386a00486ccfabdb63"/></dir><dir name="etc"><file name="config.xml" hash="3cb52e548566867f2d975cca4d856efd"/><file name="system.xml" hash="8b8a49a75cd220f0ae7597d70c55f156"/></dir><dir name="Helper"><file name="Data.php" hash="de7680011db7d6821c1f68d70a8fa684"/></dir><dir name="Model"><file name="Checkout.php" hash="9471947098baeba75bc1a6c285e2842d"/><file name="Observer.php" hash="ec961a9b67110ae344d6a3fc0165748c"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="tco.xml" hash="674ab3912206c33400cefc358f07579f"/></dir><dir name="template"><dir name="tco"><file name="form.phtml" hash="08ae585e158550d0a5dccbed3d37758d"/><file name="iframe.phtml" hash="2191326835aeb340ad3e26f6acd4963f"/><file name="info.phtml" hash="b714a7398773adc71ea086024dfc96b1"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

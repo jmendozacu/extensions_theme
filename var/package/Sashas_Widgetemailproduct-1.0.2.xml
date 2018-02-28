@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+    <name>Sashas_Widgetemailproduct</name>
+    <version>1.0.2</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/GPL-3.0">GPL-3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Product  Widget For emails</summary>
+    <description>Product  Widget For emails</description>
+    <notes>- Fixed Special Price appearing&#xD;
+- Fixed issue with Grouped Product prices&#xD;
+- Added Short Description&#xD;
+- Added colors options for button, border and text on the button</notes>
+    <authors><author><name>Aliaksandr Lukyanau</name><user>sashas7777</user><email>cybergomel@gmail.com</email></author></authors>
+    <date>2014-03-20</date>
+    <time>06:55:50</time>
+    <contents><target name="magelocal"><dir name="Sashas"><dir name="Widgetemailproduct"><dir name="Block"><file name="Product.php" hash="58e9cf95878582aa936842574c573445"/></dir><dir name="Helper"><file name="Data.php" hash="6fed05aeb9c57ffe7b0859f89289e3f4"/></dir><dir name="etc"><file name="config.xml" hash="6d5514df3582fc77dbc78d45657446d4"/><file name="widget.xml" hash="310c13f8c6a0a04ecad4d5891e5b4d20"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Sashas_Widgetemailproduct.xml" hash="6721427cc0e710346326a84417f74b8b"/></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="template"><dir name="widgetemailproduct"><file name="product.phtml" hash="d511440dc867d90af0582a8438a0d06b"/></dir></dir></dir></dir></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

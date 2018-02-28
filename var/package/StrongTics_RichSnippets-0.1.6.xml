@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<package>
+    <name>StrongTics_RichSnippets</name>
+    <version>0.1.6</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/OSL-3.0">Open Software License v. 3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>StrongTics RichSnippets allows you to increase your Search Engine Visibility with Schema.org main markups.</summary>
+    <description>&lt;h2&gt;Make your business easy-to-find on Google, Yahoo!, Bing &amp;amp; more!&lt;/h2&gt;&#xD;
+&#xD;
+If you are in a competitive online market, to make money, it is necessary to ensure that customers can easily find you, your products and Services you offer.&lt;br&gt;&#xD;
+StrongTics RichSnippets Suite will increase your search rankings, and get guaranteed exposure FAST.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+This extension is based on Schema.org  markups, the leader and standard technology for semantic markup of data on the web, implemented by the search systems Google, Bing and Yahoo!&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+It contains only useful markups for eCommerce that are: &lt;strong&gt;Organization markup, Authorship markup, Publisher markup, Breadcrumb markup, Product markup, Review markup, Aggregate Rating markup.&lt;/strong&gt;&#xD;
+&#xD;
+&lt;br /&gt;&lt;br /&gt;&#xD;
+&lt;h2&gt;Module Compatibility:&lt;/h2&gt;&#xD;
+This extension was developed following best practices according to Magento standards.&lt;br /&gt;&#xD;
+It is simple, fluid and doesn't impact or require any change of Magento default core files or whatever.&#xD;
+&lt;br /&gt;&lt;/br&gt;&#xD;
+&lt;strong&gt;The extension full supports Magento Community.&lt;/strong&gt; &lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;h2&gt;Module Features:&lt;/h2&gt;&#xD;
+&lt;strong&gt;It is fully customisable, you've got possibility to:&lt;/strong&gt;&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;strong&gt;- Easy to use:&lt;/strong&gt;&lt;br /&gt;&#xD;
+A single Enable/Disable options for the entiere extension.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;strong&gt;- Flexible and Intelligent use of Markups:&lt;/strong&gt;&lt;br /&gt;&#xD;
+For each markups you can decided to Enable/Disable: &lt;br /&gt;&#xD;
+1- Organization markup,&lt;br /&gt;&#xD;
+2- Authorship markup,&lt;br /&gt;&#xD;
+3- Publisher markup,&lt;br /&gt;&#xD;
+4- Breadcrumb markup,&lt;br /&gt;&#xD;
+5- Product markup,&lt;br /&gt; &#xD;
+6- Review markup,&lt;br /&gt;&#xD;
+7- Aggregate Rating markup.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;strong&gt;- Multiple stores support:&lt;/strong&gt;&lt;br /&gt;&#xD;
+Support multiple stores, multiple languages and multiple domains.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;h2&gt;Module Set up Requirements:&lt;/h2&gt;&#xD;
+&#xD;
+&lt;strong&gt;- Rich Snippets Global Activation:&lt;/strong&gt;&lt;br /&gt;&#xD;
+1- The entiere extension activation is manage at this point, to start enabled it.&lt;br /&gt;&#xD;
+2- Setup your Google+ profile link.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;strong&gt;- Setting for Author Rich Snippets&lt;/strong&gt;&lt;br /&gt;&#xD;
+To get Authorship markup enabled it.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;strong&gt;- Setting for Breadcrumbs Rich Snippets&lt;/strong&gt;&lt;br /&gt;&#xD;
+ To get Breadcrumb markup enabled it.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;strong&gt;- Setting for Organization Logo Rich Snippets&lt;/strong&gt;&lt;br /&gt;&#xD;
+This markup requires that following the information be pre-setted:&lt;br /&gt;&#xD;
+- Store Name, Phone, Country and Store Contact Address (at Admin &amp;gt; System &amp;gt; Configuration &amp;gt; General &amp;gt; General &amp;gt; Store information ),&lt;br /&gt;&#xD;
+- Send Emails To (at Admin &amp;gt; System &amp;gt; Configuration &amp;gt; General &amp;gt; Contacts.),&lt;br /&gt;&#xD;
+- and Logo Image Source (at Admin &amp;gt; System &amp;gt; Configuration &amp;gt; General &amp;gt; Design &amp;gt; Header).&lt;br /&gt;&#xD;
+At least set the store name and the phone number.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+You need also to set:&lt;br /&gt;&#xD;
+- Store Street Address,&lt;br /&gt;&#xD;
+- Store Postal Code Address,&lt;br /&gt;&#xD;
+- and Store City Address.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;strong&gt;- Setting for Publisher Rich Snippets&lt;/strong&gt;&lt;br /&gt;&#xD;
+ To get Publisher markup enabled it.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;strong&gt;- Setting for Product Rich Snippets&lt;/strong&gt;&lt;br /&gt;&#xD;
+ To get Product markup enabled it. It included Review and Aggregate Rating markups.&lt;br /&gt;&lt;br /&gt;&#xD;
+&#xD;
+&lt;h2&gt;Module Tag:&lt;/h2&gt;&#xD;
+Rich Snippets Suite Extension, Google Rich snippets, Rich Snippets, Structured Data, Schema.org markups.&#xD;
+</description>
+    <notes>This update contains the following fix:&#xD;
+Breadcrumbs missing 'Title' and 'url' in Google Rich Snippets tester.</notes>
+    <authors><author><name>Issa BERTHE</name><user>xsaBERTHE</user><email>issaberthet@gmail.com</email></author></authors>
+    <date>2015-04-05</date>
+    <time>13:21:13</time>
+    <contents><target name="magecommunity"><dir name="StrongTics"><dir name="RichSnippets"><dir name="Block"><file name="Abstract.php" hash="637e5518740c3e8f11c9b80d96b8fff3"/><dir name="Page"><dir name="Html"><file name="Breadcrumbs.php" hash="99c04de0071dc2306e6cc019103db110"/></dir><file name="Logo.php" hash="e0d53e47bbfe360688af81830e7f4df7"/><file name="Publisher.php" hash="1e7006c40c0c75d74e5401956357766e"/></dir><dir name="Product"><file name="Author.php" hash="4b6d705cdcb93f447b747b417c5f6e40"/><file name="View.php" hash="1069d4555f84ba46017831416bd28226"/><file name="View.php~" hash="1069d4555f84ba46017831416bd28226"/></dir></dir><dir name="Helper"><file name="Config.php" hash="4e4fb4230e394329d0976f60d3abf7ce"/><file name="Data.php" hash="7be5066f3152d31b8c80aaa75abc6786"/></dir><dir name="etc"><file name="config.xml" hash="de2bfca1db879dce9336f7f130f1914e"/><file name="system.xml" hash="1972e969396d522b29dc66206f971243"/></dir></dir></dir></target><target name="magedesign"><dir name="frontend"><dir name="base"><dir name="default"><dir name="layout"><file name="sticsrichsnippets.xml" hash="df6a94cc58869e9cc6dd5016e1b7f139"/></dir><dir name="template"><dir name="sticsrichsnippets"><dir name="page"><dir name="html"><file name="breadcrumbs.phtml" hash="ea34af3a979052c577b5a29c10604323"/></dir><file name="logo.phtml" hash="00f48bb544c4501b0e63ce29ea06cbaa"/><file name="publisher.phtml" hash="89bab39a70aa653a25d3f45f2b0f4415"/></dir><dir name="product"><file name="author.phtml" hash="ab32c8cf5337ec5be3f9f5ada7aee049"/><file name="view.phtml" hash="df6f2876b6f20b5fec308f31b0a0f8c4"/></dir></dir></dir></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="StrongTics_RichSnippets.xml" hash="a1b5d76bb610e3bd120577010f47ad78"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>4.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

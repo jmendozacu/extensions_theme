@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>Sashas_Magapp</name>
+    <version>0.1.2</version>
+    <stability>stable</stability>
+    <license uri="http://opensource.org/licenses/GPL-3.0">GPL-3.0</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Android application</summary>
+    <description>Android application</description>
+    <notes>Android application</notes>
+    <authors><author><name>Aliaksandr Lukyanau</name><user>sashas7777</user><email>cybergomel@gmail.com</email></author></authors>
+    <date>2014-09-20</date>
+    <time>05:48:57</time>
+    <contents><target name="magelocal"><dir name="Sashas"><dir name="Magapp"><dir name="Helper"><file name="Data.php" hash="aec3e0fea1d052a7e01d2c8c54c3dbfb"/></dir><dir name="Model"><dir name="Dashboard"><file name="Api.php" hash="cf3262eefb39d264d30e6aa6d366f9a8"/></dir><dir name="Order"><file name="Api.php" hash="50e608669c38d7aacae4312dc970b80f"/></dir></dir><dir name="etc"><file name="api.xml" hash="94243100ffc7f5f6698f6280f375b420"/><file name="config.xml" hash="ba2ff39862631f1900cc32c3b533b703"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Sashas_Magapp.xml" hash="23e2a90f1ea0ddecb179a2ec5507f55d"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.2.0</min><max>6.0.0</max></php></required></dependencies>
+</package>
