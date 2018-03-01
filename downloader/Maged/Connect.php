@@ -20,7 +20,7 @@
  *
  * @category    Mage
  * @package     Mage_Connect
- * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright  Copyright (c) 2006-2018 Magento, Inc. (http://www.magento.com)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
@@ -406,7 +406,9 @@ body { margin:0px;
     color:#2EC029;
     font:normal 11px Lucida Console, Courier New, serif;
     }
-</style></head><body>
+</style>
+<script type="text/javascript" src="js/prototype.js"></script>
+</head><body>
 <script type="text/javascript">
 if (parent && parent.disableInputs) {
     parent.disableInputs(true);
