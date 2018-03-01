@@ -1,66 +1,156 @@
 === Simple Share Buttons Adder ===
-Contributors: DavidoffNeal
-Tags: share buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
-Requires at least: 3.9
-Tested up to: 4.4
-Stable tag: 6.1.2
-License: GPLv2
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Contributors: sharethis, scottstorebloom, surlyrightclick, DavidoffNeal
+Tags: share buttons, social buttons, facebook, twitter, google+, share, share links, stumble upon, linkedin, pinterest, yummly, vk
+Requires at least: 4.5
+Tested up to: 4.9.4
+Stable tag: 7.4.13
+License: GPLv2 or later
 
 A simple plugin that enables you to add share buttons to all of your posts and/or pages.
 
 == Description ==
 
-The Simple Share Buttons Adder does exactly what it says on the tin – adds share buttons to all of your posts and pages, simply.
+The Simple Share Buttons Adder does exactly what it says – adds share buttons to all of your posts and pages, simply.
+
+The new “Modern Share Buttons” tab are CSS-based settings which allow you more flexibility when it comes to customizing your Share Buttons, Icon and Icon Hover colors! You have the option to use our predefined CSS themes or your own custom CSS.
 
 This plugin has a dedicated website! Check out <a href="https://simplesharebuttons.com" target="_blank">simplesharebuttons.com</a>
 
-Looking for even more? <a href="https://simplesharebuttons.com/plus/" target="_blank">Checkout the Plus version</a>!
-
-No hotlinking to another website to slow downloading or for tracking use, it's simple, as promised.
-
 You can even upload and use your own custom images if you wish!
 
-Visit <a href="http://make.simplesharebuttons.com" target="_blank">make.simplesharebuttons.com</a> to make your own custom-coloured share buttons!
+The Simple Share Buttons Adder utilizes features that, as a WordPress user, you will be familiar with. A self-explanatory administration screen will have you showing your Share Buttons on your posts and pages in no time!
 
-The Simple Share Buttons Adder utilises features that, as a WordPress user, you will be familiar with. A self-explanatory administration screen will have you showing your Share Buttons on your posts and pages in no time!
+By downloading and installing this plugin you are agreeing to the <a href="https://simplesharebuttons.com/privacy/" target="_blank">Privacy Policy</a> and <a href="https://simplesharebuttons.com/privacy/" target="_blank">Terms of Service</a>.
 
 == Installation ==
 
-For full configuration instructions<a href="http://www.simplesharebuttons.com/wordpress/wordpress-configuration/" target="_blank"> visit this page</a>
+= Automatic =
+* Click the ‘Plugins’ tab in WordPress admin view
+* Click the ‘Add New’ button
+* Search for ‘Simple Share’
+* Click ‘Install Now’
+* Activate the plugin
+* Navigate to ‘Installed Plugins’
+* Click ‘Settings’
+* Toggle On/Off Location Placement
+* Click the blue save icon
 
-Visit <a href="http://make.simplesharebuttons.com" target="_blank">make.simplesharebuttons.com</a> to make your own custom-coloured share buttons!
+= FTP =
+* Upload Simple Share Adder to the `/wp-content/plugins/` directory
+* Activate the plugin
+* Navigate to ‘Installed Plugins’
+* Click ‘Settings’
+* Toggle On/Off Location Placement
+* Click the blue save icon
 
-1. Upload the 'simple-share-buttons-adder' folder to the `/wp-content/plugins/` directory
-2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Navigate to the SSBA Admin Panel via ‘Plugins’ -> ‘Share Buttons’ to change the settings as desired.
-4. Follow the instructions on <a href="http://www.simplesharebuttons.com/wordpress/wordpress-configuration/" target="_blank">this page</a> to customise your buttons to your liking.
-5. Watch <a href="http://www.youtube.com/watch?v=p03B4C3QMzs" target="_blank">this video</a> to learn how to configure your buttons if you prefer.
-6. Watch <a href="https://www.youtube.com/watch?v=dkte9uu2o0M" target="_blank">this video</a> to see how you can upload and use your own custom images.
-
+= Upload =
+* Upload the downloaded zip file on the ‘Add New’ plugins screen (see the ‘Upload’ tab) in your WordPress admin view
+* Activate the plugin
+* Navigate to ‘Installed Plugins’
+* Click ‘Settings’
+* Toggle On/Off Location Placement
+* Click the blue save icon
 
 == Frequently Asked Questions ==
 
-This plugin has a dedicated website! Check out the<a href="www.simplesharebuttons.com/wordpress-faq/" target="_blank"> FAQs page</a>
+This plugin has a dedicated website! Check out the <a href="http://simplesharebuttons.com/wordpress-faq/" target="_blank"> FAQs page</a>
 
-Visit <a href="http://make.simplesharebuttons.com" target="_blank">make.simplesharebuttons.com</a> to make your own custom-coloured share buttons!
-
-Please visit the <a href="http://www.simplesharebuttons.com/forums/forum/wordpress-forum/">WordPress Support Forum</a> for any assistance you may need.
-
-A step by step guide on how to configure this plugin can be found <a href="http://www.simplesharebuttons.com/wordpress/wordpress-configuration/">here</a>.
+Please visit the <a href="https://wordpress.org/support/plugin/simple-share-buttons-adder">WordPress Support Forum</a> for any assistance you may need.
 
 == Screenshots ==
 
-1. The core settings tab - where you can choose where you want your buttons and which networks to include
-2. The styling settings tab - where you can pick an image set and resize your buttons and share text
-3. The counters settings tab - where you can enable share counts
-4. The advanced settings tab - where you can apply more advanced features
-5. The additional CSS field - where you can add your own CSS
-6. The custom CSS field - where you can use your own CSS
-7. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder
-8. This is an example of a set of Share Buttons you can add using Simple Share Buttons Adder
+1. The top of the admin menu including the network selection tool.
+2. Some styling options for your button's share text and container.
+3. The button preview and additional accordions with more configuration options.
+4. An example of the buttons shown below page content using the "Ribbon" theme.
 
 == Changelog ==
+
+= 7.4.13 =
+* Fix: missing index issue and share bar view switches.
+
+= 7.4.12 =
+* Fix: Saving issue.
+
+= 7.4.11 =
+* Fix: Missing variables and indexes.
+
+= 7.4.10 =
+* Feature: Add share bar buttons
+* Feature: Add “Modern Share Buttons”, which allows for more advanced customization ability using CSS-based settings.
+* Add new admin menu link with logo.
+
+= 7.3.10 =
+* Fixed pinterest blank pop up.
+
+= 7.3.9 =
+* Fixed missing variable error.
+* Remove missing index errors.
+
+= 7.3.8 =
+* Add mobile specific message for whatsapp network.
+* Fix plugin confliction due to non specific function name.
+
+= 7.3.7 =
+* Fixed Window specific plugin location error.
+* Added missing custom email, diggit, buffer image fields.
+* Put old shortcode back in place.
+
+= 7.3.6 =
+* Major plugin code clean up and refactor.
+* Addition of Button Preview in admin.
+* New admin menu layout design.
+* Addition of Whatsapp and Xing buttons.
+
+= 6.3.6 =
+* minor bug fixes
+
+= 6.3.5 =
+* Enable declining of Terms of Service
+
+= 6.3.4 =
+* Fixes for FB open graph tags (so it doesn't add extra text)
+* W3C code validation (thanks @olga22)
+* Other bug fixes
+
+= 6.3.3 =
+* Fixes for old versions of PHP
+
+= 6.3.2 =
+* Minor bug fixes
+
+= 6.3.1 =
+* Added a caching layer on top of Facebook's API to ensure fallback share counts.
+
+= 6.3 =
+* Facebook share counts are back! We implemented a solution to Facebook’s deprecated API.
+* Added the ability to close the update notice when updating from old plugin versions. You will still need to accept the new terms to receive the new features, however you can now more easily choose to continue using the old version.
+
+= 6.2.4 =
+* Fixes the Facebook page widget style bug.
+
+= 6.2.3 =
+* Fixes an issue with the Facebook like widget.
+
+= 6.2.2 =
+* Improves performance over previous two plugin updates.
+
+= 6.2.1 =
+* Fix bug affecting older versions of PHP that didn’t allow people to close the notice.
+
+= 6.2.0 =
+* Feature: Add Facebook Save button
+* Feature: Add Facebook insights
+* Feature: Add Facebook iframe sharing
+
+= 6.1.5 =
+* Feature: Add newsharecounts.com option and functionality to show Twitter share counts again
+
+= 6.1.4 =
+* Tweak: PHP notice
+
+= 6.1.3 =
+* Add sharedcount.com API functionality for Facebook share counts
 
 = 6.1.2 =
 * Reluctantly remove the twitter share count - https://blog.twitter.com/2015/hard-decisions-for-a-sustainable-platform
@@ -249,13 +339,13 @@ A step by step guide on how to configure this plugin can be found <a href="http:
 
 = 2.6 =
 * Tumblr button added!
-* You can now order your own custom-colour share buttons!! http://www.simplesharebuttons.com/custom-share-buttons/
+* You can now order your own custom-colour share buttons!! http://simplesharebuttons.com/custom-share-buttons/
 
 = 2.5 =
 * Further Twitter customisation for Twitter under 'Advanced' options!
 * Buffer and Flattr buttons added! (share counts still to come!)
 * Flattr requires you to enter your user ID under the advanced tab, you must also submit pages/posts here http://flattr.com/submit
-* You can now set a specified URL and Title when using shortcode - [ssba url="http://www.simplesharebuttons.com" title="Simple Share Buttons"]!
+* You can now set a specified URL and Title when using shortcode - [ssba url="http://simplesharebuttons.com" title="Simple Share Buttons"]!
 * When doing the above, both a title and url must be specified.
 * 'Default' image set has been removed! If you are currently using this image set, it will be replaced with 'Somacro'!
 * Only relevant fonts are loaded if specified.

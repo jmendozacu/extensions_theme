@@ -6,11 +6,11 @@
 /**
  * Class WPSEO_JSON_LD
  *
- * Outputs schema code specific for Google's JSON LD stuff
+ * Outputs schema code specific for Google's JSON LD stuff.
  *
  * @since 1.8
  */
-class WPSEO_JSON_LD {
+class WPSEO_JSON_LD implements WPSEO_WordPress_Integration {
 
 	/**
 	 * @var array Holds the plugins options.
@@ -28,18 +28,23 @@ class WPSEO_JSON_LD {
 	private $data = array();
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 */
 	public function __construct() {
-		$this->options = WPSEO_Options::get_all();
+		$this->options = WPSEO_Options::get_options( array( 'wpseo', 'wpseo_social' ) );
+	}
 
+	/**
+	 * Registers the hooks.
+	 */
+	public function register_hooks() {
 		add_action( 'wpseo_head', array( $this, 'json_ld' ), 90 );
 		add_action( 'wpseo_json_ld', array( $this, 'website' ), 10 );
 		add_action( 'wpseo_json_ld', array( $this, 'organization_or_person' ), 20 );
 	}
 
 	/**
-	 * JSON LD output function that the functions for specific code can hook into
+	 * JSON LD output function that the functions for specific code can hook into.
 	 *
 	 * @since 1.8
 	 */
@@ -48,7 +53,7 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Outputs code to allow Google to recognize social profiles for use in the Knowledge graph
+	 * Outputs code to allow Google to recognize social profiles for use in the Knowledge graph.
 	 *
 	 * @since 1.8
 	 */
@@ -72,7 +77,7 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Outputs code to allow recognition of the internal search engine
+	 * Outputs code to allow recognition of the internal search engine.
 	 *
 	 * @since 1.5.7
 	 *
@@ -82,6 +87,7 @@ class WPSEO_JSON_LD {
 		$this->data = array(
 			'@context' => 'http://schema.org',
 			'@type'    => 'WebSite',
+			'@id'      => '#website',
 			'url'      => $this->get_home_url(),
 			'name'     => $this->get_website_name(),
 		);
@@ -93,7 +99,7 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Outputs the JSON LD code in a valid JSON+LD wrapper
+	 * Outputs the JSON LD code in a valid JSON+LD wrapper.
 	 *
 	 * @since 1.8
 	 *
@@ -101,18 +107,16 @@ class WPSEO_JSON_LD {
 	 */
 	private function output( $context ) {
 		/**
-		 * Filter: 'wpseo_json_ld_output' - Allows filtering of the JSON+LD output
+		 * Filter: 'wpseo_json_ld_output' - Allows filtering of the JSON+LD output.
 		 *
-		 * @api array $output The output array, before its JSON encoded
+		 * @api array $output The output array, before its JSON encoded.
 		 *
 		 * @param string $context The context of the output, useful to determine whether to filter or not.
 		 */
 		$this->data = apply_filters( 'wpseo_json_ld_output', $this->data, $context );
 
 		if ( is_array( $this->data ) && ! empty( $this->data ) ) {
-			$json_data = WPSEO_Utils::json_encode( $this->data );
-
-			echo "<script type='application/ld+json'>", $json_data, '</script>', "\n";
+			echo "<script type='application/ld+json'>", wp_json_encode( $this->data ), '</script>', "\n";
 		}
 
 		// Empty the $data array so we don't output it twice.
@@ -120,11 +124,12 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Schema for Organization
+	 * Schema for Organization.
 	 */
 	private function organization() {
 		if ( '' !== $this->options['company_name'] ) {
 			$this->data['@type'] = 'Organization';
+			$this->data['@id']   = '#organization';
 			$this->data['name']  = $this->options['company_name'];
 			$this->data['logo']  = $this->options['company_logo'];
 			return;
@@ -133,11 +138,12 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Schema for Person
+	 * Schema for Person.
 	 */
 	private function person() {
 		if ( '' !== $this->options['person_name'] ) {
 			$this->data['@type'] = 'Person';
+			$this->data['@id']   = '#person';
 			$this->data['name']  = $this->options['person_name'];
 			return;
 		}
@@ -145,7 +151,7 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Prepares the organization or person markup
+	 * Prepares the organization or person markup.
 	 */
 	private function prepare_organization_person_markup() {
 		$this->fetch_social_profiles();
@@ -187,21 +193,21 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Retrieves the home URL
+	 * Retrieves the home URL.
 	 *
 	 * @return string
 	 */
 	private function get_home_url() {
 		/**
-		 * Filter: 'wpseo_json_home_url' - Allows filtering of the home URL for Yoast SEO's JSON+LD output
+		 * Filter: 'wpseo_json_home_url' - Allows filtering of the home URL for Yoast SEO's JSON+LD output.
 		 *
 		 * @api unsigned string
 		 */
-		return apply_filters( 'wpseo_json_home_url', trailingslashit( home_url() ) );
+		return apply_filters( 'wpseo_json_home_url', WPSEO_Utils::home_url() );
 	}
 
 	/**
-	 * Returns an alternate name if one was specified in the Yoast SEO settings
+	 * Returns an alternate name if one was specified in the Yoast SEO settings.
 	 */
 	private function add_alternate_name() {
 		if ( '' !== $this->options['alternate_website_name'] ) {
@@ -210,19 +216,19 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Adds the internal search JSON LD code if it's not disabled
+	 * Adds the internal search JSON LD code if it's not disabled.
 	 *
 	 * @link https://developers.google.com/structured-data/slsb-overview
 	 */
 	private function internal_search_section() {
 		/**
-		 * Filter: 'disable_wpseo_json_ld_search' - Allow disabling of the json+ld output
+		 * Filter: 'disable_wpseo_json_ld_search' - Allow disabling of the json+ld output.
 		 *
-		 * @api bool $display_search Whether or not to display json+ld search on the frontend
+		 * @api bool $display_search Whether or not to display json+ld search on the frontend.
 		 */
 		if ( ! apply_filters( 'disable_wpseo_json_ld_search', false ) ) {
 			/**
-			 * Filter: 'wpseo_json_ld_search_url' - Allows filtering of the search URL for Yoast SEO
+			 * Filter: 'wpseo_json_ld_search_url' - Allows filtering of the search URL for Yoast SEO.
 			 *
 			 * @api string $search_url The search URL for this site with a `{search_term_string}` variable.
 			 */
@@ -237,7 +243,7 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Returns the website name either from Yoast SEO's options or from the site settings
+	 * Returns the website name either from Yoast SEO's options or from the site settings.
 	 *
 	 * @since 2.1
 	 *
@@ -252,10 +258,12 @@ class WPSEO_JSON_LD {
 	}
 
 	/**
-	 * Renders internal search schema markup
+	 * Renders internal search schema markup.
 	 *
 	 * @deprecated 2.1
 	 * @deprecated use WPSEO_JSON_LD::website()
+
+	 * @codeCoverageIgnore
 	 */
 	public function internal_search() {
 		_deprecated_function( __METHOD__, 'WPSEO 2.1', 'WPSEO_JSON_LD::website()' );
