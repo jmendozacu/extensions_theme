@@ -4,7 +4,7 @@ Plugin Name: oEmbed Gist
 Plugin URI: https://github.com/miya0001/oembed-gist
 Description: Embed source from gist.github.
 Author: Takayuki Miyauchi
-Version: 2.0.3
+Version: 4.8.0
 Author URI: http://firegoby.jp/
 */
 
@@ -82,6 +82,7 @@ class gist {
 		<style>
 		.gist table {
 			margin-bottom: 0 !important;
+			table-layout: auto !important;
 		}
 		.gist .line-numbers
 		{
@@ -127,6 +128,11 @@ class gist {
 			$url = $p['url'];
 		} elseif ( preg_match( "/^[a-zA-Z0-9]+$/", $p['id'] ) ) {
 			$url = 'https://gist.github.com/' . $p['id'];
+		}
+
+		// If displaying AMP page with wp-amp plugin - return link.
+		if ( function_exists( 'is_amp_endpoint' ) && is_amp_endpoint() ) {
+			return sprintf( __( '<a href="%s">See the gist on github</a>.', 'oembed-gist' ), esc_url( $url ) );
 		}
 
 		$noscript = sprintf(
