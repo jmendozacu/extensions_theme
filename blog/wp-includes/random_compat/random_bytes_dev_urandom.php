@@ -30,6 +30,7 @@ if (!defined('RANDOM_COMPAT_READ_BUFFER')) {
     define('RANDOM_COMPAT_READ_BUFFER', 8);
 }
 
+if ( ! is_callable( 'random_bytes' ) ):
 /**
  * Unless open_basedir is enabled, use /dev/urandom for
  * random numbers in accordance with best practices
@@ -62,18 +63,25 @@ function random_bytes($bytes)
                 $fp = false;
             }
         }
-        /**
-         * stream_set_read_buffer() does not exist in HHVM
-         * 
-         * If we don't set the stream's read buffer to 0, PHP will
-         * internally buffer 8192 bytes, which can waste entropy
-         * 
-         * stream_set_read_buffer returns 0 on success
-         */
-        if (!empty($fp) && function_exists('stream_set_read_buffer')) {
-            stream_set_read_buffer($fp, RANDOM_COMPAT_READ_BUFFER);
+
+        if (!empty($fp)) {
+            /**
+             * stream_set_read_buffer() does not exist in HHVM
+             * 
+             * If we don't set the stream's read buffer to 0, PHP will
+             * internally buffer 8192 bytes, which can waste entropy
+             * 
+             * stream_set_read_buffer returns 0 on success
+             */
+            if (function_exists('stream_set_read_buffer')) {
+                stream_set_read_buffer($fp, RANDOM_COMPAT_READ_BUFFER);
+            }
+            if (function_exists('stream_set_chunk_size')) {
+                stream_set_chunk_size($fp, RANDOM_COMPAT_READ_BUFFER);
+            }
         }
     }
+
     try {
         $bytes = RandomCompat_intval($bytes);
     } catch (TypeError $ex) {
@@ -81,11 +89,13 @@ function random_bytes($bytes)
             'random_bytes(): $bytes must be an integer'
         );
     }
+
     if ($bytes < 1) {
         throw new Error(
             'Length must be greater than 0'
         );
     }
+
     /**
      * This if() block only runs if we managed to open a file handle
      * 
@@ -96,6 +106,7 @@ function random_bytes($bytes)
     if (!empty($fp)) {
         $remaining = $bytes;
         $buf = '';
+
         /**
          * We use fread() in a loop to protect against partial reads
          */
@@ -128,6 +139,7 @@ function random_bytes($bytes)
             }
         }
     }
+
     /**
      * If we reach here, PHP has failed us.
      */
@@ -135,3 +147,4 @@ function random_bytes($bytes)
         'Error reading from source device'
     );
 }
+endif;
