@@ -9,6 +9,8 @@ if ( ! defined( 'WPSEO_VERSION' ) ) {
 	exit();
 }
 
+$version = '3.4';
+
 /**
  * Display a list of contributors
  *
@@ -16,131 +18,81 @@ if ( ! defined( 'WPSEO_VERSION' ) ) {
  */
 function wpseo_display_contributors( $contributors ) {
 	foreach ( $contributors as $username => $dev ) {
-		echo '<li class="wp-person" id="wp-person-', $username, '">';
-		echo '<a href="https://github.com/', $username, '"><img	src="//gravatar.com/avatar/', $dev->gravatar, '?s=60" class="gravatar" alt="', $dev->name, '"></a>';
-		echo '<a class="web" href="https://github.com/', $username, '">', $dev->name, '</a>';
-		echo '<span class="title">', $dev->role, '</span></li>';
+		echo '<li class="wp-person">';
+		echo '<a href="', esc_url( 'https://github.com/' . $username ), '" class="web"><img src="//gravatar.com/avatar/', rawurlencode( $dev->gravatar ), '?s=120" class="gravatar" alt="">', esc_html( $dev->name ), '</a>';
+		echo '<span class="title">', esc_html( $dev->role ), "</span></li>\n";
 	}
 }
+
+/* translators: %1$s expands to Yoast SEO */
+$wpseo_thanks_for_updating = sprintf( __( 'Thank you for updating %1$s!', 'wordpress-seo' ), 'Yoast SEO' );
 
 ?>
 
 <div class="wrap about-wrap">
 
-	<h1><?php
-		/* translators: %1$s expands to Yoast SEO */
-		printf( __( 'Thank you for updating %1$s!', 'wordpress-seo' ), 'Yoast SEO' );
-		?></h1>
+	<h1><?php echo esc_html( $wpseo_thanks_for_updating ); ?></h1>
 
 	<p class="about-text">
-		Yoast SEO 3.0 is about feedback. Feedback on what <em>you</em> can do to improve your site and your post(s).
-		Feedback when you are doing what you should be doing: writing awesome content.
+		<?php
+		printf(
+			/* translators: %1$s and %2$s expands to anchor tags, %3$s expands to Yoast SEO */
+			esc_html__( 'While most of the development team is at %1$sYoast%2$s in the Netherlands, %3$s is created by a worldwide team.', 'wordpress-seo' ),
+			'<a target="_blank" href="' . esc_url( WPSEO_Shortlinker::get( 'https://yoa.st/1ye' ) ) . '" rel="noopener noreferrer">',
+			'</a>',
+			'Yoast SEO'
+		);
+		echo ' ';
+		printf(
+			/* translators: 1: link open tag; 2: link close tag. */
+			esc_html__( 'Want to help us develop? Read our %1$scontribution guidelines%2$s!', 'wordpress-seo' ),
+			'<a target="_blank" href="' . esc_url( WPSEO_Shortlinker::get( 'https://yoa.st/wpseocontributionguidelines' ) ) . '" rel="noopener noreferrer">',
+			'</a>'
+		);
+		?>
 	</p>
 
 	<div class="wp-badge"></div>
 
 	<h2 class="nav-tab-wrapper" id="wpseo-tabs">
-		<a class="nav-tab" href="#top#new" id="new-tab">
-			<?php
-			/* translators: %s: '3.0' version number */
-			echo sprintf( __( 'What’s new in %s', 'wordpress-seo' ), '3.0' );
-			?>
-		</a>
-		<a class="nav-tab" href="#top#credits" id="credits-tab"><?php _e( 'Credits', 'wordpress-seo' ); ?></a>
+		<a class="nav-tab" href="#top#credits" id="credits-tab"><?php esc_html_e( 'Credits', 'wordpress-seo' ); ?></a>
+		<a class="nav-tab" href="#top#integrations" id="integrations-tab"><?php esc_html_e( 'Integrations', 'wordpress-seo' ); ?></a>
 	</h2>
 
-	<div id="new" class="wpseotab">
-
-		<h2>Real time content analysis</h2>
-
-		<p>No longer will you have to save your post or page for the content analysis to update, it'll be there in real
-			time. Which is also why it's now in plain sight all the time.</p>
-
-		<div class="headline-feature feature-video">
-			<?php // @codingStandardsIgnoreStart ?>
-			<script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/E-v1.js" async></script>
-			<?php // @codingStandardsIgnoreEnd ?>
-			<div class="wistia_responsive_padding" style="padding:56.25% 0 0 0;position:relative;">
-				<div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;">
-					<div class="wistia_embed wistia_async_vdcuq7tfh1 videoFoam=true" style="height:100%;width:100%">
-						&nbsp;</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="feature-section two-col">
-			<div class="col">
-				<div class="media-container">
-					<img src="//yoast-30.s3.amazonaws.com/snippet-editor.png" alt="Snippet editor">
-				</div>
-				<h3>A snippet editor</h3>
-
-				<p>Our snippet preview got turned into a snippet editor. Click it, modify it, make it work. With instant
-					inline feedback when it's too long and the content analysis updating straight away too.</p>
-			</div>
-			<div class="col">
-				<div class="media-container">
-					<img src="//yoast-30.s3.amazonaws.com/onpage.png" alt="OnPage.org indexability check">
-				</div>
-				<h3>Is your site indexable?</h3>
-
-				<p>in collaboration with our friends at <a href="https://onpage.org/yoast-indexability/">OnPage.org</a>
-					we now give you an indexability check for your site. It automatically tells you whether your site
-					can be indexed by search engines and will alert you when that changes.</p>
-			</div>
-			<div class="col">
-				<div class="media-container">
-					<img src="//yoast-30.s3.amazonaws.com/category-fixes.png" alt="Supercharged categories">
-				</div>
-				<h3>Supercharged categories</h3>
-
-				<p>We've supercharged categories and tags: we've given them a snippet editor, social meta fields, etc.
-					The entire post experience in Yoast SEO is now available for categories and tags too. Using custom
-					taxonomies? Cool, we support those too!</p>
-			</div>
-			<div class="col">
-				<div class="svg-container">
-					<span class="dashicons dashicons-wordpress"></span>
-				</div>
-				<h3>WordPress 4.4? We're ready!</h3>
-
-				<p>
-					WordPress 4.4 is nearing completion. We've tested Yoast SEO extensively with it, and we're ready.
-					With the new embeds functionality, our canonical URLs just work. Without you needing to do anything.
-				</p>
-			</div>
-
-			<div class="clear"></div>
-
-			<div class="return-to-dashboard">
-				<a href="<?php echo esc_url( admin_url( 'admin.php?page=wpseo_dashboard' ) ); ?>"><?php _e( 'Go to the General settings page →', 'wordpress-seo' ); ?></a>
-			</div>
-
-		</div>
-	</div>
-
 	<div id="credits" class="wpseotab">
-		<p class="about-description">
-			<?php
-			/* translators: %1$s and %2$s expands to anchor tags, %3$s expands to Yoast SEO */
-			printf( __( 'While most of the development team is at %1$sYoast%2$s in the Netherlands, %3$s is created by a worldwide team.', 'wordpress-seo' ), '<a target="_blank" href="https://yoast.com/">', '</a>', 'Yoast SEO' );
-			echo ' ';
-			printf( __( 'Want to help us develop? Read our %1$scontribution guidelines%2$s!', 'wordpress-seo' ), '<a target="_blank" href="http://yoa.st/wpseocontributionguidelines">', '</a>' );
-			?>
-		</p>
+		<h2 class="screen-reader-text"><?php esc_html_e( 'Team and contributors', 'wordpress-seo' ); ?></h2>
 
-		<h4 class="wp-people-group"><?php _e( 'Project Leaders', 'wordpress-seo' ); ?></h4>
+		<h3 class="wp-people-group"><?php esc_html_e( 'Product Management', 'wordpress-seo' ); ?></h3>
 		<ul class="wp-people-group " id="wp-people-group-project-leaders">
 			<?php
-			$leaders = array(
-				'jdevalk'   => (object) array(
+			$people = array(
+				'jdevalk'     => (object) array(
 					'name'     => 'Joost de Valk',
 					'role'     => __( 'Project Lead', 'wordpress-seo' ),
 					'gravatar' => 'f08c3c3253bf14b5616b4db53cea6b78',
 				),
+				'mariekerakt' => (object) array(
+					'name'     => 'Marieke van de Rakt',
+					'role'     => __( 'Head R&D', 'wordpress-seo' ),
+					'gravatar' => '1d83533e299c379140f9fcc2cb0015cb',
+				),
+				'irenestr'    => (object) array(
+					'name'     => 'Irene Strikkers',
+					'role'     => __( 'Linguist', 'wordpress-seo' ),
+					'gravatar' => '074d67179d52561e36e57e8e9ea8f8cf',
+				),
+			);
+
+			wpseo_display_contributors( $people );
+			?>
+		</ul>
+		<h3 class="wp-people-group"><?php esc_html_e( 'Development Leaders', 'wordpress-seo' ); ?></h3>
+		<ul class="wp-people-group " id="wp-people-group-development-leaders">
+			<?php
+			$people = array(
 				'omarreiss' => (object) array(
 					'name'     => 'Omar Reiss',
-					'role'     => __( 'Lead Architect', 'wordpress-seo' ),
+					'role'     => __( 'CTO', 'wordpress-seo' ),
 					'gravatar' => '86aaa606a1904e7e0cf9857a663c376e',
 				),
 				'atimmer'   => (object) array(
@@ -148,81 +100,180 @@ function wpseo_display_contributors( $contributors ) {
 					'role'     => __( 'Architect', 'wordpress-seo' ),
 					'gravatar' => 'b3acbabfdd208ecbf950d864b86fe968',
 				),
-				'tacoverdo' => (object) array(
-					'name'     => 'Taco Verdonschot',
-					'role'     => __( 'QA & Translations Manager', 'wordpress-seo' ),
-					'gravatar' => 'd2d3ecb38cacd521926979b5c678297b',
+				'moorscode' => (object) array(
+					'name'     => 'Jip Moors',
+					'role'     => __( 'Architect', 'wordpress-seo' ),
+					'gravatar' => '1751c5afc377ef4ec07a50791db1bc52',
 				),
 			);
 
-			wpseo_display_contributors( $leaders );
+			wpseo_display_contributors( $people );
 			?>
 		</ul>
-		<h4 class="wp-people-group"><?php _e( 'Contributing Developers', 'wordpress-seo' ); ?></h4>
+		<h3 class="wp-people-group"><?php esc_html_e( 'Yoast Developers', 'wordpress-seo' ); ?></h3>
 		<ul class="wp-people-group " id="wp-people-group-core-developers">
 			<?php
-			$contributors = array(
-				'CarolineGeven' => (object) array(
-					'name'     => 'Caroline Geven',
+			$people = array(
+				'afercia'       => (object) array(
+					'name'     => 'Andrea Fercia',
 					'role'     => __( 'Developer', 'wordpress-seo' ),
-					'gravatar' => 'f2596a568c3974e35f051266a63d791f',
+					'gravatar' => '074af62ea5ff218b6a6eeab89104f616',
 				),
-				'jrfnl'         => (object) array(
-					'name'     => 'Juliette Reinders Folmer',
+				'rarst'         => (object) array(
+					'name'     => 'Andrey Savchenko',
 					'role'     => __( 'Developer', 'wordpress-seo' ),
-					'gravatar' => 'cbbac3e529102364dc3b026af3cc2988',
-				),
-				'terw-dan'      => (object) array(
-					'name'     => 'Danny Terwindt',
-					'role'     => __( 'Developer', 'wordpress-seo' ),
-					'gravatar' => '20a04b0736e630e80ce2dbefe3f1d62f',
-				),
-				'garyjones'     => (object) array(
-					'name'     => 'Gary Jones',
-					'role'     => 'Developer, QA & Accessibility',
-					'gravatar' => 'f00cf4e7f02e10152f60ec3507fa8ba8',
+					'gravatar' => 'c445c2491f9f55409b2e4dccee357961',
 				),
 				'andizer'       => (object) array(
 					'name'     => 'Andy Meerwaldt',
 					'role'     => __( 'Developer', 'wordpress-seo' ),
 					'gravatar' => 'a9b43e766915b48031eab78f9916ca8e',
 				),
-				'rarst'         => (object) array(
-					'name'     => 'Andrey Savchenko',
-					'role'     => 'For the 100+ fixes that didn\'t make the about page',
-					'gravatar' => 'c445c2491f9f55409b2e4dccee357961',
-				),
 				'boblinthorst'  => (object) array(
 					'name'     => 'Bob Linthorst',
-					'role'     => 'For testing ridiculously hard',
+					'role'     => __( 'Developer', 'wordpress-seo' ),
 					'gravatar' => '8063b1955f54681ef3a2deb21972faa1',
+				),
+				'CarolineGeven' => (object) array(
+					'name'     => 'Caroline Geven',
+					'role'     => __( 'Developer', 'wordpress-seo' ),
+					'gravatar' => 'f2596a568c3974e35f051266a63d791f',
+				),
+				'terw-dan'      => (object) array(
+					'name'     => 'Danny Terwindt',
+					'role'     => __( 'Developer', 'wordpress-seo' ),
+					'gravatar' => '20a04b0736e630e80ce2dbefe3f1d62f',
 				),
 				'diedexx'       => (object) array(
 					'name'     => 'Diede Exterkate',
-					'role'     => 'For testing ridiculously hard',
+					'role'     => __( 'Developer', 'wordpress-seo' ),
 					'gravatar' => '59908788f406037240ee011388db29f8',
 				),
-
+				'irenestr'      => (object) array(
+					'name'     => 'Irene Strikkers',
+					'role'     => __( 'Developer', 'wordpress-seo' ),
+					'gravatar' => '074d67179d52561e36e57e8e9ea8f8cf',
+				),
+				'jcomack'       => (object) array(
+					'name'     => 'Jimmy Comack',
+					'role'     => __( 'Developer', 'wordpress-seo' ),
+					'gravatar' => '41073ef9e1f3e01b03cbee75cee33bd4',
+				),
 			);
 
-			wpseo_display_contributors( $contributors );
+			wpseo_display_contributors( $people );
 			?>
 		</ul>
-		<h4 class="wp-people-group"><?php _e( 'Contributors to this release', 'wordpress-seo' ); ?></h4>
-		<?php
-		$patches_from = array(
-			'Daniel Homer' => 'https://github.com/danielhomer',
-		);
-		?>
-		<p>We're always grateful for patches from non-regular contributors, in Yoast SEO 3.0, patches from
-			the
-			following people made it in:</p>
-		<ul class="ul-square">
+		<h3 class="wp-people-group"><?php esc_html_e( 'Quality Assurance & Testing', 'wordpress-seo' ); ?></h3>
+		<ul class="wp-people-group " id="wp-people-group-qa-testing">
 			<?php
-			foreach ( $patches_from as $patcher => $link ) {
-				echo '<li><a href="', esc_url( $link ), '">', $patcher, '</a></li>';
-			}
+			$people = array(
+				'tacoverdo'    => (object) array(
+					'name'     => 'Taco Verdonschot',
+					'role'     => __( 'QA & Translations Manager', 'wordpress-seo' ),
+					'gravatar' => 'd2d3ecb38cacd521926979b5c678297b',
+				),
+				'benvaassen'   => (object) array(
+					'name'     => 'Ben Vaassen',
+					'role'     => __( 'QA', 'wordpress-seo' ),
+					'gravatar' => 'e186ff6435b02a7bc1c7185dd66b7e64',
+				),
+				'monbauza'     => (object) array(
+					'name'     => 'Ramon Bauza',
+					'role'     => __( 'Tester', 'wordpress-seo' ),
+					'gravatar' => 'de09b8491ab1d927e770f7519219cfc9',
+				),
+				'boblinthorst' => (object) array(
+					'name'     => 'Bob Linthorst',
+					'role'     => __( 'Tester', 'wordpress-seo' ),
+					'gravatar' => '8063b1955f54681ef3a2deb21972faa1',
+				),
+			);
+
+			wpseo_display_contributors( $people );
 			?>
 		</ul>
+		<?php
+		$patches_from = array();
+		if ( ! empty( $patches_from ) ) :
+			$call_to_contribute = sprintf(
+				/* translators: %1$s expands to Yoast SEO, %2$s to the version number of the plugin. */
+				__( 'We\'re always grateful for patches from non-regular contributors, in %1$s %2$s, patches from the following people made it in:', 'wordpress-seo' ),
+				'Yoast SEO',
+				$version
+			);
+			?>
+			<h3 class="wp-people-group"><?php esc_html_e( 'Community contributors', 'wordpress-seo' ); ?></h3>
+			<p><?php echo $call_to_contribute; ?></p>
+			<ul class="ul-square">
+				<?php
+				foreach ( $patches_from as $patcher => $link ) {
+					echo '<li><a href="', esc_url( $link ), '">', $patcher, '</a></li>';
+				}
+				?>
+			</ul>
+		<?php endif; ?>
+	</div>
+
+	<div id="integrations" class="wpseotab">
+		<h2>
+			<?php
+			printf(
+				/* translators: %1$s expands to Yoast SEO */
+				esc_html__( '%1$s Integrations', 'wordpress-seo' ),
+				'Yoast SEO'
+			);
+			?>
+		</h2>
+		<p class="about-description">
+			<?php
+			printf(
+				/* translators: 1: expands to "Yoast SEO"; 2: emphasis open tag; 3: emphasis close tag. */
+				esc_html__( '%1$s 3.0 brought a way for theme builders and custom field plugins to integrate with %1$s. These integrations make sure that %2$sall%3$s the data on your page is used for the content analysis. On this page, we highlight the frameworks that have nicely working integrations.', 'wordpress-seo' ),
+				'Yoast SEO',
+				'<em>',
+				'</em>'
+			);
+			?>
+		</p>
+
+		<ol>
+			<li>
+				<?php
+				printf(
+					/* translators: 1: link open tag; 2: link close tag; 3: Yoast; 4: linked developer name. */
+					esc_html__( '%1$s%3$s ACF Integration%2$s - an integration built by %4$s and Team %3$s', 'wordpress-seo' ),
+					'<a target="_blank" href="https://wordpress.org/plugins/yoast-seo-acf-analysis/">',
+					'</a>',
+					'Yoast',
+					'<a href="https://forsberg.ax" target="_blank" rel="noreferrer noopener">Marcus Forsberg</a>, ' .
+					'<a href="http://kraftner.com/" target="_blank" rel="noreferrer noopener">Thomas Kräftner</a>, ' .
+					'<a href="https://angrycreative.se/" target="_blank" rel="noreferrer noopener">Angry Creative</a>'
+				);
+				?>
+			</li>
+			<li><a href="https://www.elegantthemes.com/plugins/divi-builder/" target="_blank" rel="noreferrer noopener">Divi Builder</a></li>
+			<li><a href="https://vc.wpbakery.com/" target="_blank" rel="noreferrer noopener">Visual Composer</a></li>
+		</ol>
+
+		<h3><?php esc_html_e( 'Other integrations', 'wordpress-seo' ); ?></h3>
+		<p class="about-description">
+			<?php esc_html_e( 'We\'ve got other integrations we\'d like to tell you about:', 'wordpress-seo' ); ?>
+		</p>
+
+		<ol>
+			<li>
+				<?php
+				printf(
+					/* translators: 1,2: link open tag; 3: link close tag; 4: Yoast SEO. */
+					esc_html__( '%1$sGlue for %4$s &amp; AMP%3$s - an integration between %2$sthe WordPress AMP plugin%3$s and %4$s.', 'wordpress-seo' ),
+					'<a target="_blank" rel="noreferrer noopener" href="https://wordpress.org/plugins/glue-for-yoast-seo-amp/">',
+					'<a target="_blank" rel="noreferrer noopener" href="https://wordpress.org/plugins/amp/">',
+					'</a>',
+					'Yoast SEO'
+				);
+				?>
+			</li>
+		</ol>
 	</div>
 </div>
