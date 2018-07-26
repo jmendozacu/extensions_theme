@@ -30,14 +30,31 @@ class Sashas_Invoice_Helper_Data extends Mage_Core_Helper_Abstract
 			        $total_time=trim($data[1]);
 			        $total_amount=str_replace('$','',trim($data[2]));
 			        $subtotal_amount=str_replace('$','',trim($data[3]));
+			        $hourlyRate="";
+                    $totalData0=array();
+                    if (!is_numeric($total_time) && isset($data[5])) {
+                        $hourlyRate=str_replace('$','',trim($data[5]));
+                        $totalData0=array(
+                            'label'=>'Hourly Rate',
+                            'amount'=>$hourlyRate,
+                        );
+                    }
 			        $invoiceData['invoice_id']=$invoice_id;
 			        
 			        /*Totals*/
 			        $totalItems=new Varien_Data_Collection();
-			        $totalData1=array(
-			                'label'=>'Total Time',
-			                'amount'=>$total_time,
-			        );
+			        if (is_numeric($total_time)) {
+                        $totalData1=array(
+                            'label'=>'Total Amount',
+                            'amount'=>$total_time,
+                        );
+                    } else {
+                        $totalData1=array(
+                            'label'=>'Total Time',
+                            'amount'=>$total_time,
+                        );
+                    }
+
 			        $totalData2=array(
 			                'label'=>'Subtotal',
 			                'amount'=>$subtotal_amount,
@@ -46,7 +63,9 @@ class Sashas_Invoice_Helper_Data extends Mage_Core_Helper_Abstract
 			                'label'=>'Total',
 			                'amount'=>$total_amount,
 			        );
-			         
+			         if (count($totalData0)) {
+                         $totalItems->addItem(new Varien_Object($totalData0));
+                     }
 			        $totalItems->addItem(new Varien_Object($totalData1));
 			        $totalItems->addItem(new Varien_Object($totalData2));
 			        $totalItems->addItem(new Varien_Object($totalData3));

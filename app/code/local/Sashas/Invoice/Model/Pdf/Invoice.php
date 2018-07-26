@@ -77,7 +77,7 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
 		$page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
 		$page->drawText(Mage::helper('sales')->__('Date'), 35, $this->y, 'UTF-8');
             $page->drawText(Mage::helper('sales')->__('Description'), 85, $this->y, 'UTF-8');           
-            $page->drawText(Mage::helper('sales')->__('Time/Price'), 535, $this->y, 'UTF-8');
+            $page->drawText(Mage::helper('sales')->__('Effort'), 535, $this->y, 'UTF-8');
   
             $this->y -=15; 
             $this->_setFontRegular($page);
@@ -121,7 +121,7 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
                
             $page->drawText(Mage::helper('sales')->__('Date'), 35, $this->y, 'UTF-8');
             $page->drawText(Mage::helper('sales')->__('Description'), 85, $this->y, 'UTF-8');           
-            $page->drawText(Mage::helper('sales')->__('Time/Price'), 535, $this->y, 'UTF-8');
+            $page->drawText(Mage::helper('sales')->__('Effort'), 535, $this->y, 'UTF-8');
              
     
             $page->setFillColor(new Zend_Pdf_Color_GrayScale(0));
@@ -154,9 +154,17 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
         $page->drawText(Mage::helper('sales')->__('Invoice # ').$invoice->getInvoiceId(), 35, $this->y, 'UTF-8');
      
         $page->drawText(Mage::helper('sales')->__('Invoice Date: ') . date( 'n/d/Y', strtotime( 'now')), 35, $this->y-10, 'UTF-8');
-        $page->drawText(Mage::helper('sales')->__('Paypal Email: ') . 'asashas@mail.ru', 35, $this->y-20, 'UTF-8');
- 
-        $this->y = $this->y-40;         
+        $page->drawText(Mage::helper('sales')->__('Currency: '). 'USD' , 35, $this->y-20, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('PayPal: ') . 'asashas@mail.ru', 35, $this->y-40, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('ACH Bank Payment (USA only): ') , 35, $this->y-60, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Bank Name: '). 'Capital One' , 35, $this->y-70, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Bank Address: '). 'Capital One Bank, P.O. Box 180, St. Cloud, MN 56302-0180' , 35, $this->y-80, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Account Number: '). '7527110976' , 35, $this->y-90, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Routing Number: '). '065000090' , 35, $this->y-100, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Account Type: '). 'Checking' , 35, $this->y-110, 'UTF-8');
+
+
+        $this->y = $this->y-130;
     }
    
     
