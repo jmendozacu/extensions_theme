@@ -32,12 +32,12 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
  
                 $y1 = $top - $height;
                 $y2 = $top;
-                $x1 = 25;
+                $x1 = 35;
                 $x2 = $x1 + $width;      
                        
                 //coordinates after transformation are rounded by Zend
                 $page->drawImage($image, $x1, $y1, $x2, $y2);  
-               $this->y = $y1 - 10;
+               $this->y = $y1 - 20;
             }
         }
     }
@@ -155,16 +155,31 @@ class Sashas_Invoice_Model_Pdf_Invoice extends Mage_Sales_Model_Order_Pdf_Abstra
      
         $page->drawText(Mage::helper('sales')->__('Invoice Date: ') . date( 'n/d/Y', strtotime( 'now')), 35, $this->y-10, 'UTF-8');
         $page->drawText(Mage::helper('sales')->__('Currency: '). 'USD' , 35, $this->y-20, 'UTF-8');
-        $page->drawText(Mage::helper('sales')->__('PayPal: ') . 'asashas@mail.ru', 35, $this->y-40, 'UTF-8');
-        $page->drawText(Mage::helper('sales')->__('ACH Bank Payment (USA only): ') , 35, $this->y-60, 'UTF-8');
-        $page->drawText(Mage::helper('sales')->__('Bank Name: '). 'Capital One' , 35, $this->y-70, 'UTF-8');
-        $page->drawText(Mage::helper('sales')->__('Bank Address: '). 'Capital One Bank, P.O. Box 180, St. Cloud, MN 56302-0180' , 35, $this->y-80, 'UTF-8');
-        $page->drawText(Mage::helper('sales')->__('Account Number: '). '7527110976' , 35, $this->y-90, 'UTF-8');
-        $page->drawText(Mage::helper('sales')->__('Routing Number: '). '065000090' , 35, $this->y-100, 'UTF-8');
-        $page->drawText(Mage::helper('sales')->__('Account Type: '). 'Checking' , 35, $this->y-110, 'UTF-8');
+        $font = $this->_setFontBold($page, 10);
+        $page->drawText(Mage::helper('sales')->__('PayPal (non-US only):'), 35, $this->y-40, 'UTF-8');
+        $font = $this->_setFontRegular($page, 10);
+        $page->drawText('asashas@mail.ru', 130, $this->y-40, 'UTF-8');
+        $font = $this->_setFontBold($page, 10);
+        $page->drawText(Mage::helper('sales')->__('Zelle/Chase Quick Pay:'), 35, $this->y-60, 'UTF-8');
+        $font = $this->_setFontRegular($page, 10);
+        $page->drawText('631-949-8284 or cybergomel@gmail.com', 135, $this->y-60, 'UTF-8');
+        $font = $this->_setFontBold($page, 10);
+        $page->drawText(Mage::helper('sales')->__('ACH Bank Payment: ') , 35, $this->y-80, 'UTF-8');
+        $font = $this->_setFontRegular($page, 10);
+        $page->drawText(Mage::helper('sales')->__('Bank Name: '). 'Capital One' , 35, $this->y-90, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Bank Address: '). 'Capital One Bank, P.O. Box 180, St. Cloud, MN 56302-0180' , 35, $this->y-100, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Account Number: '). '7527110976' , 35, $this->y-110, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Routing Number: '). '065000090' , 35, $this->y-120, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Account Type: '). 'Checking' , 35, $this->y-130, 'UTF-8');
 
+        $font = $this->_setFontBold($page, 10);
+        $page->drawText(Mage::helper('sales')->__('Check Mail Address: ') , 35, $this->y-150, 'UTF-8');
+        $font = $this->_setFontRegular($page, 10);
+        $page->drawText(Mage::helper('sales')->__('Sashas IT Support Inc'), 35, $this->y-160, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('1770 East 14th St, 6K'), 35, $this->y-170, 'UTF-8');
+        $page->drawText(Mage::helper('sales')->__('Brooklyn, NY, 11229'), 35, $this->y-180, 'UTF-8');
 
-        $this->y = $this->y-130;
+        $this->y = $this->y-200;
     }
    
     
