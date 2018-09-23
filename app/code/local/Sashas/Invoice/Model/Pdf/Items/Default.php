@@ -36,7 +36,7 @@ class Sashas_Invoice_Model_Pdf_Items_Default extends Mage_Sales_Model_Order_Pdf_
              'font_size'=>8,
         );
        	if (strpos($item->getValue(), ":")===false )
-        	$value=Mage::helper('core')->currency($item->getValue(), true, false);
+        	$value=Mage::helper('core')->currency(str_replace(',','',$item->getValue()), true, false);
        	else 
        	    $value=Mage::helper('core/string')->str_split($item->getValue(),10);
        	
